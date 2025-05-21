@@ -44,7 +44,7 @@
     .confidence-bar-bg { height: 6px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; }
     .confidence-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3B82F6, #60A5FA); }
     .tab-active { border-bottom: 2px solid #3B82F6; color: #fff !important; }
-    .stock-card { transition: all .2s ease; border: 1px solid transparent; }
+    .stock-card { transition: all .2s ease; border: 1px solid transparent; /* 테두리 애니메이션을 위한 기본 border */ }
     .stock-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,.2); }
     .favorite-star { transition: all .2s ease; }
     .favorite-star.active { color: #F59E0B; transform: scale(1.2); }
@@ -80,18 +80,17 @@
     .feedback-success { color: #10B981; }
     .feedback-error { color: #EF4444; }
 
-    /* MODIFIED: 신뢰도 90% 이상 카드 테두리 애니메이션 - 일괄적인 느낌으로 변경 */
-    @keyframes collective-glow-beat {
-        0%, 45%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); /* bright-yellow, 투명 */ }
-        20% { box-shadow: 0 0 10px 3px rgba(250, 204, 21, 0.7); } /* 밝게 빛남 */
-        /* 0% ~ 20% : 밝아짐
-           20% ~ 45% : 서서히 어두워짐 (유지 시간 약간)
-           45% ~ 100% : 꺼진 상태 유지 */
+    /* 신뢰도 90% 이상 카드 테두리 애니메이션 */
+    @keyframes luxurious-pulse-glow {
+        0%, 100% {
+            box-shadow: 0 0 5px 1px rgba(250, 204, 21, 0.25); /* FACC15 (bright-yellow) */
+        }
+        50% {
+            box-shadow: 0 0 14px 5px rgba(250, 204, 21, 0.55);
+        }
     }
     .high-confidence-card-border {
-        animation: collective-glow-beat 2.2s infinite linear; /* 지속시간 및 타이밍 함수 조정 */
-        /* border-width: 1px; */ /* 기존 stock-card의 border: 1px solid transparent; 와 중복될 수 있어 제거 또는 조정 */
-        /* border-style: solid; */
+        animation: luxurious-pulse-glow 3.2s infinite ease-in-out;
     }
   </style>
 </head>
@@ -307,8 +306,8 @@
   </div>
 
   <script>
-    const AppConfig = { /* ... */ };
-    const MockData = { /* ... */ };
+    const AppConfig = { /* 이전과 동일 */ };
+    const MockData = { /* 이전과 동일 */ };
     // AppConfig, MockData 내용은 이전 답변의 것을 그대로 사용합니다.
           AppConfig.tickerUpdateIntervalSeconds = 60;
       AppConfig.conditionColorMap = { "무상증자": "condition-a", "단일판매계약": "condition-b", "제3자유상증자": "condition-c", "자사주취득": "condition-d", "외국증권사매수": "condition-e" };
@@ -378,126 +377,125 @@
         { id: "post2", user:"이코노", ago:"3시간 전", title:"다음주 전망은?", body:"미국 금리 인하 가능성이 솔솔 나오고 있는데, 국내 증시에도 훈풍이 불까요? 다들 어떻게 생각하시는지 궁금합니다.", likes:15, replies: [] }
       ];
 
-    const UIRenderer = {
-      buildTickerHTML: function() { return MockData.marketTickerItems.map(item => `<div class="ticker-item"><span class="font-medium">${item.label}</span><span class="ml-1 text-${item.dir}">${item.value} ${item.change}</span></div>`).join(""); },
-      renderTickers: function() { const html = this.buildTickerHTML(); AppConfig.elements.tickerWrapper1.innerHTML = html; AppConfig.elements.tickerWrapper2.innerHTML = html; },
-      populateConditionFilterOptions: function() {
-        if (!AppConfig.elements.conditionFilterSelect) return;
-        const conditions = Object.keys(AppConfig.conditionColorMap);
-        let optionsHTML = '<option value="all">조건 전체</option>';
-        conditions.forEach(condition => { optionsHTML += `<option value="${condition}">${condition}</option>`; });
-        AppConfig.elements.conditionFilterSelect.innerHTML = optionsHTML;
-      },
-      renderStockCards: function(stocksToRender = MockData.sampleStocks) {
-        const container = AppConfig.elements.stockCardsContainer;
-        if (!container) { console.error("Stock cards container not found"); return; }
-
-        if (!stocksToRender || stocksToRender.length === 0) {
-            container.innerHTML = `
-                <div class="col-span-full text-center text-gray-500 py-10">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                    </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-300">데이터 없음</h3>
-                    <p class="mt-1 text-sm text-gray-500">선택하신 카테고리에 해당하는 종목이 없습니다.</p>
-                </div>
-            `;
-            return;
-        }
-        
-        container.innerHTML = stocksToRender.map(stock => {
-          const badgeColorClass = AppConfig.conditionColorMap[stock.condition] || 'accent-blue';
-          const isFavorite = AppLogic.favoritedStockCodes.has(stock.code);
-          const highConfidenceClass = stock.confidence >= 90 ? 'text-bright-yellow font-bold' : 'text-gray-300'; // 신뢰도 숫자 색상
-          const highConfidenceBorderClass = stock.confidence >= 90 ? 'high-confidence-card-border' : '';
-
-          return `
-            <div class="stock-card relative rounded-lg bg-card-bg p-5 shadow-soft ${highConfidenceBorderClass}" 
-                 data-industry="${stock.industry}" data-condition="${stock.condition}" 
-                 data-new="${stock.isNew}" data-today="${stock.today}" data-code="${stock.code}">
-              <div class="mb-3 flex items-start justify-between">
-                <div class="flex items-center"><span class="condition-badge bg-${badgeColorClass} bg-opacity-20 text-${badgeColorClass}">${stock.condition}</span><h3 class="text-lg font-bold">${stock.name}</h3></div>
-                <div class="flex items-center">
-                  <button class="favorite-star ${isFavorite ? 'text-yellow-500 active' : 'text-gray-400'} hover:text-yellow-500 mr-2" aria-label="Toggle Favorite">
-                    <svg class="h-6 w-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                  </button>
-                  <div class="rounded-md bg-${stock.changeDir} bg-opacity-20 px-2 py-1 text-sm font-medium text-${stock.changeDir}">${stock.change}</div>
-                </div>
-              </div>
-              <div class="mb-2 text-sm text-gray-400">${stock.code} &middot; ${stock.industry.toUpperCase()}</div>
-              <div class="mb-5"><div class="mb-1 text-sm font-medium">주요지표</div><div class="space-y-1">${stock.metrics.slice(0, 3).map(m => `<div class="metric-box"><span class="metric-label">${m.label}</span><span class="metric-value">${m.value}</span></div>`).join("")}</div></div>
-              <div class="mb-4 flex justify-between text-sm"><span class="text-gray-400">추천 타임</span><span class="font-medium ${stock.type.startsWith('강') ? 'text-positive' : 'text-gray-300'}">${stock.type}</span></div>
-              <div class="mb-1">
-                  <div class="mb-1 flex justify-between text-sm"><span class="text-gray-400">신뢰도</span><span class="font-medium ${highConfidenceClass}">${stock.confidence}%</span></div>
-                  <div class="confidence-bar-bg"><div class="confidence-bar-fill" style="width:${stock.confidence}%"></div></div>
-              </div>
-              <div class="mt-4"><div class="mb-2 text-sm font-medium">추천 이유</div><ul class="list-disc pl-5 text-sm text-gray-300">${stock.reason.map(r=>`<li>${r}</li>`).join("")}</ul></div>
-              <div class="mt-4 flex justify-end text-xs text-gray-400">추천 시각: 09:15</div>
-              <div class="stock-update absolute top-2 right-2 text-xs font-bold ${stock.isNew ? 'text-bright-green' : 'text-transparent'}">NEW</div>
-            </div>
-          `;
-        }).join("");
-      },
-      renderConditionTabs: function() {
-        Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
-          const tabElement = document.getElementById(tabId);
-          if (tabElement) tabElement.innerHTML = "";
-        });
-
-        MockData.sampleStocks.forEach(stock => {
-          const tabId = AppConfig.conditionTabIdMap[stock.condition];
-          const tabElement = document.getElementById(tabId);
-          if (tabElement) {
-            const metricsHTML = stock.metrics && stock.metrics.length > 0 ?
-                stock.metrics.map(metric => `
-                    <span class="inline-block bg-gray-700/60 px-2 py-0.5 rounded-full text-xs whitespace-nowrap">
-                        <span class="text-gray-400">${metric.label}:</span>
-                        <span class="text-white ml-1">${metric.value}</span>
-                    </span>
-                `).join('')
-                : '';
-            
-            const confidenceBarHTML = stock.confidence !== undefined ? `
-                <div class="inline-flex items-center whitespace-nowrap">
-                    <span class="text-xs text-gray-400 mr-1.5">신뢰도:</span>
-                    <div class="confidence-bar-bg rounded" style="width: 100px; height: 6px;">
-                        <div class="confidence-bar-fill h-full rounded" style="width:${stock.confidence}%"></div>
-                    </div>
-                    <span class="text-xs ml-1.5 ${stock.confidence >= 90 ? 'text-bright-yellow font-semibold' : 'text-gray-300'}">${stock.confidence}%</span>
-                </div>
-            ` : '';
-
-            tabElement.insertAdjacentHTML('beforeend', `
-              <div class="flex items-start justify-between py-3 border-b border-gray-700 last:border-none">
-                <div class="flex-grow flex items-start min-w-0">
-                    <div class="flex-shrink-0 mr-4">
-                        <span class="block text-sm font-medium text-gray-100">${stock.name}</span>
-                        <span class="block text-xs text-gray-400">${stock.code}</span>
-                    </div>
-                    <div class="flex-grow min-w-0"> 
-                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-                            ${metricsHTML ? `<div class="flex flex-wrap gap-x-1.5 gap-y-1">${metricsHTML}</div>` : ''}
-                            ${confidenceBarHTML ? `<div class="inline-flex items-center mt-1 sm:mt-0">${confidenceBarHTML}</div>` : ''}
-                        </div>
-                    </div>
-                </div>
-                <div class="text-sm font-semibold text-gray-100 flex-shrink-0 ml-4">${stock.price}</div>
-              </div>
-            `);
-          }
-        });
-
-        Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
-          const tabElement = document.getElementById(tabId);
-          if (tabElement && !tabElement.children.length) {
-            tabElement.innerHTML = '<p class="text-sm text-gray-400">해당 조건의 종목이 없습니다.</p>';
-          }
-        });
-      },
-      renderForumPosts: function() { /* ... 이전과 동일 ... */ },
-      updateTimersUI: function(val) { const mm=String(Math.floor(val/60)).padStart(2,'0'); const ss=String(val%60).padStart(2,'0'); AppConfig.elements.updateCountdown.textContent=`${mm}:${ss}`;},
-      setLastUpdateTime: function() { AppConfig.elements.lastUpdateTime.textContent = new Date().toTimeString().slice(0,8); }
+    const UIRenderer = { /* 이전 답변과 동일하게 모든 UI 렌더링 함수 포함 */ };
+    UIRenderer.buildTickerHTML = function() { return MockData.marketTickerItems.map(item => `<div class="ticker-item"><span class="font-medium">${item.label}</span><span class="ml-1 text-${item.dir}">${item.value} ${item.change}</span></div>`).join(""); };
+    UIRenderer.renderTickers = function() { const html = this.buildTickerHTML(); AppConfig.elements.tickerWrapper1.innerHTML = html; AppConfig.elements.tickerWrapper2.innerHTML = html; };
+    UIRenderer.populateConditionFilterOptions = function() {
+      if (!AppConfig.elements.conditionFilterSelect) return;
+      const conditions = Object.keys(AppConfig.conditionColorMap);
+      let optionsHTML = '<option value="all">조건 전체</option>';
+      conditions.forEach(condition => { optionsHTML += `<option value="${condition}">${condition}</option>`; });
+      AppConfig.elements.conditionFilterSelect.innerHTML = optionsHTML;
     };
+    UIRenderer.renderStockCards = function(stocksToRender = MockData.sampleStocks) {
+      const container = AppConfig.elements.stockCardsContainer;
+      if (!container) { console.error("Stock cards container not found"); return; }
+
+      if (!stocksToRender || stocksToRender.length === 0) {
+          container.innerHTML = `
+              <div class="col-span-full text-center text-gray-500 py-10">
+                  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  </svg>
+                  <h3 class="mt-2 text-sm font-medium text-gray-300">데이터 없음</h3>
+                  <p class="mt-1 text-sm text-gray-500">선택하신 카테고리에 해당하는 종목이 없습니다.</p>
+              </div>
+          `;
+          return;
+      }
+      
+      container.innerHTML = stocksToRender.map(stock => {
+        const badgeColorClass = AppConfig.conditionColorMap[stock.condition] || 'accent-blue';
+        const isFavorite = AppLogic.favoritedStockCodes.has(stock.code);
+        const highConfidenceClass = stock.confidence >= 90 ? 'text-bright-yellow font-bold' : 'text-gray-300';
+        const highConfidenceBorderClass = stock.confidence >= 90 ? 'high-confidence-card-border' : '';
+
+        return `
+          <div class="stock-card relative rounded-lg bg-card-bg p-5 shadow-soft ${highConfidenceBorderClass}" 
+               data-industry="${stock.industry}" data-condition="${stock.condition}" 
+               data-new="${stock.isNew}" data-today="${stock.today}" data-code="${stock.code}">
+            <div class="mb-3 flex items-start justify-between">
+              <div class="flex items-center"><span class="condition-badge bg-${badgeColorClass} bg-opacity-20 text-${badgeColorClass}">${stock.condition}</span><h3 class="text-lg font-bold">${stock.name}</h3></div>
+              <div class="flex items-center">
+                <button class="favorite-star ${isFavorite ? 'text-yellow-500 active' : 'text-gray-400'} hover:text-yellow-500 mr-2" aria-label="Toggle Favorite">
+                  <svg class="h-6 w-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                </button>
+                <div class="rounded-md bg-${stock.changeDir} bg-opacity-20 px-2 py-1 text-sm font-medium text-${stock.changeDir}">${stock.change}</div>
+              </div>
+            </div>
+            <div class="mb-2 text-sm text-gray-400">${stock.code} &middot; ${stock.industry.toUpperCase()}</div>
+            <div class="mb-5"><div class="mb-1 text-sm font-medium">주요지표</div><div class="space-y-1">${stock.metrics.slice(0, 3).map(m => `<div class="metric-box"><span class="metric-label">${m.label}</span><span class="metric-value">${m.value}</span></div>`).join("")}</div></div>
+            <div class="mb-4 flex justify-between text-sm"><span class="text-gray-400">추천 타임</span><span class="font-medium ${stock.type.startsWith('강') ? 'text-positive' : 'text-gray-300'}">${stock.type}</span></div>
+            <div class="mb-1">
+                <div class="mb-1 flex justify-between text-sm"><span class="text-gray-400">신뢰도</span><span class="font-medium ${highConfidenceClass}">${stock.confidence}%</span></div>
+                <div class="confidence-bar-bg"><div class="confidence-bar-fill" style="width:${stock.confidence}%"></div></div>
+            </div>
+            <div class="mt-4"><div class="mb-2 text-sm font-medium">추천 이유</div><ul class="list-disc pl-5 text-sm text-gray-300">${stock.reason.map(r=>`<li>${r}</li>`).join("")}</ul></div>
+            <div class="mt-4 flex justify-end text-xs text-gray-400">추천 시각: 09:15</div>
+            <div class="stock-update absolute top-2 right-2 text-xs font-bold ${stock.isNew ? 'text-bright-green' : 'text-transparent'}">NEW</div>
+          </div>
+        `;
+      }).join("");
+    };
+    UIRenderer.renderConditionTabs = function() {
+      Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
+        const tabElement = document.getElementById(tabId);
+        if (tabElement) tabElement.innerHTML = "";
+      });
+
+      MockData.sampleStocks.forEach(stock => {
+        const tabId = AppConfig.conditionTabIdMap[stock.condition];
+        const tabElement = document.getElementById(tabId);
+        if (tabElement) {
+          const metricsHTML = stock.metrics && stock.metrics.length > 0 ?
+              stock.metrics.map(metric => `
+                  <span class="inline-block bg-gray-700/60 px-2 py-0.5 rounded-full text-xs whitespace-nowrap">
+                      <span class="text-gray-400">${metric.label}:</span>
+                      <span class="text-white ml-1">${metric.value}</span>
+                  </span>
+              `).join('')
+              : '';
+          
+          const confidenceBarHTML = stock.confidence !== undefined ? `
+              <div class="inline-flex items-center whitespace-nowrap">
+                  <span class="text-xs text-gray-400 mr-1.5">신뢰도:</span>
+                  <div class="confidence-bar-bg rounded" style="width: 100px; height: 6px;">
+                      <div class="confidence-bar-fill h-full rounded" style="width:${stock.confidence}%"></div>
+                  </div>
+                  <span class="text-xs ml-1.5 ${stock.confidence >= 90 ? 'text-bright-yellow font-semibold' : 'text-gray-300'}">${stock.confidence}%</span>
+              </div>
+          ` : '';
+
+          tabElement.insertAdjacentHTML('beforeend', `
+            <div class="flex items-start justify-between py-3 border-b border-gray-700 last:border-none">
+              <div class="flex-grow flex items-start min-w-0">
+                  <div class="flex-shrink-0 mr-4">
+                      <span class="block text-sm font-medium text-gray-100">${stock.name}</span>
+                      <span class="block text-xs text-gray-400">${stock.code}</span>
+                  </div>
+                  <div class="flex-grow min-w-0"> 
+                      <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                          ${metricsHTML ? `<div class="flex flex-wrap gap-x-1.5 gap-y-1">${metricsHTML}</div>` : ''}
+                          ${confidenceBarHTML ? `<div class="inline-flex items-center mt-1 sm:mt-0">${confidenceBarHTML}</div>` : ''}
+                      </div>
+                  </div>
+              </div>
+              <div class="text-sm font-semibold text-gray-100 flex-shrink-0 ml-4">${stock.price}</div>
+            </div>
+          `);
+        }
+      });
+
+      Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
+        const tabElement = document.getElementById(tabId);
+        if (tabElement && !tabElement.children.length) {
+          tabElement.innerHTML = '<p class="text-sm text-gray-400">해당 조건의 종목이 없습니다.</p>';
+        }
+      });
+    };
+    UIRenderer.renderForumPosts = function() { /* ... 이전과 동일 ... */ };
+    UIRenderer.updateTimersUI = function(val) { const mm=String(Math.floor(val/60)).padStart(2,'0'); const ss=String(val%60).padStart(2,'0'); AppConfig.elements.updateCountdown.textContent=`${mm}:${ss}`;};
+    UIRenderer.setLastUpdateTime = function() { AppConfig.elements.lastUpdateTime.textContent = new Date().toTimeString().slice(0,8); };
     UIRenderer.renderForumPosts = function() {
         AppConfig.elements.forumPostsContainer.innerHTML = MockData.forumPosts.map(p => `
           <div class="post-card" data-post-id="${p.id}">
@@ -533,7 +531,8 @@
                 </div>
               `).join('') : '<p class="text-xs text-gray-500 italic">아직 댓글이 없습니다.</p>'}
             </div>
-            <div class="reply-form mt-3 md:pl-5"> <div class="flex items-center gap-1 sm:gap-2">
+            <div class="reply-form mt-3 md:pl-5">
+              <div class="flex items-center gap-1 sm:gap-2">
                 <input type="text" class="reply-input-field flex-1 min-w-0 rounded-l-lg border border-gray-600 bg-gray-700/80 px-3 py-1.5 text-sm text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue" placeholder="댓글 남기기...">
                 <button class="reply-submit-btn rounded-r-lg bg-accent-blue px-2 sm:px-3 py-1.5 text-xs font-medium text-white transition hover:bg-blue-600 flex-shrink-0" data-post-id="${p.id}">등록</button>
               </div>
@@ -543,7 +542,6 @@
     };
 
     const AppLogic = { /* ... 모든 AppLogic 함수 ... */ };
-    // AppLogic 전체 내용은 이전 답변의 것을 그대로 사용합니다. (길이 관계상 생략)
     AppLogic.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
     AppLogic.countdownIntervalId = null;
     AppLogic.notificationsEnabled = true;
@@ -868,12 +866,11 @@
           navStocksLink.classList.add('active'); 
           navCoinsLink.classList.remove('active');
           window.location.hash = 'stocks';
-          if (AppConfig.elements.stockCategoryTabs) { // Null check 추가
+          if (AppConfig.elements.stockCategoryTabs) {
             const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
             this.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
             this.applyStockFilters();
           }
-
 
       } else if (targetService === 'coins') {
           stockServiceContent.classList.add('hidden');
@@ -940,11 +937,11 @@
       
       if (initialPage === 'stocks') {
         UIRenderer.populateConditionFilterOptions();
-        if (AppConfig.elements.stockCategoryTabs) { // Null check 추가
+        if (AppConfig.elements.stockCategoryTabs) {
             const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
             AppLogic.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
         } else {
-            AppLogic.currentStockCategory = 'realtime_news_stocks'; // Fallback
+            AppLogic.currentStockCategory = 'realtime_news_stocks';
         }
         AppLogic.applyStockFilters();
         UIRenderer.renderConditionTabs();
