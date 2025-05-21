@@ -44,7 +44,7 @@
     .confidence-bar-bg { height: 6px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; }
     .confidence-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3B82F6, #60A5FA); }
     .tab-active { border-bottom: 2px solid #3B82F6; color: #fff !important; }
-    .stock-card { transition: all .2s ease; border: 1px solid transparent; /* 테두리 애니메이션을 위한 기본 border */ }
+    .stock-card { transition: all .2s ease; border: 1px solid transparent; }
     .stock-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,.2); }
     .favorite-star { transition: all .2s ease; }
     .favorite-star.active { color: #F59E0B; transform: scale(1.2); }
@@ -79,19 +79,11 @@
     .modal-input:focus { outline: none; ring-width: 1px; ring-color: #3B82F6; border-color: #3B82F6; }
     .feedback-success { color: #10B981; }
     .feedback-error { color: #EF4444; }
-
-    /* 신뢰도 90% 이상 카드 테두리 애니메이션 */
     @keyframes luxurious-pulse-glow {
-        0%, 100% {
-            box-shadow: 0 0 5px 1px rgba(250, 204, 21, 0.25); /* FACC15 (bright-yellow) */
-        }
-        50% {
-            box-shadow: 0 0 14px 5px rgba(250, 204, 21, 0.55);
-        }
+        0%, 100% { box-shadow: 0 0 5px 1px rgba(250, 204, 21, 0.25); }
+        50% { box-shadow: 0 0 14px 5px rgba(250, 204, 21, 0.55); }
     }
-    .high-confidence-card-border {
-        animation: luxurious-pulse-glow 3.2s infinite ease-in-out;
-    }
+    .high-confidence-card-border { animation: luxurious-pulse-glow 3.2s infinite ease-in-out; }
   </style>
 </head>
 <body class="min-h-screen pb-12">
@@ -148,7 +140,7 @@
     <section class="container mx-auto flex flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between">
       <div class="relative w-full md:w-64">
         <select id="condition-filter-select" class="w-full appearance-none rounded-lg border border-gray-700 bg-card-bg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-blue">
-          <option value="all">조건 전체</option>
+          <option value="all">모든 공시 조건</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
           <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -157,8 +149,8 @@
       <div class="flex w-full gap-2 overflow-x-auto pb-2 md:w-auto md:pb-0" id="filter-buttons-group">
         <button data-filter="all"       class="filter-btn active rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0">전체 추천</button>
         <button data-filter="favorites" class="filter-btn rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0">관심종목</button>
-        <button data-filter="today"     class="filter-btn rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0">오늘만</button>
-        <button data-filter="new"       class="filter-btn rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0">NEW만</button>
+        <button data-filter="new"       class="filter-btn rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0">NEW</button>
+        <button data-filter="today"     class="filter-btn rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0 hidden">오늘만</button> 
         <button id="refresh-data-btn"    class="ml-auto flex items-center rounded-lg bg-gray-700 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-600 md:ml-0 flex-shrink-0">
           <svg class="mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
           새로고침
@@ -168,7 +160,7 @@
 
     <section class="container mx-auto px-4 py-4">
       <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold">오늘 주목할만한 종목</h2>
+          <h2 class="text-xl font-bold">지금 주목할만한 종목</h2>
           <div class="hidden md:flex flex-col text-xs text-gray-400 items-end">
               <span>마지막 업데이트: <span id="last-update-time">--:--:--</span></span>
               <span>다음 업데이트: <span id="update-countdown">--:--</span></span>
@@ -305,10 +297,11 @@
       </div>
   </div>
 
+
   <script>
     const AppConfig = { /* 이전과 동일 */ };
-    const MockData = { /* 이전과 동일 */ };
-    // AppConfig, MockData 내용은 이전 답변의 것을 그대로 사용합니다.
+    const MockData = { /* 이전과 동일, sampleStocks에 disclosureTime 추가됨 */ };
+    // AppConfig 내용은 이전 답변의 것을 그대로 사용합니다.
           AppConfig.tickerUpdateIntervalSeconds = 60;
       AppConfig.conditionColorMap = { "무상증자": "condition-a", "단일판매계약": "condition-b", "제3자유상증자": "condition-c", "자사주취득": "condition-d", "외국증권사매수": "condition-e" };
       AppConfig.conditionTabIdMap = { "무상증자": "tab-condition-a", "단일판매계약": "tab-condition-b", "제3자유상증자": "tab-condition-c", "자사주취득": "tab-condition-d", "외국증권사매수": "tab-condition-e" };
@@ -365,137 +358,153 @@
         {label:"NASDAQ", value:"16,742.39", change:"+0.83%", dir:"positive"}, {label:"S&P500", value:"5,234.18", change:"+0.51%", dir:"positive"}
       ];
     MockData.sampleStocks = [
-        { code:"005930", name:"삼성전자", industry:"electronics", price:"78,500원", changeDir:"positive", change:"+2.34%", today:true, isNew:false, initiallyNew: false, condition:"무상증자", type:"강력매수", confidence:92, metrics:[ {label:"증자비율", value:"10:5"}, {label:"기준일",  value:"2025-03-15"}, {label:"권리락일",value:"2025-03-16"} ], reason:["메모리 반도체 가격 상승세 지속","AI 서버용 HBM 수요 급증","2분기 실적 전망치 상향 조정"] },
-        { code:"035720", name:"카카오", industry:"it", price:"52,300원", changeDir:"negative", change:"-1.05%", today:true, isNew:true, initiallyNew: true, condition:"단일판매계약", type:"매수", confidence:72, metrics:[ {label:"매출 대비", value:"12%"}, {label:"계약금액", value:"120억"}, {label:"상대방", value:"(주)넥슨"} ], reason:["AI 기반 서비스 확장 전략 발표","핀테크 부문 거래액 증가세","단기 조정 후 기술적 반등 신호"] },
-        { code:"051910", name:"LG화학", industry:"chemical", price:"625,000원", changeDir:"positive", change:"+3.78%", today:true, isNew:false, initiallyNew: false, condition:"제3자유상증자", type:"강력매수", confidence:95, metrics:[ {label:"발행가액", value:"58만"}, {label:"증자 규모", value:"1.2조원"}, {label:"납입일", value:"2025-06-30"} ], reason:["배터리 소재 신규 계약 체결","북미 시장 점유율 확대","친환경 소재 부문 성장성 주목"] },
-        { code:"035420", name:"NAVER", industry:"it", price:"214,500원", changeDir:"positive", change:"+1.25%", today:true, isNew:false, initiallyNew: false, condition:"외국증권사매수", type:"매수", confidence:83, metrics:[ {label:"매수주체", value:"모건스탠리"},{label:"순매수량", value:"10만주"} ], reason:["생성형 AI 서비스 출시 임박","웹툰/웹소설 글로벌 매출 증가","클라우드 사업 성장세 가속화"] },
-        { code:"005380", name:"현대차", industry:"auto", price:"243,000원", changeDir:"negative", change:"-0.45%", today:false, isNew:false, initiallyNew: false, condition:"자사주취득", type:"관망", confidence:65, metrics:[ {label:"시총 대비", value:"2.1%"}, {label:"취득기간", value:"~25/12/31"} ], reason:["전기차 판매 호조세 지속","원자재 가격 상승 부담","기술적 지지선 근접, 반등 가능성"] },
-        { code:"068270", name:"셀트리온", industry:"pharma", price:"187,500원", changeDir:"positive", change:"+4.12%", today:true, isNew:true, initiallyNew: true, condition:"무상증자", type:"강력매수", confidence:89, metrics:[ {label:"증자비율", value:"2:1"}, {label:"기준일",  value:"2025-04-10"} ], reason:["신약 FDA 승인 임박","유럽 시장 바이오시밀러 점유율 확대","기관 매수세 유입 증가"] }
+        { code:"005930", name:"삼성전자", industry:"electronics", price:"78,500원", changeDir:"positive", change:"+2.34%", today:true, isNew:false, initiallyNew: false, condition:"무상증자", type:"강력매수", confidence:92, disclosureTime: new Date(Date.now() - 10 * 60 * 1000).toISOString(), metrics:[ {label:"증자비율", value:"10:5"}, {label:"기준일",  value:"2025-03-15"}, {label:"권리락일",value:"2025-03-16"} ], reason:["메모리 반도체 가격 상승세 지속","AI 서버용 HBM 수요 급증","2분기 실적 전망치 상향 조정"] },
+        { code:"035720", name:"카카오", industry:"it", price:"52,300원", changeDir:"negative", change:"-1.05%", today:true, isNew:true, initiallyNew: true, condition:"단일판매계약", type:"매수", confidence:72, disclosureTime: new Date(Date.now() - 30 * 60 * 1000).toISOString(), metrics:[ {label:"매출 대비", value:"12%"}, {label:"계약금액", value:"120억"}, {label:"상대방", value:"(주)넥슨"} ], reason:["AI 기반 서비스 확장 전략 발표","핀테크 부문 거래액 증가세","단기 조정 후 기술적 반등 신호"] },
+        { code:"051910", name:"LG화학", industry:"chemical", price:"625,000원", changeDir:"positive", change:"+3.78%", today:true, isNew:false, initiallyNew: false, condition:"제3자유상증자", type:"강력매수", confidence:95, disclosureTime: new Date(Date.now() - (2 * 60 + 15) * 60 * 1000).toISOString(), metrics:[ {label:"발행가액", value:"58만"}, {label:"증자 규모", value:"1.2조원"}, {label:"납입일", value:"2025-06-30"} ], reason:["배터리 소재 신규 계약 체결","북미 시장 점유율 확대","친환경 소재 부문 성장성 주목"] },
+        { code:"035420", name:"NAVER", industry:"it", price:"214,500원", changeDir:"positive", change:"+1.25%", today:true, isNew:false, initiallyNew: false, condition:"외국증권사매수", type:"매수", confidence:83, disclosureTime: new Date(Date.now() - (5 * 60 + 30) * 60 * 1000).toISOString(), metrics:[ {label:"매수주체", value:"모건스탠리"},{label:"순매수량", value:"10만주"} ], reason:["생성형 AI 서비스 출시 임박","웹툰/웹소설 글로벌 매출 증가","클라우드 사업 성장세 가속화"] },
+        { code:"005380", name:"현대차", industry:"auto", price:"243,000원", changeDir:"negative", change:"-0.45%", today:false, isNew:false, initiallyNew: false, condition:"자사주취득", type:"관망", confidence:65, disclosureTime: new Date(Date.now() - 23 * 60 * 1000).toISOString(), metrics:[ {label:"시총 대비", value:"2.1%"}, {label:"취득기간", value:"~25/12/31"} ], reason:["전기차 판매 호조세 지속","원자재 가격 상승 부담","기술적 지지선 근접, 반등 가능성"] },
+        { code:"068270", name:"셀트리온", industry:"pharma", price:"187,500원", changeDir:"positive", change:"+4.12%", today:true, isNew:true, initiallyNew: true, condition:"무상증자", type:"강력매수", confidence:89, disclosureTime: new Date(Date.now() - (1 * 60 + 5) * 60 * 1000).toISOString(), metrics:[ {label:"증자비율", value:"2:1"}, {label:"기준일",  value:"2025-04-10"} ], reason:["신약 FDA 승인 임박","유럽 시장 바이오시밀러 점유율 확대","기관 매수세 유입 증가"] }
       ];
     MockData.forumPosts = [
         { id: "post1", user:"김투자", ago:"2시간 전", title:"오늘 시장 분석", body:"반도체 업종이 강세를 보이고 있네요. 특히 삼성전자와 SK하이닉스의 상승세가 두드러집니다. AI 관련 수혜주로 계속 주목해야 할 것 같습니다.", likes:23, replies: [ { id: "reply1-1", user: "박매수", text: "동의합니다. HBM 관련주 눈여겨보고 있습니다.", ago: "1시간 전" }, { id: "reply1-2", user: "최고점", text: "삼전 가즈아!", ago: "30분 전" } ] },
         { id: "post2", user:"이코노", ago:"3시간 전", title:"다음주 전망은?", body:"미국 금리 인하 가능성이 솔솔 나오고 있는데, 국내 증시에도 훈풍이 불까요? 다들 어떻게 생각하시는지 궁금합니다.", likes:15, replies: [] }
       ];
 
-    const UIRenderer = { /* 이전 답변과 동일하게 모든 UI 렌더링 함수 포함 */ };
-    UIRenderer.buildTickerHTML = function() { return MockData.marketTickerItems.map(item => `<div class="ticker-item"><span class="font-medium">${item.label}</span><span class="ml-1 text-${item.dir}">${item.value} ${item.change}</span></div>`).join(""); };
-    UIRenderer.renderTickers = function() { const html = this.buildTickerHTML(); AppConfig.elements.tickerWrapper1.innerHTML = html; AppConfig.elements.tickerWrapper2.innerHTML = html; };
-    UIRenderer.populateConditionFilterOptions = function() {
-      if (!AppConfig.elements.conditionFilterSelect) return;
-      const conditions = Object.keys(AppConfig.conditionColorMap);
-      let optionsHTML = '<option value="all">조건 전체</option>';
-      conditions.forEach(condition => { optionsHTML += `<option value="${condition}">${condition}</option>`; });
-      AppConfig.elements.conditionFilterSelect.innerHTML = optionsHTML;
-    };
-    UIRenderer.renderStockCards = function(stocksToRender = MockData.sampleStocks) {
-      const container = AppConfig.elements.stockCardsContainer;
-      if (!container) { console.error("Stock cards container not found"); return; }
 
-      if (!stocksToRender || stocksToRender.length === 0) {
-          container.innerHTML = `
-              <div class="col-span-full text-center text-gray-500 py-10">
-                  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  </svg>
-                  <h3 class="mt-2 text-sm font-medium text-gray-300">데이터 없음</h3>
-                  <p class="mt-1 text-sm text-gray-500">선택하신 카테고리에 해당하는 종목이 없습니다.</p>
+    const UIRenderer = {
+      buildTickerHTML: function() { return MockData.marketTickerItems.map(item => `<div class="ticker-item"><span class="font-medium">${item.label}</span><span class="ml-1 text-${item.dir}">${item.value} ${item.change}</span></div>`).join(""); },
+      renderTickers: function() { const html = this.buildTickerHTML(); AppConfig.elements.tickerWrapper1.innerHTML = html; AppConfig.elements.tickerWrapper2.innerHTML = html; },
+      populateConditionFilterOptions: function() {
+        if (!AppConfig.elements.conditionFilterSelect) return;
+        const conditions = Object.keys(AppConfig.conditionColorMap);
+        let optionsHTML = '<option value="all">모든 공시 조건</option>';
+        conditions.forEach(condition => { optionsHTML += `<option value="${condition}">${condition}</option>`; });
+        AppConfig.elements.conditionFilterSelect.innerHTML = optionsHTML;
+      },
+      renderStockCards: function(stocksToRender = MockData.sampleStocks) {
+        const container = AppConfig.elements.stockCardsContainer;
+        if (!container) { console.error("Stock cards container not found"); return; }
+
+        if (!stocksToRender || stocksToRender.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full text-center text-gray-500 py-10">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    </svg>
+                    <h3 class="mt-2 text-sm font-medium text-gray-300">데이터 없음</h3>
+                    <p class="mt-1 text-sm text-gray-500">선택하신 카테고리에 해당하는 종목이 없습니다.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = stocksToRender.map(stock => {
+          const badgeColorClass = AppConfig.conditionColorMap[stock.condition] || 'accent-blue';
+          const isFavorite = AppLogic.favoritedStockCodes.has(stock.code);
+          const highConfidenceClass = stock.confidence >= 90 ? 'text-bright-yellow font-bold' : 'text-gray-300';
+          const highConfidenceBorderClass = stock.confidence >= 90 ? 'high-confidence-card-border' : '';
+          const disclosureTimeAgo = AppLogic.formatTimeAgo(stock.disclosureTime);
+          const disclosureTimeFormatted = stock.disclosureTime ? 
+            new Date(stock.disclosureTime).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true }) : '-';
+
+          return `
+            <div class="stock-card relative rounded-lg bg-card-bg p-5 shadow-soft ${highConfidenceBorderClass}" 
+                 data-industry="${stock.industry}" data-condition="${stock.condition}" 
+                 data-new="${stock.isNew}" data-today="${stock.today}" data-code="${stock.code}">
+              <div class="mb-3 flex items-start justify-between">
+                <div class="flex items-center">
+                  <span class="condition-badge bg-${badgeColorClass} bg-opacity-20 text-${badgeColorClass}">${stock.condition}</span>
+                  <h3 class="text-lg font-bold">${stock.name} <span class="text-sm text-gray-400 font-normal">(${stock.code})</span></h3>
+                </div>
+                <div class="flex items-center">
+                  <button class="favorite-star ${isFavorite ? 'text-yellow-500 active' : 'text-gray-400'} hover:text-yellow-500 mr-2" aria-label="Toggle Favorite">
+                    <svg class="h-6 w-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                  </button>
+                  <div class="rounded-md bg-${stock.changeDir} bg-opacity-20 px-2 py-1 text-sm font-medium text-${stock.changeDir}">${stock.change}</div>
+                </div>
               </div>
+              <div class="mb-3 text-xs"> 
+                <span class="text-gray-100">공시 시간:</span>
+                <span class="text-gray-100 font-medium ml-1">${disclosureTimeFormatted}</span>
+                <span class="text-gray-100 ml-1.5">(${disclosureTimeAgo})</span>
+              </div>
+              <div class="mb-5"><div class="mb-1 text-sm font-medium">주요지표</div><div class="space-y-1">${stock.metrics.slice(0, 3).map(m => `<div class="metric-box"><span class="metric-label">${m.label}</span><span class="metric-value">${m.value}</span></div>`).join("")}</div></div>
+              <div class="mb-4 flex justify-between text-sm"><span class="text-gray-400">추천 타임</span><span class="font-medium ${stock.type.startsWith('강') ? 'text-positive' : 'text-gray-300'}">${stock.type}</span></div>
+              <div class="mb-1">
+                  <div class="mb-1 flex justify-between text-sm"><span class="text-gray-400">신뢰도</span><span class="font-medium ${highConfidenceClass}">${stock.confidence}%</span></div>
+                  <div class="confidence-bar-bg"><div class="confidence-bar-fill" style="width:${stock.confidence}%"></div></div>
+              </div>
+              <div class="mt-4"><div class="mb-2 text-sm font-medium">추천 이유</div><ul class="list-disc pl-5 text-sm text-gray-300">${stock.reason.map(r=>`<li>${r}</li>`).join("")}</ul></div>
+              <div class="mt-4 flex justify-end text-xs text-gray-400">추천 시각: 09:15</div>
+              <div class="stock-update absolute top-2 right-2 text-xs font-bold ${stock.isNew ? 'text-bright-green' : 'text-transparent'}">NEW</div>
+            </div>
           `;
-          return;
-      }
-      
-      container.innerHTML = stocksToRender.map(stock => {
-        const badgeColorClass = AppConfig.conditionColorMap[stock.condition] || 'accent-blue';
-        const isFavorite = AppLogic.favoritedStockCodes.has(stock.code);
-        const highConfidenceClass = stock.confidence >= 90 ? 'text-bright-yellow font-bold' : 'text-gray-300';
-        const highConfidenceBorderClass = stock.confidence >= 90 ? 'high-confidence-card-border' : '';
+        }).join("");
+      },
+      renderConditionTabs: function() {
+        Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
+          const tabElement = document.getElementById(tabId);
+          if (tabElement) tabElement.innerHTML = "";
+        });
 
-        return `
-          <div class="stock-card relative rounded-lg bg-card-bg p-5 shadow-soft ${highConfidenceBorderClass}" 
-               data-industry="${stock.industry}" data-condition="${stock.condition}" 
-               data-new="${stock.isNew}" data-today="${stock.today}" data-code="${stock.code}">
-            <div class="mb-3 flex items-start justify-between">
-              <div class="flex items-center"><span class="condition-badge bg-${badgeColorClass} bg-opacity-20 text-${badgeColorClass}">${stock.condition}</span><h3 class="text-lg font-bold">${stock.name}</h3></div>
-              <div class="flex items-center">
-                <button class="favorite-star ${isFavorite ? 'text-yellow-500 active' : 'text-gray-400'} hover:text-yellow-500 mr-2" aria-label="Toggle Favorite">
-                  <svg class="h-6 w-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                </button>
-                <div class="rounded-md bg-${stock.changeDir} bg-opacity-20 px-2 py-1 text-sm font-medium text-${stock.changeDir}">${stock.change}</div>
+        MockData.sampleStocks.forEach(stock => {
+          const tabId = AppConfig.conditionTabIdMap[stock.condition];
+          const tabElement = document.getElementById(tabId);
+          if (tabElement) {
+            const metricsHTML = stock.metrics && stock.metrics.length > 0 ?
+                stock.metrics.map(metric => `
+                    <span class="inline-block bg-gray-700/60 px-2 py-0.5 rounded-full text-xs whitespace-nowrap">
+                        <span class="text-gray-400">${metric.label}:</span>
+                        <span class="text-white ml-1">${metric.value}</span>
+                    </span>
+                `).join('')
+                : '';
+            
+            const confidenceBarHTML = stock.confidence !== undefined ? `
+                <div class="inline-flex items-center whitespace-nowrap">
+                    <span class="text-xs text-gray-400 mr-1.5">신뢰도:</span>
+                    <div class="confidence-bar-bg rounded" style="width: 100px; height: 6px;">
+                        <div class="confidence-bar-fill h-full rounded" style="width:${stock.confidence}%"></div>
+                    </div>
+                    <span class="text-xs ml-1.5 ${stock.confidence >= 90 ? 'text-bright-yellow font-semibold' : 'text-gray-300'}">${stock.confidence}%</span>
+                </div>
+            ` : '';
+            
+            const disclosureTimeForTab = stock.disclosureTime ? 
+                `공시: ${new Date(stock.disclosureTime).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true })}` 
+                : '공시: -';
+
+            tabElement.insertAdjacentHTML('beforeend', `
+              <div class="flex items-start justify-between py-3 border-b border-gray-700 last:border-none">
+                <div class="flex-grow flex items-start min-w-0">
+                    <div class="flex-shrink-0 mr-4">
+                        <span class="block text-sm font-medium text-gray-100">${stock.name}</span>
+                        <span class="block text-xs text-gray-400">${stock.code}</span>
+                    </div>
+                    <div class="flex-grow min-w-0"> 
+                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                            ${metricsHTML ? `<div class="flex flex-wrap gap-x-1.5 gap-y-1">${metricsHTML}</div>` : ''}
+                            ${confidenceBarHTML ? `<div class="inline-flex items-center mt-1 sm:mt-0">${confidenceBarHTML}</div>` : ''}
+                        </div>
+                    </div>
+                </div>
+                <div class="text-sm font-semibold text-gray-100 flex-shrink-0 ml-4 whitespace-nowrap">${disclosureTimeForTab}</div>
               </div>
-            </div>
-            <div class="mb-2 text-sm text-gray-400">${stock.code} &middot; ${stock.industry.toUpperCase()}</div>
-            <div class="mb-5"><div class="mb-1 text-sm font-medium">주요지표</div><div class="space-y-1">${stock.metrics.slice(0, 3).map(m => `<div class="metric-box"><span class="metric-label">${m.label}</span><span class="metric-value">${m.value}</span></div>`).join("")}</div></div>
-            <div class="mb-4 flex justify-between text-sm"><span class="text-gray-400">추천 타임</span><span class="font-medium ${stock.type.startsWith('강') ? 'text-positive' : 'text-gray-300'}">${stock.type}</span></div>
-            <div class="mb-1">
-                <div class="mb-1 flex justify-between text-sm"><span class="text-gray-400">신뢰도</span><span class="font-medium ${highConfidenceClass}">${stock.confidence}%</span></div>
-                <div class="confidence-bar-bg"><div class="confidence-bar-fill" style="width:${stock.confidence}%"></div></div>
-            </div>
-            <div class="mt-4"><div class="mb-2 text-sm font-medium">추천 이유</div><ul class="list-disc pl-5 text-sm text-gray-300">${stock.reason.map(r=>`<li>${r}</li>`).join("")}</ul></div>
-            <div class="mt-4 flex justify-end text-xs text-gray-400">추천 시각: 09:15</div>
-            <div class="stock-update absolute top-2 right-2 text-xs font-bold ${stock.isNew ? 'text-bright-green' : 'text-transparent'}">NEW</div>
-          </div>
-        `;
-      }).join("");
+            `);
+          }
+        });
+
+        Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
+          const tabElement = document.getElementById(tabId);
+          if (tabElement && !tabElement.children.length) {
+            tabElement.innerHTML = '<p class="text-sm text-gray-400">해당 조건의 종목이 없습니다.</p>';
+          }
+        });
+      },
+      renderForumPosts: function() { /* ... 이전과 동일 ... */ },
+      updateTimersUI: function(val) { const mm=String(Math.floor(val/60)).padStart(2,'0'); const ss=String(val%60).padStart(2,'0'); AppConfig.elements.updateCountdown.textContent=`${mm}:${ss}`;},
+      setLastUpdateTime: function() { AppConfig.elements.lastUpdateTime.textContent = new Date().toTimeString().slice(0,8); }
     };
-    UIRenderer.renderConditionTabs = function() {
-      Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
-        const tabElement = document.getElementById(tabId);
-        if (tabElement) tabElement.innerHTML = "";
-      });
-
-      MockData.sampleStocks.forEach(stock => {
-        const tabId = AppConfig.conditionTabIdMap[stock.condition];
-        const tabElement = document.getElementById(tabId);
-        if (tabElement) {
-          const metricsHTML = stock.metrics && stock.metrics.length > 0 ?
-              stock.metrics.map(metric => `
-                  <span class="inline-block bg-gray-700/60 px-2 py-0.5 rounded-full text-xs whitespace-nowrap">
-                      <span class="text-gray-400">${metric.label}:</span>
-                      <span class="text-white ml-1">${metric.value}</span>
-                  </span>
-              `).join('')
-              : '';
-          
-          const confidenceBarHTML = stock.confidence !== undefined ? `
-              <div class="inline-flex items-center whitespace-nowrap">
-                  <span class="text-xs text-gray-400 mr-1.5">신뢰도:</span>
-                  <div class="confidence-bar-bg rounded" style="width: 100px; height: 6px;">
-                      <div class="confidence-bar-fill h-full rounded" style="width:${stock.confidence}%"></div>
-                  </div>
-                  <span class="text-xs ml-1.5 ${stock.confidence >= 90 ? 'text-bright-yellow font-semibold' : 'text-gray-300'}">${stock.confidence}%</span>
-              </div>
-          ` : '';
-
-          tabElement.insertAdjacentHTML('beforeend', `
-            <div class="flex items-start justify-between py-3 border-b border-gray-700 last:border-none">
-              <div class="flex-grow flex items-start min-w-0">
-                  <div class="flex-shrink-0 mr-4">
-                      <span class="block text-sm font-medium text-gray-100">${stock.name}</span>
-                      <span class="block text-xs text-gray-400">${stock.code}</span>
-                  </div>
-                  <div class="flex-grow min-w-0"> 
-                      <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-                          ${metricsHTML ? `<div class="flex flex-wrap gap-x-1.5 gap-y-1">${metricsHTML}</div>` : ''}
-                          ${confidenceBarHTML ? `<div class="inline-flex items-center mt-1 sm:mt-0">${confidenceBarHTML}</div>` : ''}
-                      </div>
-                  </div>
-              </div>
-              <div class="text-sm font-semibold text-gray-100 flex-shrink-0 ml-4">${stock.price}</div>
-            </div>
-          `);
-        }
-      });
-
-      Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
-        const tabElement = document.getElementById(tabId);
-        if (tabElement && !tabElement.children.length) {
-          tabElement.innerHTML = '<p class="text-sm text-gray-400">해당 조건의 종목이 없습니다.</p>';
-        }
-      });
-    };
-    UIRenderer.renderForumPosts = function() { /* ... 이전과 동일 ... */ };
-    UIRenderer.updateTimersUI = function(val) { const mm=String(Math.floor(val/60)).padStart(2,'0'); const ss=String(val%60).padStart(2,'0'); AppConfig.elements.updateCountdown.textContent=`${mm}:${ss}`;};
-    UIRenderer.setLastUpdateTime = function() { AppConfig.elements.lastUpdateTime.textContent = new Date().toTimeString().slice(0,8); };
     UIRenderer.renderForumPosts = function() {
         AppConfig.elements.forumPostsContainer.innerHTML = MockData.forumPosts.map(p => `
           <div class="post-card" data-post-id="${p.id}">
@@ -541,7 +550,8 @@
         `).join("");
     };
 
-    const AppLogic = { /* ... 모든 AppLogic 함수 ... */ };
+    const AppLogic = { /* 모든 AppLogic 함수 */ };
+    // AppLogic 전체 내용은 이전 답변의 것을 그대로 사용합니다.
     AppLogic.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
     AppLogic.countdownIntervalId = null;
     AppLogic.notificationsEnabled = true;
@@ -675,6 +685,22 @@
       }
       this.updateAuthUI();
     };
+    AppLogic.formatTimeAgo = function(dateString) {
+        if (!dateString) return '';
+        const now = new Date();
+        const past = new Date(dateString);
+        const diffInSeconds = Math.floor((now - past) / 1000);
+
+        const minutes = Math.floor(diffInSeconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        if (days > 0) return `${days}일 전`;
+        if (hours > 0) return `${hours}시간 전`;
+        if (minutes > 0) return `${minutes}분 전`;
+        if (diffInSeconds < 5) return `방금 전`;
+        return `${diffInSeconds}초 전`;
+    };
     AppLogic.applyStockFilters = function() {
       const selectedCondDropdownValue = AppConfig.elements.conditionFilterSelect.value;
       const activeTopFilterButton = AppConfig.elements.filterButtonsGroup.querySelector('.filter-btn.active');
@@ -698,9 +724,9 @@
 
       if (currentTopFilterType === 'favorites') {
           최종필터된종목들 = 최종필터된종목들.filter(stock => AppLogic.favoritedStockCodes.has(stock.code));
-      } else if (currentTopFilterType === 'today') {
+      } else if (currentTopFilterType === 'today' && AppConfig.elements.filterButtonsGroup.querySelector('[data-filter="today"]') && !AppConfig.elements.filterButtonsGroup.querySelector('[data-filter="today"]').classList.contains('hidden') ) {
           최종필터된종목들 = 최종필터된종목들.filter(stock => stock.today === true);
-      } else if (currentTopFilterType === 'new') {
+      } else if (currentTopFilterType === 'new' && AppConfig.elements.filterButtonsGroup.querySelector('[data-filter="new"]') && !AppConfig.elements.filterButtonsGroup.querySelector('[data-filter="new"]').classList.contains('hidden') ) {
           최종필터된종목들 = 최종필터된종목들.filter(stock => stock.isNew === true);
       }
       
@@ -866,7 +892,7 @@
           navStocksLink.classList.add('active'); 
           navCoinsLink.classList.remove('active');
           window.location.hash = 'stocks';
-          if (AppConfig.elements.stockCategoryTabs) {
+          if (AppConfig.elements.stockCategoryTabs) { 
             const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
             this.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
             this.applyStockFilters();
@@ -937,7 +963,7 @@
       
       if (initialPage === 'stocks') {
         UIRenderer.populateConditionFilterOptions();
-        if (AppConfig.elements.stockCategoryTabs) {
+        if (AppConfig.elements.stockCategoryTabs) { 
             const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
             AppLogic.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
         } else {
