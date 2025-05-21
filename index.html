@@ -24,7 +24,8 @@
             'condition-c':'#EC4899',
             'condition-d':'#F59E0B',
             'condition-e':'#10B981',
-            'bright-green': '#4ade80', // NEW 플래그를 위한 밝은 녹색 (green-400)
+            'bright-green': '#4ade80',
+            'bright-yellow': '#FACC15',
           },
           boxShadow: {
             'soft':'0 4px 12px rgba(0,0,0,0.15)'
@@ -43,7 +44,7 @@
     .confidence-bar-bg { height: 6px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; }
     .confidence-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3B82F6, #60A5FA); }
     .tab-active { border-bottom: 2px solid #3B82F6; color: #fff !important; }
-    .stock-card { transition: all .2s ease; }
+    .stock-card { transition: all .2s ease; border: 1px solid transparent; }
     .stock-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,.2); }
     .favorite-star { transition: all .2s ease; }
     .favorite-star.active { color: #F59E0B; transform: scale(1.2); }
@@ -65,11 +66,10 @@
     .post-card:last-child { border-bottom: none; margin-bottom: 0; }
     .post-header { display: flex; justify-content: space-between; align-items: center; }
     .forum-badge { font-size: .75rem; background: #374151; padding: .15rem .5rem; border-radius: .25rem; display: inline-flex; align-items: center; }
-    .like-btn { cursor: pointer; transition: all .2s ease; } /* 좋아요 버튼 전체에 transition 적용 */
+    .like-btn { cursor: pointer; transition: all .2s ease; }
     .like-btn:hover { background-color: #4A5568; }
-    .like-btn.liked svg { fill: #3B82F6; stroke: #3B82F6; color: #3B82F6;} /* 좋아요 눌렸을 때 SVG 색상 변경 */
-    .like-btn.liked span { color: #60A5FA; } /* 좋아요 눌렸을 때 숫자 색상 변경 */
-
+    .like-btn.liked svg { fill: #3B82F6; stroke: #3B82F6; color: #3B82F6;}
+    .like-btn.liked span { color: #60A5FA; }
     .category-tab-btn { transition: color .2s ease, border-color .2s ease; }
     .main-nav-link.active { color: #E5E7EB; background-color: rgba(59, 130, 246, 0.3); }
     .main-nav-link { color: #9CA3AF; }
@@ -79,20 +79,36 @@
     .modal-input:focus { outline: none; ring-width: 1px; ring-color: #3B82F6; border-color: #3B82F6; }
     .feedback-success { color: #10B981; }
     .feedback-error { color: #EF4444; }
+
+    /* MODIFIED: 신뢰도 90% 이상 카드 테두리 애니메이션 - 일괄적인 느낌으로 변경 */
+    @keyframes collective-glow-beat {
+        0%, 45%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); /* bright-yellow, 투명 */ }
+        20% { box-shadow: 0 0 10px 3px rgba(250, 204, 21, 0.7); } /* 밝게 빛남 */
+        /* 0% ~ 20% : 밝아짐
+           20% ~ 45% : 서서히 어두워짐 (유지 시간 약간)
+           45% ~ 100% : 꺼진 상태 유지 */
+    }
+    .high-confidence-card-border {
+        animation: collective-glow-beat 2.2s infinite linear; /* 지속시간 및 타이밍 함수 조정 */
+        /* border-width: 1px; */ /* 기존 stock-card의 border: 1px solid transparent; 와 중복될 수 있어 제거 또는 조정 */
+        /* border-style: solid; */
+    }
   </style>
 </head>
 <body class="min-h-screen pb-12">
 
   <header class="sticky top-0 z-50 bg-deep-navy/95 backdrop-blur-sm shadow-md">
     <div class="container mx-auto flex items-center justify-between px-4 py-3">
-      <div class="flex items-center flex-shrink-0"> <svg class="w-7 h-7 sm:w-8 sm:h-8 text-accent-blue" fill="currentColor" viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/><path d="M16 10h2V4h-2v6zm0 10h2v-6h-2v6z"/></svg>
+      <div class="flex items-center flex-shrink-0">
+        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-accent-blue" fill="currentColor" viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/><path d="M16 10h2V4h-2v6zm0 10h2v-6h-2v6z"/></svg>
         <span class="ml-1.5 sm:ml-2 text-lg sm:text-xl font-bold text-white flex-shrink-0">Snappiko</span>
         <nav id="main-navigation" class="ml-2 sm:ml-4 md:ml-6 flex items-baseline space-x-1 sm:space-x-2">
             <a href="#stocks" id="nav-stocks" class="main-nav-link active px-1.5 py-1 sm:px-3 sm:py-2 rounded-md text-xs sm:text-sm font-medium whitespace-nowrap" aria-current="page">주식</a>
             <a href="#coins" id="nav-coins" class="main-nav-link px-1.5 py-1 sm:px-3 sm:py-2 rounded-md text-xs sm:text-sm font-medium whitespace-nowrap">코인</a>
         </nav>
       </div>
-      <div class="flex items-center flex-shrink-0"> <span class="mr-1.5 sm:mr-2 text-xs sm:text-sm hidden md:inline">알림</span>
+      <div class="flex items-center flex-shrink-0">
+        <span class="mr-1.5 sm:mr-2 text-xs sm:text-sm hidden md:inline">알림</span>
         <label class="notification-toggle mr-2 sm:mr-4">
           <input type="checkbox" id="notification-toggle" checked>
           <span class="notification-slider"></span>
@@ -290,11 +306,10 @@
       </div>
   </div>
 
-
   <script>
-    const AppConfig = { /* 이전과 동일 */ };
-    const MockData = { /* 이전과 동일 */ };
-    // AppConfig, MockData 내용은 이전 답변의 것을 그대로 사용합니다. (길이 관계상 생략)
+    const AppConfig = { /* ... */ };
+    const MockData = { /* ... */ };
+    // AppConfig, MockData 내용은 이전 답변의 것을 그대로 사용합니다.
           AppConfig.tickerUpdateIntervalSeconds = 60;
       AppConfig.conditionColorMap = { "무상증자": "condition-a", "단일판매계약": "condition-b", "제3자유상증자": "condition-c", "자사주취득": "condition-d", "외국증권사매수": "condition-e" };
       AppConfig.conditionTabIdMap = { "무상증자": "tab-condition-a", "단일판매계약": "tab-condition-b", "제3자유상증자": "tab-condition-c", "자사주취득": "tab-condition-d", "외국증권사매수": "tab-condition-e" };
@@ -351,9 +366,9 @@
         {label:"NASDAQ", value:"16,742.39", change:"+0.83%", dir:"positive"}, {label:"S&P500", value:"5,234.18", change:"+0.51%", dir:"positive"}
       ];
     MockData.sampleStocks = [
-        { code:"005930", name:"삼성전자", industry:"electronics", price:"78,500원", changeDir:"positive", change:"+2.34%", today:true, isNew:false, initiallyNew: false, condition:"무상증자", type:"강력매수", confidence:87, metrics:[ {label:"증자비율", value:"10:5"}, {label:"기준일",  value:"2025-03-15"}, {label:"권리락일",value:"2025-03-16"} ], reason:["메모리 반도체 가격 상승세 지속","AI 서버용 HBM 수요 급증","2분기 실적 전망치 상향 조정"] },
+        { code:"005930", name:"삼성전자", industry:"electronics", price:"78,500원", changeDir:"positive", change:"+2.34%", today:true, isNew:false, initiallyNew: false, condition:"무상증자", type:"강력매수", confidence:92, metrics:[ {label:"증자비율", value:"10:5"}, {label:"기준일",  value:"2025-03-15"}, {label:"권리락일",value:"2025-03-16"} ], reason:["메모리 반도체 가격 상승세 지속","AI 서버용 HBM 수요 급증","2분기 실적 전망치 상향 조정"] },
         { code:"035720", name:"카카오", industry:"it", price:"52,300원", changeDir:"negative", change:"-1.05%", today:true, isNew:true, initiallyNew: true, condition:"단일판매계약", type:"매수", confidence:72, metrics:[ {label:"매출 대비", value:"12%"}, {label:"계약금액", value:"120억"}, {label:"상대방", value:"(주)넥슨"} ], reason:["AI 기반 서비스 확장 전략 발표","핀테크 부문 거래액 증가세","단기 조정 후 기술적 반등 신호"] },
-        { code:"051910", name:"LG화학", industry:"chemical", price:"625,000원", changeDir:"positive", change:"+3.78%", today:true, isNew:false, initiallyNew: false, condition:"제3자유상증자", type:"강력매수", confidence:91, metrics:[ {label:"발행가액", value:"58만"}, {label:"증자 규모", value:"1.2조원"}, {label:"납입일", value:"2025-06-30"} ], reason:["배터리 소재 신규 계약 체결","북미 시장 점유율 확대","친환경 소재 부문 성장성 주목"] },
+        { code:"051910", name:"LG화학", industry:"chemical", price:"625,000원", changeDir:"positive", change:"+3.78%", today:true, isNew:false, initiallyNew: false, condition:"제3자유상증자", type:"강력매수", confidence:95, metrics:[ {label:"발행가액", value:"58만"}, {label:"증자 규모", value:"1.2조원"}, {label:"납입일", value:"2025-06-30"} ], reason:["배터리 소재 신규 계약 체결","북미 시장 점유율 확대","친환경 소재 부문 성장성 주목"] },
         { code:"035420", name:"NAVER", industry:"it", price:"214,500원", changeDir:"positive", change:"+1.25%", today:true, isNew:false, initiallyNew: false, condition:"외국증권사매수", type:"매수", confidence:83, metrics:[ {label:"매수주체", value:"모건스탠리"},{label:"순매수량", value:"10만주"} ], reason:["생성형 AI 서비스 출시 임박","웹툰/웹소설 글로벌 매출 증가","클라우드 사업 성장세 가속화"] },
         { code:"005380", name:"현대차", industry:"auto", price:"243,000원", changeDir:"negative", change:"-0.45%", today:false, isNew:false, initiallyNew: false, condition:"자사주취득", type:"관망", confidence:65, metrics:[ {label:"시총 대비", value:"2.1%"}, {label:"취득기간", value:"~25/12/31"} ], reason:["전기차 판매 호조세 지속","원자재 가격 상승 부담","기술적 지지선 근접, 반등 가능성"] },
         { code:"068270", name:"셀트리온", industry:"pharma", price:"187,500원", changeDir:"positive", change:"+4.12%", today:true, isNew:true, initiallyNew: true, condition:"무상증자", type:"강력매수", confidence:89, metrics:[ {label:"증자비율", value:"2:1"}, {label:"기준일",  value:"2025-04-10"} ], reason:["신약 FDA 승인 임박","유럽 시장 바이오시밀러 점유율 확대","기관 매수세 유입 증가"] }
@@ -393,8 +408,11 @@
         container.innerHTML = stocksToRender.map(stock => {
           const badgeColorClass = AppConfig.conditionColorMap[stock.condition] || 'accent-blue';
           const isFavorite = AppLogic.favoritedStockCodes.has(stock.code);
+          const highConfidenceClass = stock.confidence >= 90 ? 'text-bright-yellow font-bold' : 'text-gray-300'; // 신뢰도 숫자 색상
+          const highConfidenceBorderClass = stock.confidence >= 90 ? 'high-confidence-card-border' : '';
+
           return `
-            <div class="stock-card relative rounded-lg bg-card-bg p-5 shadow-soft" 
+            <div class="stock-card relative rounded-lg bg-card-bg p-5 shadow-soft ${highConfidenceBorderClass}" 
                  data-industry="${stock.industry}" data-condition="${stock.condition}" 
                  data-new="${stock.isNew}" data-today="${stock.today}" data-code="${stock.code}">
               <div class="mb-3 flex items-start justify-between">
@@ -410,12 +428,12 @@
               <div class="mb-5"><div class="mb-1 text-sm font-medium">주요지표</div><div class="space-y-1">${stock.metrics.slice(0, 3).map(m => `<div class="metric-box"><span class="metric-label">${m.label}</span><span class="metric-value">${m.value}</span></div>`).join("")}</div></div>
               <div class="mb-4 flex justify-between text-sm"><span class="text-gray-400">추천 타임</span><span class="font-medium ${stock.type.startsWith('강') ? 'text-positive' : 'text-gray-300'}">${stock.type}</span></div>
               <div class="mb-1">
-                  <div class="mb-1 flex justify-between text-sm"><span class="text-gray-400">신뢰도</span><span class="font-medium">${stock.confidence}%</span></div>
+                  <div class="mb-1 flex justify-between text-sm"><span class="text-gray-400">신뢰도</span><span class="font-medium ${highConfidenceClass}">${stock.confidence}%</span></div>
                   <div class="confidence-bar-bg"><div class="confidence-bar-fill" style="width:${stock.confidence}%"></div></div>
               </div>
               <div class="mt-4"><div class="mb-2 text-sm font-medium">추천 이유</div><ul class="list-disc pl-5 text-sm text-gray-300">${stock.reason.map(r=>`<li>${r}</li>`).join("")}</ul></div>
               <div class="mt-4 flex justify-end text-xs text-gray-400">추천 시각: 09:15</div>
-              ${stock.isNew ? '<div class="stock-update absolute top-2 right-2 text-xs font-bold text-bright-green">NEW</div>' : ''}
+              <div class="stock-update absolute top-2 right-2 text-xs font-bold ${stock.isNew ? 'text-bright-green' : 'text-transparent'}">NEW</div>
             </div>
           `;
         }).join("");
@@ -445,7 +463,7 @@
                     <div class="confidence-bar-bg rounded" style="width: 100px; height: 6px;">
                         <div class="confidence-bar-fill h-full rounded" style="width:${stock.confidence}%"></div>
                     </div>
-                    <span class="text-xs text-gray-300 ml-1.5">${stock.confidence}%</span>
+                    <span class="text-xs ml-1.5 ${stock.confidence >= 90 ? 'text-bright-yellow font-semibold' : 'text-gray-300'}">${stock.confidence}%</span>
                 </div>
             ` : '';
 
@@ -476,7 +494,11 @@
           }
         });
       },
-      renderForumPosts: function() {
+      renderForumPosts: function() { /* ... 이전과 동일 ... */ },
+      updateTimersUI: function(val) { const mm=String(Math.floor(val/60)).padStart(2,'0'); const ss=String(val%60).padStart(2,'0'); AppConfig.elements.updateCountdown.textContent=`${mm}:${ss}`;},
+      setLastUpdateTime: function() { AppConfig.elements.lastUpdateTime.textContent = new Date().toTimeString().slice(0,8); }
+    };
+    UIRenderer.renderForumPosts = function() {
         AppConfig.elements.forumPostsContainer.innerHTML = MockData.forumPosts.map(p => `
           <div class="post-card" data-post-id="${p.id}">
             <div class="post-header mb-2">
@@ -511,403 +533,401 @@
                 </div>
               `).join('') : '<p class="text-xs text-gray-500 italic">아직 댓글이 없습니다.</p>'}
             </div>
-            <div class="reply-form mt-3 md:pl-5">
-              <div class="flex items-center gap-1 sm:gap-2">
+            <div class="reply-form mt-3 md:pl-5"> <div class="flex items-center gap-1 sm:gap-2">
                 <input type="text" class="reply-input-field flex-1 min-w-0 rounded-l-lg border border-gray-600 bg-gray-700/80 px-3 py-1.5 text-sm text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue" placeholder="댓글 남기기...">
                 <button class="reply-submit-btn rounded-r-lg bg-accent-blue px-2 sm:px-3 py-1.5 text-xs font-medium text-white transition hover:bg-blue-600 flex-shrink-0" data-post-id="${p.id}">등록</button>
               </div>
             </div>
           </div>
         `).join("");
-      },
-      updateTimersUI: function(val) { const mm=String(Math.floor(val/60)).padStart(2,'0'); const ss=String(val%60).padStart(2,'0'); AppConfig.elements.updateCountdown.textContent=`${mm}:${ss}`;},
-      setLastUpdateTime: function() { AppConfig.elements.lastUpdateTime.textContent = new Date().toTimeString().slice(0,8); }
     };
 
-    const AppLogic = {
-      nextUpdateSeconds: AppConfig.tickerUpdateIntervalSeconds,
-      countdownIntervalId: null,
-      notificationsEnabled: true,
-      newStockNotificationShownFor: new Set(),
-      toastTimeoutId: null,
-      statusUpdateBannerTimeoutId: null,
-      favoritedStockCodes: new Set(),
-      currentStockCategory: 'realtime_news_stocks', 
-      currentUser: null, 
-      USERS_STORAGE_KEY: 'snappiko_users', 
-      CURRENT_USER_STORAGE_KEY: 'snappiko_currentUser',
-      likedPostIds: new Set(), // NEW: 좋아요 누른 게시물 ID 저장
+    const AppLogic = { /* ... 모든 AppLogic 함수 ... */ };
+    // AppLogic 전체 내용은 이전 답변의 것을 그대로 사용합니다. (길이 관계상 생략)
+    AppLogic.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
+    AppLogic.countdownIntervalId = null;
+    AppLogic.notificationsEnabled = true;
+    AppLogic.newStockNotificationShownFor = new Set();
+    AppLogic.toastTimeoutId = null;
+    AppLogic.statusUpdateBannerTimeoutId = null;
+    AppLogic.favoritedStockCodes = new Set();
+    AppLogic.currentStockCategory = 'realtime_news_stocks'; 
+    AppLogic.currentUser = null; 
+    AppLogic.USERS_STORAGE_KEY = 'snappiko_users'; 
+    AppLogic.CURRENT_USER_STORAGE_KEY = 'snappiko_currentUser';
+    AppLogic.likedPostIds = new Set();
 
-      getUsers: function() { return JSON.parse(localStorage.getItem(this.USERS_STORAGE_KEY)) || {}; },
-      saveUsers: function(users) { localStorage.setItem(this.USERS_STORAGE_KEY, JSON.stringify(users)); },
+    AppLogic.getUsers = function() { return JSON.parse(localStorage.getItem(this.USERS_STORAGE_KEY)) || {}; };
+    AppLogic.saveUsers = function(users) { localStorage.setItem(this.USERS_STORAGE_KEY, JSON.stringify(users)); };
 
-      updateAuthUI: function() {
-        const { signupBtnHeader, loginBtnHeader, welcomeMessage, logoutBtnHeader } = AppConfig.elements;
-        if (!signupBtnHeader || !loginBtnHeader || !welcomeMessage || !logoutBtnHeader) { return; }
-        if (this.currentUser) {
-            welcomeMessage.textContent = `${this.currentUser}님, 환영합니다!`;
-            welcomeMessage.classList.remove('hidden');
-            logoutBtnHeader.classList.remove('hidden');
-            signupBtnHeader.classList.add('hidden');
-            loginBtnHeader.classList.add('hidden');
-        } else {
-            welcomeMessage.classList.add('hidden');
-            logoutBtnHeader.classList.add('hidden');
-            signupBtnHeader.classList.remove('hidden');
-            loginBtnHeader.classList.remove('hidden');
+    AppLogic.updateAuthUI = function() {
+      const { signupBtnHeader, loginBtnHeader, welcomeMessage, logoutBtnHeader } = AppConfig.elements;
+      if (!signupBtnHeader || !loginBtnHeader || !welcomeMessage || !logoutBtnHeader) { return; }
+      
+      if (this.currentUser) {
+          welcomeMessage.textContent = `${this.currentUser}님, 환영합니다!`;
+          welcomeMessage.classList.remove('hidden');
+          logoutBtnHeader.classList.remove('hidden');
+          signupBtnHeader.classList.add('hidden');
+          loginBtnHeader.classList.add('hidden');
+      } else {
+          welcomeMessage.classList.add('hidden');
+          logoutBtnHeader.classList.add('hidden');
+          signupBtnHeader.classList.remove('hidden');
+          loginBtnHeader.classList.remove('hidden');
+      }
+    };
+    AppLogic.toggleModal = function(modalElement, show) {
+        if (modalElement) {
+            modalElement.classList.toggle('hidden', !show);
+            modalElement.classList.toggle('flex', show); 
         }
-      },
-      toggleModal: function(modalElement, show) {
-          if (modalElement) {
-              modalElement.classList.toggle('hidden', !show);
-              modalElement.classList.toggle('flex', show); 
+    };
+    AppLogic.handleCheckIdDuplicate = function() {
+      const id = AppConfig.elements.signupIdInput.value.trim();
+      const feedbackEl = AppConfig.elements.signupIdFeedback;
+      if (!id) {
+          feedbackEl.textContent = "아이디를 입력해주세요.";
+          feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
+          return false;
+      }
+      if (!/^[a-z0-9]{6,12}$/.test(id)) {
+          feedbackEl.textContent = "아이디는 영문 소문자, 숫자 조합 6~12자여야 합니다.";
+          feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
+          return false;
+      }
+      const users = this.getUsers();
+      if (users[id]) {
+          feedbackEl.textContent = "이미 사용 중인 아이디입니다.";
+          feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
+          return false;
+      } else {
+          feedbackEl.textContent = "사용 가능한 아이디입니다.";
+          feedbackEl.className = 'text-xs mt-1 h-4 feedback-success';
+          return true;
+      }
+    };
+    AppLogic.handleSignup = function(event) {
+      event.preventDefault();
+      const id = AppConfig.elements.signupIdInput.value.trim();
+      const password = AppConfig.elements.signupPasswordInput.value;
+      const passwordConfirm = AppConfig.elements.signupPasswordConfirmInput.value;
+      const idFeedbackEl = AppConfig.elements.signupIdFeedback;
+      const passwordFeedbackEl = AppConfig.elements.signupPasswordFeedback;
+
+      passwordFeedbackEl.textContent = ''; 
+
+      if (idFeedbackEl.textContent !== "사용 가능한 아이디입니다.") {
+          AppConfig.elements.signupIdInput.focus();
+          idFeedbackEl.textContent = "아이디 중복확인을 먼저 해주세요.";
+          idFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
+          return;
+      }
+      if (password.length < 8) { 
+          passwordFeedbackEl.textContent = "비밀번호는 8자 이상이어야 합니다.";
+          passwordFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
+          return;
+      }
+      if (password !== passwordConfirm) {
+          passwordFeedbackEl.textContent = "비밀번호가 일치하지 않습니다.";
+          passwordFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
+          return;
+      }
+
+      const users = this.getUsers();
+      users[id] = password; 
+      this.saveUsers(users);
+      
+      alert("회원가입이 완료되었습니다! 로그인해주세요.");
+      this.toggleModal(AppConfig.elements.signupModal, false);
+      if (AppConfig.elements.signupForm) AppConfig.elements.signupForm.reset();
+      if (idFeedbackEl) idFeedbackEl.textContent = ''; 
+      if (passwordFeedbackEl) passwordFeedbackEl.textContent = '';
+    };
+    AppLogic.handleLogin = function(event) {
+      event.preventDefault();
+      const id = AppConfig.elements.loginIdInput.value.trim();
+      const password = AppConfig.elements.loginPasswordInput.value;
+      const feedbackEl = AppConfig.elements.loginFeedback;
+      const users = this.getUsers();
+
+      if (users[id] && users[id] === password) { 
+          this.currentUser = id;
+          localStorage.setItem(this.CURRENT_USER_STORAGE_KEY, id);
+          this.updateAuthUI();
+          this.toggleModal(AppConfig.elements.loginModal, false);
+          if(AppConfig.elements.loginForm) AppConfig.elements.loginForm.reset();
+          if(feedbackEl) feedbackEl.textContent = '';
+      } else {
+          if(feedbackEl) {
+              feedbackEl.textContent = "아이디 또는 비밀번호가 올바르지 않습니다.";
+              feedbackEl.className = 'text-xs text-center h-4 mb-2 feedback-error';
           }
-      },
-      handleCheckIdDuplicate: function() {
-        const id = AppConfig.elements.signupIdInput.value.trim();
-        const feedbackEl = AppConfig.elements.signupIdFeedback;
-        if (!id) {
-            feedbackEl.textContent = "아이디를 입력해주세요.";
-            feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-            return false;
-        }
-        if (!/^[a-z0-9]{6,12}$/.test(id)) {
-            feedbackEl.textContent = "아이디는 영문 소문자, 숫자 조합 6~12자여야 합니다.";
-            feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-            return false;
-        }
-        const users = this.getUsers();
-        if (users[id]) {
-            feedbackEl.textContent = "이미 사용 중인 아이디입니다.";
-            feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-            return false;
-        } else {
-            feedbackEl.textContent = "사용 가능한 아이디입니다.";
-            feedbackEl.className = 'text-xs mt-1 h-4 feedback-success';
-            return true;
-        }
-      },
-      handleSignup: function(event) {
-        event.preventDefault();
-        const id = AppConfig.elements.signupIdInput.value.trim();
-        const password = AppConfig.elements.signupPasswordInput.value;
-        const passwordConfirm = AppConfig.elements.signupPasswordConfirmInput.value;
-        const idFeedbackEl = AppConfig.elements.signupIdFeedback;
-        const passwordFeedbackEl = AppConfig.elements.signupPasswordFeedback;
+      }
+    };
+    AppLogic.handleLogout = function() {
+      this.currentUser = null;
+      localStorage.removeItem(this.CURRENT_USER_STORAGE_KEY);
+      this.updateAuthUI();
+    };
+    AppLogic.checkLoggedInStatus = function() {
+      const loggedInUser = localStorage.getItem(this.CURRENT_USER_STORAGE_KEY);
+      if (loggedInUser) {
+          this.currentUser = loggedInUser;
+      }
+      this.updateAuthUI();
+    };
+    AppLogic.applyStockFilters = function() {
+      const selectedCondDropdownValue = AppConfig.elements.conditionFilterSelect.value;
+      const activeTopFilterButton = AppConfig.elements.filterButtonsGroup.querySelector('.filter-btn.active');
+      const currentTopFilterType = activeTopFilterButton ? activeTopFilterButton.dataset.filter : 'all';
 
-        passwordFeedbackEl.textContent = ''; 
+      let baseStocksForCategory = [];
+      switch (this.currentStockCategory) {
+          case 'realtime_news_stocks':
+              baseStocksForCategory = [...MockData.sampleStocks];
+              break;
+          case 'low_pbr_stocks':
+          case 'treasury_accumulating':
+          case 'treasury_over_50': 
+              baseStocksForCategory = []; 
+              break;
+          default: 
+              baseStocksForCategory = [...MockData.sampleStocks];
+      }
 
-        if (idFeedbackEl.textContent !== "사용 가능한 아이디입니다.") {
-            AppConfig.elements.signupIdInput.focus();
-            idFeedbackEl.textContent = "아이디 중복확인을 먼저 해주세요.";
-            idFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-            return;
-        }
-        if (password.length < 8) { 
-            passwordFeedbackEl.textContent = "비밀번호는 8자 이상이어야 합니다.";
-            passwordFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-            return;
-        }
-        if (password !== passwordConfirm) {
-            passwordFeedbackEl.textContent = "비밀번호가 일치하지 않습니다.";
-            passwordFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-            return;
-        }
+      let 최종필터된종목들 = baseStocksForCategory;
 
-        const users = this.getUsers();
-        users[id] = password; 
-        this.saveUsers(users);
-        
-        alert("회원가입이 완료되었습니다! 로그인해주세요.");
-        this.toggleModal(AppConfig.elements.signupModal, false);
-        if (AppConfig.elements.signupForm) AppConfig.elements.signupForm.reset();
-        if (idFeedbackEl) idFeedbackEl.textContent = ''; 
-        if (passwordFeedbackEl) passwordFeedbackEl.textContent = '';
-      },
-      handleLogin: function(event) {
-        event.preventDefault();
-        const id = AppConfig.elements.loginIdInput.value.trim();
-        const password = AppConfig.elements.loginPasswordInput.value;
-        const feedbackEl = AppConfig.elements.loginFeedback;
-        const users = this.getUsers();
+      if (currentTopFilterType === 'favorites') {
+          최종필터된종목들 = 최종필터된종목들.filter(stock => AppLogic.favoritedStockCodes.has(stock.code));
+      } else if (currentTopFilterType === 'today') {
+          최종필터된종목들 = 최종필터된종목들.filter(stock => stock.today === true);
+      } else if (currentTopFilterType === 'new') {
+          최종필터된종목들 = 최종필터된종목들.filter(stock => stock.isNew === true);
+      }
+      
+      if (selectedCondDropdownValue !== 'all') {
+          최종필터된종목들 = 최종필터된종목들.filter(stock => stock.condition === selectedCondDropdownValue);
+      }
 
-        if (users[id] && users[id] === password) { 
-            this.currentUser = id;
-            localStorage.setItem(this.CURRENT_USER_STORAGE_KEY, id);
-            this.updateAuthUI();
-            this.toggleModal(AppConfig.elements.loginModal, false);
-            if(AppConfig.elements.loginForm) AppConfig.elements.loginForm.reset();
-            if(feedbackEl) feedbackEl.textContent = '';
-        } else {
-            if(feedbackEl) {
-                feedbackEl.textContent = "아이디 또는 비밀번호가 올바르지 않습니다.";
-                feedbackEl.className = 'text-xs text-center h-4 mb-2 feedback-error';
-            }
-        }
-      },
-      handleLogout: function() {
-        this.currentUser = null;
-        localStorage.removeItem(this.CURRENT_USER_STORAGE_KEY);
-        this.updateAuthUI();
-      },
-      checkLoggedInStatus: function() {
-        const loggedInUser = localStorage.getItem(this.CURRENT_USER_STORAGE_KEY);
-        if (loggedInUser) {
-            this.currentUser = loggedInUser;
-        }
-        this.updateAuthUI();
-      },
+      UIRenderer.renderStockCards(최종필터된종목들);
+    };
+    AppLogic.handleFilterButtonClick = function(e) { 
+      const btn = e.target.closest('.filter-btn'); 
+      if(!btn || btn.classList.contains('active')) return;
+      AppConfig.elements.filterButtonsGroup.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); 
+      btn.classList.add('active'); 
+      AppLogic.applyStockFilters(); 
+    };
+    AppLogic.handleConditionFilterChange = function() { AppLogic.applyStockFilters(); };
+    AppLogic.handleFavoriteToggle = function(e) {
+      const starButton = e.target.closest('.favorite-star');
+      if (!starButton) return;
 
-      applyStockFilters: function() {
-        const selectedCondDropdownValue = AppConfig.elements.conditionFilterSelect.value;
-        const activeTopFilterButton = AppConfig.elements.filterButtonsGroup.querySelector('.filter-btn.active');
-        const currentTopFilterType = activeTopFilterButton ? activeTopFilterButton.dataset.filter : 'all';
+      const stockCard = starButton.closest('.stock-card');
+      const stockCode = stockCard ? stockCard.dataset.code : null;
+      if (!stockCode) return;
 
-        let baseStocksForCategory = [];
-        switch (this.currentStockCategory) {
-            case 'realtime_news_stocks':
-                baseStocksForCategory = [...MockData.sampleStocks];
-                break;
-            case 'low_pbr_stocks':
-            case 'treasury_accumulating':
-            case 'treasury_over_50': 
-                baseStocksForCategory = []; 
-                break;
-            default: 
-                baseStocksForCategory = [...MockData.sampleStocks];
-        }
+      const isCurrentlyFavorite = AppLogic.favoritedStockCodes.has(stockCode);
 
-        let 최종필터된종목들 = baseStocksForCategory;
+      if (isCurrentlyFavorite) {
+          AppLogic.favoritedStockCodes.delete(stockCode);
+          starButton.classList.remove('active', 'text-yellow-500');
+          starButton.classList.add('text-gray-400');
+      } else {
+          AppLogic.favoritedStockCodes.add(stockCode);
+          starButton.classList.add('active', 'text-yellow-500');
+          starButton.classList.remove('text-gray-400');
+      }
+      
+      const activeFilterButton = AppConfig.elements.filterButtonsGroup.querySelector('.filter-btn.active');
+      if (activeFilterButton && activeFilterButton.dataset.filter === 'favorites') {
+          AppLogic.applyStockFilters();
+      }
+    };
+    AppLogic.handleTabNavigation = function(e) {
+      const btn = e.target.closest('.tab-btn'); if(!btn) return;
+      AppConfig.elements.conditionTabsNav.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('tab-active','text-white');b.classList.add('text-gray-400');});
+      btn.classList.add('tab-active','text-white'); btn.classList.remove('text-gray-400');
+      document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden'));
+      const targetId=btn.dataset.tabId; if(targetId){const targetEl=document.getElementById(targetId); if(targetEl)targetEl.classList.remove('hidden');}
+    };
+    AppLogic.handleAddNewPost = function() {
+      const titleInput = AppConfig.elements.newPostTitleInput;
+      const bodyInput = AppConfig.elements.newPostBodyInput;
+      const titleText = titleInput.value.trim();
+      const bodyText = bodyInput.value.trim();
+      if (titleText && bodyText) { MockData.forumPosts.unshift({id: `post${Date.now()}`,user: "나",ago: "방금 전",title: titleText,body: bodyText,likes: 0,replies: []}); UIRenderer.renderForumPosts(); titleInput.value = ''; bodyInput.value = ''; } else { alert("제목과 내용을 모두 입력해주세요."); }
+    };
+    AppLogic.handleLikePost = function(event) {
+      const likeButton = event.target.closest('.like-btn');
+      if (!likeButton) return;
+      const postId = likeButton.dataset.postId;
+      const post = MockData.forumPosts.find(p => p.id === postId);
 
-        if (currentTopFilterType === 'favorites') {
-            최종필터된종목들 = 최종필터된종목들.filter(stock => AppLogic.favoritedStockCodes.has(stock.code));
-        } else if (currentTopFilterType === 'today') {
-            최종필터된종목들 = 최종필터된종목들.filter(stock => stock.today === true);
-        } else if (currentTopFilterType === 'new') {
-            최종필터된종목들 = 최종필터된종목들.filter(stock => stock.isNew === true);
-        }
-        
-        if (selectedCondDropdownValue !== 'all') {
-            최종필터된종목들 = 최종필터된종목들.filter(stock => stock.condition === selectedCondDropdownValue);
-        }
+      if (post) {
+          if (AppLogic.likedPostIds.has(postId)) {
+              AppLogic.likedPostIds.delete(postId);
+              post.likes--; 
+          } else {
+              AppLogic.likedPostIds.add(postId);
+              post.likes++; 
+          }
+          UIRenderer.renderForumPosts(); 
+      }
+    };
+    AppLogic.handleAddReply = function(event) {
+      const replyButton = event.target.closest('.reply-submit-btn');
+      if (!replyButton) return;
+      const postId = replyButton.dataset.postId;
+      const post = MockData.forumPosts.find(p => p.id === postId);
+      const postCardElement = replyButton.closest('.post-card');
+      const replyInputField = postCardElement ? postCardElement.querySelector('.reply-input-field') : null;
+      if (post && replyInputField) { const replyText = replyInputField.value.trim(); if (replyText) { if (!post.replies) { post.replies = []; } post.replies.push({id: `reply${postId}-${Date.now()}`,user: "나",text: replyText,ago: "방금 전"}); UIRenderer.renderForumPosts();}}
+    };
+    AppLogic.showToastNotification = function(stockName) {
+      if (!this.notificationsEnabled || !AppConfig.elements.toastNotification || !AppConfig.elements.toastMessageContent) return;
+      if (this.toastTimeoutId) clearTimeout(this.toastTimeoutId);
+      AppConfig.elements.toastMessageContent.innerHTML = `<strong class="font-semibold">${stockName}</strong> - 새로운 추천 종목!`;
+      AppConfig.elements.toastNotification.classList.remove('hidden', 'opacity-0', 'translate-y-10');
+      AppConfig.elements.toastNotification.classList.add('opacity-100', 'translate-y-0');
+      this.toastTimeoutId = setTimeout(() => {
+          AppConfig.elements.toastNotification.classList.remove('opacity-100', 'translate-y-0');
+          AppConfig.elements.toastNotification.classList.add('opacity-0', 'translate-y-10');
+          setTimeout(() => { AppConfig.elements.toastNotification.classList.add('hidden'); }, 300);
+      }, 4000);
+    };
+    AppLogic.processNewStockNotifications = function(stocks) {
+      if (!this.notificationsEnabled) return;
+      stocks.forEach(stock => {
+          if (stock.isNew && !this.newStockNotificationShownFor.has(stock.code)) {
+              this.showToastNotification(stock.name);
+              this.newStockNotificationShownFor.add(stock.code);
+          }
+      });
+    };
+    AppLogic.showStatusUpdateBanner = function() {
+      const bannerContainer = AppConfig.elements.statusUpdateBannerContainer;
+      const bannerMessage = AppConfig.elements.statusUpdateBannerMessage;
+      if (!bannerContainer || !bannerMessage) return;
+      if (this.statusUpdateBannerTimeoutId) clearTimeout(this.statusUpdateBannerTimeoutId);
 
-        UIRenderer.renderStockCards(최종필터된종목들);
-      },
-      handleFilterButtonClick: function(e) { 
-        const btn = e.target.closest('.filter-btn'); 
-        if(!btn || btn.classList.contains('active')) return;
-        AppConfig.elements.filterButtonsGroup.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); 
-        btn.classList.add('active'); 
-        AppLogic.applyStockFilters(); 
-      },
-      handleConditionFilterChange: function() { AppLogic.applyStockFilters(); },
-      handleFavoriteToggle: function(e) {
-        const starButton = e.target.closest('.favorite-star');
-        if (!starButton) return;
+      const now = new Date();
+      const timeString = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      bannerMessage.textContent = ` ${timeString} 추천 정보가 업데이트 되었습니다!`;
 
-        const stockCard = starButton.closest('.stock-card');
-        const stockCode = stockCard ? stockCard.dataset.code : null;
-        if (!stockCode) return;
+      bannerContainer.classList.remove('hidden', 'opacity-0');
+      void bannerContainer.offsetWidth;
+      bannerContainer.classList.add('opacity-100');
 
-        const isCurrentlyFavorite = AppLogic.favoritedStockCodes.has(stockCode);
+      this.statusUpdateBannerTimeoutId = setTimeout(() => {
+          bannerContainer.classList.remove('opacity-100');
+          bannerContainer.classList.add('opacity-0');
+          setTimeout(() => {
+              bannerContainer.classList.add('hidden');
+          }, 500);
+      }, 3000);
+    };
+    AppLogic.startUpdateTimer = function() {
+      if (this.countdownIntervalId) clearInterval(this.countdownIntervalId);
+      this.countdownIntervalId = setInterval(() => {
+          UIRenderer.updateTimersUI(this.nextUpdateSeconds);
+          if (this.nextUpdateSeconds === 0) {
+              this.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
+              UIRenderer.setLastUpdateTime();
+              console.log("Automatic data refresh cycle triggered...");
+              AppLogic.applyStockFilters(); 
+              UIRenderer.renderConditionTabs(); 
+              const newStocksForToast = MockData.sampleStocks.filter(stock => stock.isNew && !this.newStockNotificationShownFor.has(stock.code));
+              this.processNewStockNotifications(newStocksForToast);
+              this.showStatusUpdateBanner();
+          }
+          this.nextUpdateSeconds--;
+      }, 1000);
+    };
+    AppLogic.handleRefreshData = function() {
+      console.log("Manual refresh: Processing notifications and showing status banner.");
+      this.newStockNotificationShownFor.clear();
+      AppLogic.applyStockFilters();
+      UIRenderer.renderConditionTabs();
+      UIRenderer.renderForumPosts();
+      UIRenderer.setLastUpdateTime();
+      this.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
+      UIRenderer.updateTimersUI(this.nextUpdateSeconds);
+      this.showStatusUpdateBanner();
+      const currentNewStocks = MockData.sampleStocks.filter(stock => stock.isNew);
+      this.processNewStockNotifications(currentNewStocks);
+    };
+    AppLogic.handlePageNavigation = function(targetService) {
+      const { stockServiceContent, coinServiceContent, navStocksLink, navCoinsLink } = AppConfig.elements;
+      if (!stockServiceContent || !coinServiceContent || !navStocksLink || !navCoinsLink) return;
 
-        if (isCurrentlyFavorite) {
-            AppLogic.favoritedStockCodes.delete(stockCode);
-            starButton.classList.remove('active', 'text-yellow-500');
-            starButton.classList.add('text-gray-400');
-        } else {
-            AppLogic.favoritedStockCodes.add(stockCode);
-            starButton.classList.add('active', 'text-yellow-500');
-            starButton.classList.remove('text-gray-400');
-        }
-        
-        const activeFilterButton = AppConfig.elements.filterButtonsGroup.querySelector('.filter-btn.active');
-        if (activeFilterButton && activeFilterButton.dataset.filter === 'favorites') {
-            AppLogic.applyStockFilters();
-        }
-      },
-      handleTabNavigation: function(e) {
-        const btn = e.target.closest('.tab-btn'); if(!btn) return;
-        AppConfig.elements.conditionTabsNav.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('tab-active','text-white');b.classList.add('text-gray-400');});
-        btn.classList.add('tab-active','text-white'); btn.classList.remove('text-gray-400');
-        document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden'));
-        const targetId=btn.dataset.tabId; if(targetId){const targetEl=document.getElementById(targetId); if(targetEl)targetEl.classList.remove('hidden');}
-      },
-      handleAddNewPost: function() {
-        const titleInput = AppConfig.elements.newPostTitleInput;
-        const bodyInput = AppConfig.elements.newPostBodyInput;
-        const titleText = titleInput.value.trim();
-        const bodyText = bodyInput.value.trim();
-        if (titleText && bodyText) { MockData.forumPosts.unshift({id: `post${Date.now()}`,user: "나",ago: "방금 전",title: titleText,body: bodyText,likes: 0,replies: []}); UIRenderer.renderForumPosts(); titleInput.value = ''; bodyInput.value = ''; } else { alert("제목과 내용을 모두 입력해주세요."); }
-      },
-      // MODIFIED: 게시판 좋아요 토글 기능
-      handleLikePost: function(event) {
-        const likeButton = event.target.closest('.like-btn');
-        if (!likeButton) return;
-        const postId = likeButton.dataset.postId;
-        const post = MockData.forumPosts.find(p => p.id === postId);
-
-        if (post) {
-            if (AppLogic.likedPostIds.has(postId)) {
-                AppLogic.likedPostIds.delete(postId);
-                post.likes--; 
-            } else {
-                AppLogic.likedPostIds.add(postId);
-                post.likes++; 
-            }
-            UIRenderer.renderForumPosts(); 
-        }
-      },
-      handleAddReply: function(event) {
-        const replyButton = event.target.closest('.reply-submit-btn');
-        if (!replyButton) return;
-        const postId = replyButton.dataset.postId;
-        const post = MockData.forumPosts.find(p => p.id === postId);
-        const postCardElement = replyButton.closest('.post-card');
-        const replyInputField = postCardElement ? postCardElement.querySelector('.reply-input-field') : null;
-        if (post && replyInputField) { const replyText = replyInputField.value.trim(); if (replyText) { if (!post.replies) { post.replies = []; } post.replies.push({id: `reply${postId}-${Date.now()}`,user: "나",text: replyText,ago: "방금 전"}); UIRenderer.renderForumPosts();}}
-      },
-      showToastNotification: function(stockName) {
-        if (!this.notificationsEnabled || !AppConfig.elements.toastNotification || !AppConfig.elements.toastMessageContent) return;
-        if (this.toastTimeoutId) clearTimeout(this.toastTimeoutId);
-        AppConfig.elements.toastMessageContent.innerHTML = `<strong class="font-semibold">${stockName}</strong> - 새로운 추천 종목!`;
-        AppConfig.elements.toastNotification.classList.remove('hidden', 'opacity-0', 'translate-y-10');
-        AppConfig.elements.toastNotification.classList.add('opacity-100', 'translate-y-0');
-        this.toastTimeoutId = setTimeout(() => {
-            AppConfig.elements.toastNotification.classList.remove('opacity-100', 'translate-y-0');
-            AppConfig.elements.toastNotification.classList.add('opacity-0', 'translate-y-10');
-            setTimeout(() => { AppConfig.elements.toastNotification.classList.add('hidden'); }, 300);
-        }, 4000);
-      },
-      processNewStockNotifications: function(stocks) {
-        if (!this.notificationsEnabled) return;
-        stocks.forEach(stock => {
-            if (stock.isNew && !this.newStockNotificationShownFor.has(stock.code)) {
-                this.showToastNotification(stock.name);
-                this.newStockNotificationShownFor.add(stock.code);
-            }
-        });
-      },
-      showStatusUpdateBanner: function() {
-        const bannerContainer = AppConfig.elements.statusUpdateBannerContainer;
-        const bannerMessage = AppConfig.elements.statusUpdateBannerMessage;
-        if (!bannerContainer || !bannerMessage) return;
-        if (this.statusUpdateBannerTimeoutId) clearTimeout(this.statusUpdateBannerTimeoutId);
-
-        const now = new Date();
-        const timeString = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-        bannerMessage.textContent = ` ${timeString} 추천 정보가 업데이트 되었습니다!`;
-
-        bannerContainer.classList.remove('hidden', 'opacity-0');
-        void bannerContainer.offsetWidth;
-        bannerContainer.classList.add('opacity-100');
-
-        this.statusUpdateBannerTimeoutId = setTimeout(() => {
-            bannerContainer.classList.remove('opacity-100');
-            bannerContainer.classList.add('opacity-0');
-            setTimeout(() => {
-                bannerContainer.classList.add('hidden');
-            }, 500);
-        }, 3000);
-      },
-      startUpdateTimer: function() {
-        if (this.countdownIntervalId) clearInterval(this.countdownIntervalId);
-        this.countdownIntervalId = setInterval(() => {
-            UIRenderer.updateTimersUI(this.nextUpdateSeconds);
-            if (this.nextUpdateSeconds === 0) {
-                this.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
-                UIRenderer.setLastUpdateTime();
-                console.log("Automatic data refresh cycle triggered...");
-                AppLogic.applyStockFilters(); 
-                UIRenderer.renderConditionTabs(); 
-                const newStocksForToast = MockData.sampleStocks.filter(stock => stock.isNew && !this.newStockNotificationShownFor.has(stock.code));
-                this.processNewStockNotifications(newStocksForToast);
-                this.showStatusUpdateBanner();
-            }
-            this.nextUpdateSeconds--;
-        }, 1000);
-      },
-      handleRefreshData: function() {
-        console.log("Manual refresh: Processing notifications and showing status banner.");
-        this.newStockNotificationShownFor.clear();
-        AppLogic.applyStockFilters();
-        UIRenderer.renderConditionTabs();
-        UIRenderer.renderForumPosts();
-        UIRenderer.setLastUpdateTime();
-        this.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
-        UIRenderer.updateTimersUI(this.nextUpdateSeconds);
-        this.showStatusUpdateBanner();
-        const currentNewStocks = MockData.sampleStocks.filter(stock => stock.isNew);
-        this.processNewStockNotifications(currentNewStocks);
-      },
-      handlePageNavigation: function(targetService) {
-        const { stockServiceContent, coinServiceContent, navStocksLink, navCoinsLink } = AppConfig.elements;
-        if (!stockServiceContent || !coinServiceContent || !navStocksLink || !navCoinsLink) return;
-
-        if (targetService === 'stocks') {
-            stockServiceContent.classList.remove('hidden');
-            coinServiceContent.classList.add('hidden');
-            navStocksLink.classList.add('active'); 
-            navCoinsLink.classList.remove('active');
-            window.location.hash = 'stocks';
+      if (targetService === 'stocks') {
+          stockServiceContent.classList.remove('hidden');
+          coinServiceContent.classList.add('hidden');
+          navStocksLink.classList.add('active'); 
+          navCoinsLink.classList.remove('active');
+          window.location.hash = 'stocks';
+          if (AppConfig.elements.stockCategoryTabs) { // Null check 추가
             const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
             this.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
             this.applyStockFilters();
+          }
 
-        } else if (targetService === 'coins') {
-            stockServiceContent.classList.add('hidden');
-            coinServiceContent.classList.remove('hidden');
-            navCoinsLink.classList.add('active');
-            navStocksLink.classList.remove('active');
-            window.location.hash = 'coins';
-        }
-      },
-      initEventListeners: function() {
-        if(AppConfig.elements.filterButtonsGroup) AppConfig.elements.filterButtonsGroup.addEventListener('click', this.handleFilterButtonClick.bind(this));
-        if(AppConfig.elements.conditionFilterSelect) AppConfig.elements.conditionFilterSelect.addEventListener('change', this.handleConditionFilterChange.bind(this));
-        if(AppConfig.elements.stockCardsContainer) AppConfig.elements.stockCardsContainer.addEventListener('click', this.handleFavoriteToggle.bind(this));
-        if(AppConfig.elements.conditionTabsNav) AppConfig.elements.conditionTabsNav.addEventListener('click', this.handleTabNavigation.bind(this));
-        if(AppConfig.elements.newPostSubmitBtn) AppConfig.elements.newPostSubmitBtn.addEventListener('click', this.handleAddNewPost.bind(this));
-        if(AppConfig.elements.refreshDataBtn) AppConfig.elements.refreshDataBtn.addEventListener('click', () => this.handleRefreshData());
-        if(AppConfig.elements.notificationToggle) {
-            this.notificationsEnabled = AppConfig.elements.notificationToggle.checked;
-            AppConfig.elements.notificationToggle.addEventListener('change', (event) => {
-                this.notificationsEnabled = event.target.checked;
-                if (!this.notificationsEnabled && AppConfig.elements.toastNotification && !AppConfig.elements.toastNotification.classList.contains('hidden')) {
-                    AppConfig.elements.toastNotification.classList.remove('opacity-100', 'translate-y-0');
-                    AppConfig.elements.toastNotification.classList.add('opacity-0', 'translate-y-10', 'hidden');
-                    if(this.toastTimeoutId) clearTimeout(this.toastTimeoutId);
-                }
-            });
-        }
-        if(AppConfig.elements.forumPostsContainer) AppConfig.elements.forumPostsContainer.addEventListener('click', (event) => {
-            if (event.target.closest('.like-btn')) { AppLogic.handleLikePost(event); }
-            else if (event.target.closest('.reply-submit-btn')) { AppLogic.handleAddReply(event); }
-        });
-        if (AppConfig.elements.stockCategoryTabs) {
-            AppConfig.elements.stockCategoryTabs.addEventListener('click', (event) => {
-                const tabButton = event.target.closest('.category-tab-btn');
-                if (!tabButton || tabButton.classList.contains('tab-active')) return;
-                AppConfig.elements.stockCategoryTabs.querySelectorAll('.category-tab-btn').forEach(btn => {
-                    btn.classList.remove('tab-active', 'text-white'); btn.classList.add('text-gray-400', 'hover:text-gray-200');
-                });
-                tabButton.classList.add('tab-active', 'text-white'); tabButton.classList.remove('text-gray-400', 'hover:text-gray-200');
-                this.currentStockCategory = tabButton.dataset.category;
-                this.applyStockFilters();
-            });
-        }
-        if (AppConfig.elements.navStocksLink) AppConfig.elements.navStocksLink.addEventListener('click', (e) => { e.preventDefault(); AppLogic.handlePageNavigation('stocks'); });
-        if (AppConfig.elements.navCoinsLink) AppConfig.elements.navCoinsLink.addEventListener('click', (e) => { e.preventDefault(); AppLogic.handlePageNavigation('coins'); });
 
-        if(AppConfig.elements.loginBtnHeader) AppConfig.elements.loginBtnHeader.addEventListener('click', () => this.toggleModal(AppConfig.elements.loginModal, true));
-        if(AppConfig.elements.closeLoginModalBtn) AppConfig.elements.closeLoginModalBtn.addEventListener('click', () => { this.toggleModal(AppConfig.elements.loginModal, false); if(AppConfig.elements.loginFeedback) AppConfig.elements.loginFeedback.textContent = ''; });
-        if(AppConfig.elements.loginForm) AppConfig.elements.loginForm.addEventListener('submit', this.handleLogin.bind(this));
-        if(AppConfig.elements.signupBtnHeader) AppConfig.elements.signupBtnHeader.addEventListener('click', () => this.toggleModal(AppConfig.elements.signupModal, true));
-        if(AppConfig.elements.closeSignupModalBtn) AppConfig.elements.closeSignupModalBtn.addEventListener('click', () => { this.toggleModal(AppConfig.elements.signupModal, false); if(AppConfig.elements.signupIdFeedback) AppConfig.elements.signupIdFeedback.textContent = ''; if(AppConfig.elements.signupPasswordFeedback) AppConfig.elements.signupPasswordFeedback.textContent = ''; });
-        if(AppConfig.elements.signupForm) AppConfig.elements.signupForm.addEventListener('submit', this.handleSignup.bind(this));
-        if(AppConfig.elements.checkIdDuplicateBtn) AppConfig.elements.checkIdDuplicateBtn.addEventListener('click', this.handleCheckIdDuplicate.bind(this));
-        if(AppConfig.elements.logoutBtnHeader) AppConfig.elements.logoutBtnHeader.addEventListener('click', this.handleLogout.bind(this));
+      } else if (targetService === 'coins') {
+          stockServiceContent.classList.add('hidden');
+          coinServiceContent.classList.remove('hidden');
+          navCoinsLink.classList.add('active');
+          navStocksLink.classList.remove('active');
+          window.location.hash = 'coins';
       }
+    };
+    AppLogic.initEventListeners = function() {
+      if(AppConfig.elements.filterButtonsGroup) AppConfig.elements.filterButtonsGroup.addEventListener('click', this.handleFilterButtonClick.bind(this));
+      if(AppConfig.elements.conditionFilterSelect) AppConfig.elements.conditionFilterSelect.addEventListener('change', this.handleConditionFilterChange.bind(this));
+      if(AppConfig.elements.stockCardsContainer) AppConfig.elements.stockCardsContainer.addEventListener('click', this.handleFavoriteToggle.bind(this));
+      if(AppConfig.elements.conditionTabsNav) AppConfig.elements.conditionTabsNav.addEventListener('click', this.handleTabNavigation.bind(this));
+      if(AppConfig.elements.newPostSubmitBtn) AppConfig.elements.newPostSubmitBtn.addEventListener('click', this.handleAddNewPost.bind(this));
+      if(AppConfig.elements.refreshDataBtn) AppConfig.elements.refreshDataBtn.addEventListener('click', () => this.handleRefreshData());
+      if(AppConfig.elements.notificationToggle) {
+          this.notificationsEnabled = AppConfig.elements.notificationToggle.checked;
+          AppConfig.elements.notificationToggle.addEventListener('change', (event) => {
+              this.notificationsEnabled = event.target.checked;
+              if (!this.notificationsEnabled && AppConfig.elements.toastNotification && !AppConfig.elements.toastNotification.classList.contains('hidden')) {
+                  AppConfig.elements.toastNotification.classList.remove('opacity-100', 'translate-y-0');
+                  AppConfig.elements.toastNotification.classList.add('opacity-0', 'translate-y-10', 'hidden');
+                  if(this.toastTimeoutId) clearTimeout(this.toastTimeoutId);
+              }
+          });
+      }
+      if(AppConfig.elements.forumPostsContainer) AppConfig.elements.forumPostsContainer.addEventListener('click', (event) => {
+          if (event.target.closest('.like-btn')) { AppLogic.handleLikePost(event); }
+          else if (event.target.closest('.reply-submit-btn')) { AppLogic.handleAddReply(event); }
+      });
+      if (AppConfig.elements.stockCategoryTabs) {
+          AppConfig.elements.stockCategoryTabs.addEventListener('click', (event) => {
+              const tabButton = event.target.closest('.category-tab-btn');
+              if (!tabButton || tabButton.classList.contains('tab-active')) return;
+              AppConfig.elements.stockCategoryTabs.querySelectorAll('.category-tab-btn').forEach(btn => {
+                  btn.classList.remove('tab-active', 'text-white'); btn.classList.add('text-gray-400', 'hover:text-gray-200');
+              });
+              tabButton.classList.add('tab-active', 'text-white'); tabButton.classList.remove('text-gray-400', 'hover:text-gray-200');
+              this.currentStockCategory = tabButton.dataset.category;
+              this.applyStockFilters();
+          });
+      }
+      if (AppConfig.elements.navStocksLink) AppConfig.elements.navStocksLink.addEventListener('click', (e) => { e.preventDefault(); AppLogic.handlePageNavigation('stocks'); });
+      if (AppConfig.elements.navCoinsLink) AppConfig.elements.navCoinsLink.addEventListener('click', (e) => { e.preventDefault(); AppLogic.handlePageNavigation('coins'); });
+
+      if(AppConfig.elements.loginBtnHeader) AppConfig.elements.loginBtnHeader.addEventListener('click', () => this.toggleModal(AppConfig.elements.loginModal, true));
+      if(AppConfig.elements.closeLoginModalBtn) AppConfig.elements.closeLoginModalBtn.addEventListener('click', () => { this.toggleModal(AppConfig.elements.loginModal, false); if(AppConfig.elements.loginFeedback) AppConfig.elements.loginFeedback.textContent = ''; });
+      if(AppConfig.elements.loginForm) AppConfig.elements.loginForm.addEventListener('submit', this.handleLogin.bind(this));
+      if(AppConfig.elements.signupBtnHeader) AppConfig.elements.signupBtnHeader.addEventListener('click', () => this.toggleModal(AppConfig.elements.signupModal, true));
+      if(AppConfig.elements.closeSignupModalBtn) AppConfig.elements.closeSignupModalBtn.addEventListener('click', () => { this.toggleModal(AppConfig.elements.signupModal, false); if(AppConfig.elements.signupIdFeedback) AppConfig.elements.signupIdFeedback.textContent = ''; if(AppConfig.elements.signupPasswordFeedback) AppConfig.elements.signupPasswordFeedback.textContent = ''; });
+      if(AppConfig.elements.signupForm) AppConfig.elements.signupForm.addEventListener('submit', this.handleSignup.bind(this));
+      if(AppConfig.elements.checkIdDuplicateBtn) AppConfig.elements.checkIdDuplicateBtn.addEventListener('click', this.handleCheckIdDuplicate.bind(this));
+      if(AppConfig.elements.logoutBtnHeader) AppConfig.elements.logoutBtnHeader.addEventListener('click', this.handleLogout.bind(this));
     };
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -920,8 +940,12 @@
       
       if (initialPage === 'stocks') {
         UIRenderer.populateConditionFilterOptions();
-        const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
-        AppLogic.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
+        if (AppConfig.elements.stockCategoryTabs) { // Null check 추가
+            const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
+            AppLogic.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
+        } else {
+            AppLogic.currentStockCategory = 'realtime_news_stocks'; // Fallback
+        }
         AppLogic.applyStockFilters();
         UIRenderer.renderConditionTabs();
         UIRenderer.renderForumPosts();
