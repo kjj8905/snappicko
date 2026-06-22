@@ -1,0 +1,7283 @@
+{
+  "status": "static_preview_data_snapshot",
+  "generated_at": "2026-06-22T05:06:45.808218+00:00",
+  "title": "Snappiko Index",
+  "overall": {
+    "score": 340,
+    "max": 1000,
+    "label": "300-399",
+    "phase": {
+      "label": "300-399",
+      "ratio": 34,
+      "percentile": 47,
+      "tone": "neutral"
+    },
+    "phase_label": "300-399",
+    "phase_ratio": 34,
+    "state_percentile": 47,
+    "weekly_change": 0,
+    "trend": "+0p",
+    "previous_score": 340,
+    "summary": null,
+    "method": "snapick_formula_v1"
+  },
+  "nasdaq_heat": {
+    "score": 84,
+    "max": 100,
+    "label": "80-89",
+    "weekly": {
+      "name": "WeeklyHeat",
+      "period_label": "주봉",
+      "score": 81,
+      "max": 100,
+      "label": "80-89",
+      "as_of": "2026-06-18",
+      "components": [
+        {
+          "label": "RSI(14W)",
+          "value": "73.7",
+          "raw": 73.7315837764055,
+          "percentile": 78,
+          "weight": 0.3
+        },
+        {
+          "label": "40주선 이격",
+          "value": "+11.7%",
+          "raw": 0.11695433039515009,
+          "percentile": 81,
+          "weight": 0.3
+        },
+        {
+          "label": "13주 상승률",
+          "value": "+20.3%",
+          "raw": 0.2029260522275375,
+          "percentile": 98,
+          "weight": 0.25
+        },
+        {
+          "label": "Bollinger %B(20W)",
+          "value": "0.82",
+          "raw": 0.822936979730448,
+          "percentile": 57,
+          "weight": 0.15
+        }
+      ]
+    },
+    "monthly": {
+      "name": "MonthlyHeat",
+      "period_label": "월봉",
+      "score": 89,
+      "max": 100,
+      "label": "80-89",
+      "as_of": "2026-05-29",
+      "components": [
+        {
+          "label": "RSI(14M)",
+          "value": "83.6",
+          "raw": 83.6308073134863,
+          "percentile": 88,
+          "weight": 0.35
+        },
+        {
+          "label": "10개월선 이격",
+          "value": "+14.2%",
+          "raw": 0.14194186376113593,
+          "percentile": 89,
+          "weight": 0.35
+        },
+        {
+          "label": "12개월 상승률",
+          "value": "+34.4%",
+          "raw": 0.3444132597024493,
+          "percentile": 90,
+          "weight": 0.2
+        },
+        {
+          "label": "Bollinger %B(20M)",
+          "value": "1.06",
+          "raw": 1.0608821664632277,
+          "percentile": 94,
+          "weight": 0.1
+        }
+      ]
+    },
+    "adjustment_points": 12.0,
+    "adjustment_label": "formula=max(0,min(15,(score-60)/30*15)); value=12.0p"
+  },
+  "bond_stress": {
+    "score": 68,
+    "max": 100,
+    "label": "60-69",
+    "summary": null,
+    "adjustment_points": 6.5,
+    "adjustment_label": "formula=max(0,min(20,(score-55)/40*20)); value=6.5p",
+    "latest_date": "2026-06-19",
+    "markets": [
+      {
+        "label": "미국 10Y",
+        "source": "FRED DGS10",
+        "value": "4.49%",
+        "as_of": "2026-06-17",
+        "score": 71,
+        "max": 100,
+        "weight": 0.25,
+        "detail": "source=FRED DGS10; change_20d=-18bp; level_percentile=91%",
+        "components": [
+          {
+            "label": "금리 수준",
+            "value": "4.49%",
+            "percentile": 91
+          },
+          {
+            "label": "20거래일 변화",
+            "value": "-18bp",
+            "percentile": 20
+          }
+        ]
+      },
+      {
+        "label": "미국 30Y",
+        "source": "FRED DGS30",
+        "value": "4.93%",
+        "as_of": "2026-06-17",
+        "score": 70,
+        "max": 100,
+        "weight": 0.25,
+        "detail": "source=FRED DGS30; change_20d=-25bp; level_percentile=94%",
+        "components": [
+          {
+            "label": "금리 수준",
+            "value": "4.93%",
+            "percentile": 94
+          },
+          {
+            "label": "20거래일 변화",
+            "value": "-25bp",
+            "percentile": 9
+          }
+        ]
+      },
+      {
+        "label": "일본 10Y",
+        "source": "MOF 10Y",
+        "value": "2.656%",
+        "as_of": "2026-06-19",
+        "score": 67,
+        "max": 100,
+        "weight": 0.25,
+        "detail": "source=MOF 10Y; change_20d=-9bp; scale_low=0.5; scale_high=3.0",
+        "components": [
+          {
+            "label": "금리 수준",
+            "value": "2.656%",
+            "percentile": 86
+          },
+          {
+            "label": "20거래일 변화",
+            "value": "-9bp",
+            "percentile": 0
+          }
+        ]
+      },
+      {
+        "label": "일본 30Y",
+        "source": "MOF 30Y",
+        "value": "3.786%",
+        "as_of": "2026-06-19",
+        "score": 66,
+        "max": 100,
+        "weight": 0.25,
+        "detail": "source=MOF 30Y; change_20d=-15bp; scale_low=1.5; scale_high=4.2",
+        "components": [
+          {
+            "label": "금리 수준",
+            "value": "3.786%",
+            "percentile": 85
+          },
+          {
+            "label": "20거래일 변화",
+            "value": "-15bp",
+            "percentile": 0
+          }
+        ]
+      }
+    ]
+  },
+  "risk_on_momentum": {
+    "score": 78,
+    "max": 100,
+    "label": "70-79",
+    "value": "78%",
+    "detail": "formula=13w return*0.45+26w return*0.35+52w range position*0.20",
+    "as_of": "2026-06-18",
+    "components": [
+      {
+        "label": "13주 상승률",
+        "value": "+20.3%",
+        "raw": 0.2029260522275375,
+        "percentile": 98,
+        "weight": 0.45
+      },
+      {
+        "label": "26주 상승률",
+        "value": "+12.9%",
+        "raw": 0.12904076223983482,
+        "percentile": 69,
+        "weight": 0.35
+      },
+      {
+        "label": "52주 위치",
+        "value": "93%",
+        "raw": 0.932127311483828,
+        "percentile": 51,
+        "weight": 0.2
+      }
+    ]
+  },
+  "volatility_stress": {
+    "label": "VIX 변동성",
+    "source": "FRED VIXCLS",
+    "value": "18.44",
+    "as_of": "2026-06-17",
+    "score": 56,
+    "max": 100,
+    "phase": "50-59",
+    "detail": "source=FRED VIXCLS; change_20d=+1.0pt; level_percentile=54%",
+    "components": [
+      {
+        "label": "VIX 수준",
+        "value": "18.44",
+        "percentile": 54
+      },
+      {
+        "label": "20거래일 변화",
+        "value": "+1.0pt",
+        "percentile": 62
+      }
+    ]
+  },
+  "credit_stress": {
+    "label": "하이일드 스프레드",
+    "source": "FRED BAMLH0A0HYM2",
+    "value": "2.63%",
+    "as_of": "2026-06-17",
+    "score": 10,
+    "max": 100,
+    "phase": "10-19",
+    "detail": "source=FRED BAMLH0A0HYM2; change_20d=-15bp; level_percentile=2%",
+    "components": [
+      {
+        "label": "스프레드 수준",
+        "value": "2.63%",
+        "percentile": 2
+      },
+      {
+        "label": "20거래일 변화",
+        "value": "-15bp",
+        "percentile": 36
+      }
+    ]
+  },
+  "fx_carry_stress": {
+    "label": "USDJPY 캐리 균열",
+    "source": "FRED DEXJPUS",
+    "value": "160.24",
+    "as_of": "2026-06-12",
+    "score": 25,
+    "max": 100,
+    "phase": "20-29",
+    "detail": "source=FRED DEXJPUS; drawdown_60d=0.2%; inverse_change_20d=-2.16",
+    "components": [
+      {
+        "label": "60일 고점 이탈",
+        "value": "0.2%",
+        "percentile": 19
+      },
+      {
+        "label": "20거래일 역방향 변화",
+        "value": "-2.16",
+        "percentile": 37
+      }
+    ]
+  },
+  "dollar_index": {
+    "label": "광의 달러지수",
+    "source": "FRED DTWEXBGS",
+    "value": "119.51",
+    "as_of": "2026-06-12",
+    "score": 44,
+    "max": 100,
+    "phase": "40-49",
+    "detail": "source=FRED DTWEXBGS; change_20d=+0.84pt; level_percentile=33%",
+    "components": [
+      {
+        "label": "달러지수 수준",
+        "value": "119.51",
+        "percentile": 33
+      },
+      {
+        "label": "20거래일 변화",
+        "value": "+0.84pt",
+        "percentile": 65
+      }
+    ]
+  },
+  "liquidity": {
+    "label": "달러 유동성",
+    "source": "FRED WALCL/WTREGEN/RRPONTSYD/WRESBAL/M2SL",
+    "value": "$5.86T",
+    "as_of": "2026-06-18",
+    "score": 57,
+    "score_100": 57,
+    "max": 100,
+    "phase": "50-59",
+    "summary": null,
+    "detail": "formula=WALCL-WTREGEN-RRPONTSYD; net_change_4w=-52B; reserves_change_4w=-96B",
+    "components": [
+      {
+        "label": "순 Fed 유동성",
+        "value": "$5.86T",
+        "change": "-52B",
+        "score": 54,
+        "detail": "WALCL - WTREGEN - RRPONTSYD"
+      },
+      {
+        "label": "은행 지급준비금",
+        "value": "$3.03T",
+        "change": "-96B",
+        "score": 43,
+        "detail": "WRESBAL"
+      },
+      {
+        "label": "ON RRP 완충재",
+        "value": "0B",
+        "change": "-25B",
+        "score": 82,
+        "detail": "RRPONTSYD"
+      },
+      {
+        "label": "TGA 재정 현금",
+        "value": "881B",
+        "change": "+99B",
+        "score": 37,
+        "detail": "WTREGEN"
+      },
+      {
+        "label": "M2 장기 배경",
+        "value": "+4.7% YoY",
+        "change": "월간",
+        "score": 52,
+        "detail": "M2SL YoY"
+      }
+    ]
+  },
+  "equity_damage": {
+    "label": "나스닥 손상도",
+    "source": "FRED NASDAQCOM",
+    "value": "26517.93",
+    "as_of": "2026-06-18",
+    "score": 55,
+    "max": 100,
+    "phase": "50-59",
+    "detail": "source=FRED NASDAQCOM; drawdown_252d=2.1%; realized_vol_20d=25.0%",
+    "components": [
+      {
+        "label": "고점 대비 낙폭",
+        "value": "2.1%",
+        "percentile": 40
+      },
+      {
+        "label": "20일 실현변동성",
+        "value": "25.0%",
+        "percentile": 78
+      }
+    ]
+  },
+  "panic_boom": {
+    "score": 340,
+    "panic_score": 43,
+    "boom_score": 75,
+    "max": 1000,
+    "panic_max": 100,
+    "boom_max": 100,
+    "fragility_overlay": 0,
+    "rates_credit_stress": 42,
+    "label": "300-399",
+    "explanation": "formula=500+5*(panic-boom)+2*fragility",
+    "missing_value_policy": "missing_inputs_return_null"
+  },
+  "cycle_map": [
+    {
+      "group": "종합",
+      "label": "스냅픽코 점수",
+      "phase": "300-399",
+      "score": 340,
+      "description": "score=340/1000; formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "group": "Nasdaq",
+      "label": "Nasdaq Heat",
+      "phase": "80-89",
+      "score": 84,
+      "description": "score=84/100; formula=weekly*0.6+monthly*0.4"
+    },
+    {
+      "group": "금리 환경",
+      "label": "미국/일본 장기금리",
+      "phase": "60-69",
+      "score": 68,
+      "description": "score=68/100; inputs=US10Y,US30Y,JP10Y,JP30Y"
+    },
+    {
+      "group": "Momentum",
+      "label": "주식 추세 관성",
+      "phase": "70-79",
+      "score": 78,
+      "description": "score=78/100; source=FRED NASDAQCOM"
+    },
+    {
+      "group": "트리거",
+      "label": "VIX 변동성",
+      "phase": "50-59",
+      "score": 56,
+      "description": "score=56/100; source=FRED VIXCLS"
+    },
+    {
+      "group": "트리거",
+      "label": "하이일드 스프레드",
+      "phase": "10-19",
+      "score": 10,
+      "description": "score=10/100; source=FRED BAMLH0A0HYM2"
+    },
+    {
+      "group": "환율/캐리",
+      "label": "USDJPY 캐리 균열",
+      "phase": "20-29",
+      "score": 25,
+      "description": "score=25/100; source=FRED DEXJPUS"
+    },
+    {
+      "group": "환율/캐리",
+      "label": "광의 달러지수",
+      "phase": "40-49",
+      "score": 44,
+      "description": "score=44/100; source=FRED DTWEXBGS"
+    },
+    {
+      "group": "주식 손상",
+      "label": "나스닥 손상도",
+      "phase": "50-59",
+      "score": 55,
+      "description": "score=55/100; source=FRED NASDAQCOM"
+    }
+  ],
+  "history": [
+    {
+      "date": "2025-06-27",
+      "score": 310,
+      "phase": "300-399",
+      "heat": 61,
+      "bond": 52,
+      "vix": 16.32,
+      "credit": 3.02,
+      "usdjpy": 144.74,
+      "close": 20273.46,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-07-03",
+      "score": 270,
+      "phase": "200-299",
+      "heat": 74,
+      "bond": 56,
+      "vix": 16.38,
+      "credit": 2.8,
+      "usdjpy": 144.96,
+      "close": 20601.1,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-07-11",
+      "score": 270,
+      "phase": "200-299",
+      "heat": 77,
+      "bond": 63,
+      "vix": 16.4,
+      "credit": 2.97,
+      "usdjpy": 147.29,
+      "close": 20585.53,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-07-18",
+      "score": 255,
+      "phase": "200-299",
+      "heat": 79,
+      "bond": 66,
+      "vix": 16.41,
+      "credit": 2.93,
+      "usdjpy": 148.55,
+      "close": 20895.66,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-07-25",
+      "score": 255,
+      "phase": "200-299",
+      "heat": 80,
+      "bond": 67,
+      "vix": 14.93,
+      "credit": 2.84,
+      "usdjpy": 147.77,
+      "close": 21108.32,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-08-01",
+      "score": 465,
+      "phase": "400-499",
+      "heat": 75,
+      "bond": 58,
+      "vix": 20.38,
+      "credit": 3.13,
+      "usdjpy": 148.06,
+      "close": 20650.13,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-08-08",
+      "score": 280,
+      "phase": "200-299",
+      "heat": 81,
+      "bond": 52,
+      "vix": 15.15,
+      "credit": 2.94,
+      "usdjpy": 147.7,
+      "close": 21450.02,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-08-15",
+      "score": 324,
+      "phase": "300-399",
+      "heat": 80,
+      "bond": 56,
+      "vix": 15.09,
+      "credit": 2.88,
+      "usdjpy": 147.0,
+      "close": 21622.98,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-08-22",
+      "score": 342,
+      "phase": "300-399",
+      "heat": 77,
+      "bond": 57,
+      "vix": 14.22,
+      "credit": 2.88,
+      "usdjpy": 146.82,
+      "close": 21496.53,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-08-29",
+      "score": 299,
+      "phase": "200-299",
+      "heat": 77,
+      "bond": 60,
+      "vix": 15.36,
+      "credit": 2.82,
+      "usdjpy": 146.9,
+      "close": 21455.55,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-09-05",
+      "score": 305,
+      "phase": "300-399",
+      "heat": 77,
+      "bond": 56,
+      "vix": 15.18,
+      "credit": 2.83,
+      "usdjpy": 146.84,
+      "close": 21700.39,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-09-12",
+      "score": 245,
+      "phase": "200-299",
+      "heat": 81,
+      "bond": 50,
+      "vix": 14.76,
+      "credit": 2.79,
+      "usdjpy": 147.85,
+      "close": 22141.1,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-09-19",
+      "score": 259,
+      "phase": "200-299",
+      "heat": 84,
+      "bond": 51,
+      "vix": 15.45,
+      "credit": 2.72,
+      "usdjpy": 147.83,
+      "close": 22631.48,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-09-26",
+      "score": 265,
+      "phase": "200-299",
+      "heat": 81,
+      "bond": 54,
+      "vix": 15.29,
+      "credit": 2.75,
+      "usdjpy": 149.52,
+      "close": 22484.07,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-10-03",
+      "score": 292,
+      "phase": "200-299",
+      "heat": 84,
+      "bond": 54,
+      "vix": 16.65,
+      "credit": 2.8,
+      "usdjpy": 147.33,
+      "close": 22780.51,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-10-10",
+      "score": 515,
+      "phase": "500-599",
+      "heat": 75,
+      "bond": 55,
+      "vix": 21.66,
+      "credit": 3.18,
+      "usdjpy": 151.94,
+      "close": 22204.43,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-10-17",
+      "score": 461,
+      "phase": "400-499",
+      "heat": 79,
+      "bond": 50,
+      "vix": 20.78,
+      "credit": 3.04,
+      "usdjpy": 150.33,
+      "close": 22679.97,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-10-24",
+      "score": 300,
+      "phase": "300-399",
+      "heat": 83,
+      "bond": 49,
+      "vix": 16.37,
+      "credit": 2.88,
+      "usdjpy": 152.82,
+      "close": 23204.87,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-10-31",
+      "score": 325,
+      "phase": "300-399",
+      "heat": 88,
+      "bond": 53,
+      "vix": 17.44,
+      "credit": 2.94,
+      "usdjpy": 154.05,
+      "close": 23724.96,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-11-07",
+      "score": 407,
+      "phase": "400-499",
+      "heat": 78,
+      "bond": 53,
+      "vix": 19.08,
+      "credit": 3.15,
+      "usdjpy": 153.06,
+      "close": 23004.54,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-11-14",
+      "score": 430,
+      "phase": "400-499",
+      "heat": 73,
+      "bond": 61,
+      "vix": 19.83,
+      "credit": 3.07,
+      "usdjpy": 154.64,
+      "close": 22900.59,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-11-21",
+      "score": 586,
+      "phase": "500-599",
+      "heat": 63,
+      "bond": 62,
+      "vix": 23.43,
+      "credit": 3.19,
+      "usdjpy": 156.58,
+      "close": 22273.08,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-11-28",
+      "score": 360,
+      "phase": "300-399",
+      "heat": 75,
+      "bond": 60,
+      "vix": 16.35,
+      "credit": 2.95,
+      "usdjpy": 156.17,
+      "close": 23365.69,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-12-05",
+      "score": 300,
+      "phase": "300-399",
+      "heat": 76,
+      "bond": 66,
+      "vix": 15.41,
+      "credit": 2.85,
+      "usdjpy": 155.3,
+      "close": 23578.13,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-12-12",
+      "score": 350,
+      "phase": "300-399",
+      "heat": 66,
+      "bond": 68,
+      "vix": 15.74,
+      "credit": 2.91,
+      "usdjpy": 155.81,
+      "close": 23195.17,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-12-19",
+      "score": 320,
+      "phase": "300-399",
+      "heat": 64,
+      "bond": 65,
+      "vix": 14.91,
+      "credit": 2.9,
+      "usdjpy": 157.43,
+      "close": 23307.62,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2025-12-26",
+      "score": 305,
+      "phase": "300-399",
+      "heat": 66,
+      "bond": 67,
+      "vix": 13.6,
+      "credit": 2.86,
+      "usdjpy": 156.63,
+      "close": 23593.1,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-01-02",
+      "score": 365,
+      "phase": "300-399",
+      "heat": 57,
+      "bond": 68,
+      "vix": 14.51,
+      "credit": 2.83,
+      "usdjpy": 156.72,
+      "close": 23235.63,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-01-09",
+      "score": 305,
+      "phase": "300-399",
+      "heat": 64,
+      "bond": 65,
+      "vix": 14.49,
+      "credit": 2.74,
+      "usdjpy": 158.07,
+      "close": 23671.35,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-01-16",
+      "score": 335,
+      "phase": "300-399",
+      "heat": 60,
+      "bond": 70,
+      "vix": 15.86,
+      "credit": 2.65,
+      "usdjpy": 158.02,
+      "close": 23515.39,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-01-23",
+      "score": 405,
+      "phase": "400-499",
+      "heat": 55,
+      "bond": 71,
+      "vix": 16.09,
+      "credit": 2.68,
+      "usdjpy": 157.57,
+      "close": 23501.24,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-01-30",
+      "score": 490,
+      "phase": "400-499",
+      "heat": 47,
+      "bond": 72,
+      "vix": 17.44,
+      "credit": 2.8,
+      "usdjpy": 154.34,
+      "close": 23461.82,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-02-06",
+      "score": 545,
+      "phase": "500-599",
+      "heat": 40,
+      "bond": 68,
+      "vix": 17.76,
+      "credit": 2.87,
+      "usdjpy": 157.1,
+      "close": 23031.21,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-02-13",
+      "score": 630,
+      "phase": "600-699",
+      "heat": 37,
+      "bond": 56,
+      "vix": 20.6,
+      "credit": 2.95,
+      "usdjpy": 152.77,
+      "close": 22546.67,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-02-20",
+      "score": 555,
+      "phase": "500-599",
+      "heat": 42,
+      "bond": 54,
+      "vix": 19.09,
+      "credit": 2.86,
+      "usdjpy": 154.99,
+      "close": 22886.07,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-02-27",
+      "score": 615,
+      "phase": "600-699",
+      "heat": 33,
+      "bond": 50,
+      "vix": 19.86,
+      "credit": 3.1,
+      "usdjpy": 156.05,
+      "close": 22668.21,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-03-06",
+      "score": 705,
+      "phase": "700-799",
+      "heat": 27,
+      "bond": 58,
+      "vix": 29.49,
+      "credit": 3.13,
+      "usdjpy": 157.64,
+      "close": 22387.68,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-03-13",
+      "score": 725,
+      "phase": "700-799",
+      "heat": 25,
+      "bond": 71,
+      "vix": 27.19,
+      "credit": 3.28,
+      "usdjpy": 159.54,
+      "close": 22105.36,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-03-20",
+      "score": 740,
+      "phase": "700-799",
+      "heat": 24,
+      "bond": 76,
+      "vix": 26.78,
+      "credit": 3.24,
+      "usdjpy": 159.26,
+      "close": 21647.61,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-03-27",
+      "score": 790,
+      "phase": "700-799",
+      "heat": 22,
+      "bond": 84,
+      "vix": 31.05,
+      "credit": 3.42,
+      "usdjpy": 160.16,
+      "close": 20948.36,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-04-02",
+      "score": 705,
+      "phase": "700-799",
+      "heat": 22,
+      "bond": 79,
+      "vix": 23.87,
+      "credit": 3.17,
+      "usdjpy": 159.34,
+      "close": 21879.18,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-04-10",
+      "score": 545,
+      "phase": "500-599",
+      "heat": 27,
+      "bond": 76,
+      "vix": 19.23,
+      "credit": 2.94,
+      "usdjpy": 159.22,
+      "close": 22902.89,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-04-17",
+      "score": 410,
+      "phase": "400-499",
+      "heat": 45,
+      "bond": 69,
+      "vix": 17.48,
+      "credit": 2.83,
+      "usdjpy": 158.1,
+      "close": 24468.48,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-04-24",
+      "score": 405,
+      "phase": "400-499",
+      "heat": 50,
+      "bond": 68,
+      "vix": 18.71,
+      "credit": 2.86,
+      "usdjpy": 159.35,
+      "close": 24836.6,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-05-01",
+      "score": 348,
+      "phase": "300-399",
+      "heat": 69,
+      "bond": 75,
+      "vix": 16.99,
+      "credit": 2.77,
+      "usdjpy": 156.76,
+      "close": 25114.44,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-05-08",
+      "score": 336,
+      "phase": "300-399",
+      "heat": 79,
+      "bond": 73,
+      "vix": 17.19,
+      "credit": 2.81,
+      "usdjpy": 156.64,
+      "close": 26247.08,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-05-15",
+      "score": 375,
+      "phase": "300-399",
+      "heat": 81,
+      "bond": 89,
+      "vix": 18.43,
+      "credit": 2.8,
+      "usdjpy": 158.69,
+      "close": 26225.14,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-05-22",
+      "score": 295,
+      "phase": "200-299",
+      "heat": 81,
+      "bond": 91,
+      "vix": 16.7,
+      "credit": 2.74,
+      "usdjpy": 159.2,
+      "close": 26343.97,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-05-29",
+      "score": 240,
+      "phase": "200-299",
+      "heat": 89,
+      "bond": 80,
+      "vix": 15.32,
+      "credit": 2.72,
+      "usdjpy": 159.23,
+      "close": 26972.62,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-06-05",
+      "score": 494,
+      "phase": "400-499",
+      "heat": 77,
+      "bond": 82,
+      "vix": 21.51,
+      "credit": 2.76,
+      "usdjpy": 160.26,
+      "close": 25709.43,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-06-12",
+      "score": 360,
+      "phase": "300-399",
+      "heat": 79,
+      "bond": 73,
+      "vix": 17.68,
+      "credit": 2.71,
+      "usdjpy": 160.24,
+      "close": 25888.84,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    },
+    {
+      "date": "2026-06-18",
+      "score": 340,
+      "phase": "300-399",
+      "heat": 84,
+      "bond": 68,
+      "vix": 18.44,
+      "credit": 2.63,
+      "usdjpy": 160.24,
+      "close": 26517.93,
+      "method": "formula=500+5*(panic-boom)+2*fragility"
+    }
+  ],
+  "charts": {
+    "rates_4way": {
+      "title": "미국/일본 장기금리",
+      "unit": "%",
+      "frequency": "daily",
+      "default_period": "daily",
+      "series": [
+        {
+          "key": "us10y",
+          "label": "미국 10Y",
+          "source": "FRED DGS10"
+        },
+        {
+          "key": "us30y",
+          "label": "미국 30Y",
+          "source": "FRED DGS30"
+        },
+        {
+          "key": "jp10y",
+          "label": "일본 10Y",
+          "source": "MOF JGB 10Y"
+        },
+        {
+          "key": "jp30y",
+          "label": "일본 30Y",
+          "source": "MOF JGB 30Y"
+        }
+      ],
+      "points": [
+        {
+          "date": "2025-12-18",
+          "us10y": 4.12,
+          "us30y": 4.8,
+          "jp10y": 1.972,
+          "jp30y": 3.33
+        },
+        {
+          "date": "2025-12-19",
+          "us10y": 4.16,
+          "us30y": 4.82,
+          "jp10y": 2.021,
+          "jp30y": 3.362
+        },
+        {
+          "date": "2025-12-22",
+          "us10y": 4.17,
+          "us30y": 4.84,
+          "jp10y": 2.073,
+          "jp30y": 3.374
+        },
+        {
+          "date": "2025-12-23",
+          "us10y": 4.18,
+          "us30y": 4.83,
+          "jp10y": 2.039,
+          "jp30y": 3.371
+        },
+        {
+          "date": "2025-12-24",
+          "us10y": 4.15,
+          "us30y": 4.79,
+          "jp10y": 2.044,
+          "jp30y": 3.371
+        },
+        {
+          "date": "2025-12-25",
+          "us10y": 4.15,
+          "us30y": 4.79,
+          "jp10y": 2.042,
+          "jp30y": 3.349
+        },
+        {
+          "date": "2025-12-26",
+          "us10y": 4.14,
+          "us30y": 4.81,
+          "jp10y": 2.039,
+          "jp30y": 3.335
+        },
+        {
+          "date": "2025-12-29",
+          "us10y": 4.12,
+          "us30y": 4.8,
+          "jp10y": 2.052,
+          "jp30y": 3.371
+        },
+        {
+          "date": "2025-12-30",
+          "us10y": 4.14,
+          "us30y": 4.81,
+          "jp10y": 2.066,
+          "jp30y": 3.354
+        },
+        {
+          "date": "2025-12-31",
+          "us10y": 4.18,
+          "us30y": 4.84,
+          "jp10y": 2.066,
+          "jp30y": 3.354
+        },
+        {
+          "date": "2026-01-02",
+          "us10y": 4.19,
+          "us30y": 4.86,
+          "jp10y": 2.066,
+          "jp30y": 3.354
+        },
+        {
+          "date": "2026-01-05",
+          "us10y": 4.17,
+          "us30y": 4.85,
+          "jp10y": 2.111,
+          "jp30y": 3.393
+        },
+        {
+          "date": "2026-01-06",
+          "us10y": 4.18,
+          "us30y": 4.86,
+          "jp10y": 2.123,
+          "jp30y": 3.42
+        },
+        {
+          "date": "2026-01-07",
+          "us10y": 4.15,
+          "us30y": 4.82,
+          "jp10y": 2.124,
+          "jp30y": 3.428
+        },
+        {
+          "date": "2026-01-08",
+          "us10y": 4.19,
+          "us30y": 4.85,
+          "jp10y": 2.083,
+          "jp30y": 3.435
+        },
+        {
+          "date": "2026-01-09",
+          "us10y": 4.18,
+          "us30y": 4.82,
+          "jp10y": 2.096,
+          "jp30y": 3.399
+        },
+        {
+          "date": "2026-01-12",
+          "us10y": 4.19,
+          "us30y": 4.83,
+          "jp10y": 2.096,
+          "jp30y": 3.399
+        },
+        {
+          "date": "2026-01-13",
+          "us10y": 4.18,
+          "us30y": 4.83,
+          "jp10y": 2.163,
+          "jp30y": 3.462
+        },
+        {
+          "date": "2026-01-14",
+          "us10y": 4.15,
+          "us30y": 4.79,
+          "jp10y": 2.182,
+          "jp30y": 3.486
+        },
+        {
+          "date": "2026-01-15",
+          "us10y": 4.17,
+          "us30y": 4.79,
+          "jp10y": 2.164,
+          "jp30y": 3.454
+        },
+        {
+          "date": "2026-01-16",
+          "us10y": 4.24,
+          "us30y": 4.83,
+          "jp10y": 2.182,
+          "jp30y": 3.462
+        },
+        {
+          "date": "2026-01-19",
+          "us10y": 4.24,
+          "us30y": 4.83,
+          "jp10y": 2.266,
+          "jp30y": 3.562
+        },
+        {
+          "date": "2026-01-20",
+          "us10y": 4.3,
+          "us30y": 4.91,
+          "jp10y": 2.33,
+          "jp30y": 3.765
+        },
+        {
+          "date": "2026-01-21",
+          "us10y": 4.26,
+          "us30y": 4.87,
+          "jp10y": 2.28,
+          "jp30y": 3.647
+        },
+        {
+          "date": "2026-01-22",
+          "us10y": 4.26,
+          "us30y": 4.84,
+          "jp10y": 2.239,
+          "jp30y": 3.604
+        },
+        {
+          "date": "2026-01-23",
+          "us10y": 4.24,
+          "us30y": 4.82,
+          "jp10y": 2.253,
+          "jp30y": 3.585
+        },
+        {
+          "date": "2026-01-26",
+          "us10y": 4.22,
+          "us30y": 4.8,
+          "jp10y": 2.236,
+          "jp30y": 3.568
+        },
+        {
+          "date": "2026-01-27",
+          "us10y": 4.24,
+          "us30y": 4.83,
+          "jp10y": 2.281,
+          "jp30y": 3.599
+        },
+        {
+          "date": "2026-01-28",
+          "us10y": 4.26,
+          "us30y": 4.85,
+          "jp10y": 2.237,
+          "jp30y": 3.579
+        },
+        {
+          "date": "2026-01-29",
+          "us10y": 4.24,
+          "us30y": 4.85,
+          "jp10y": 2.252,
+          "jp30y": 3.566
+        },
+        {
+          "date": "2026-01-30",
+          "us10y": 4.26,
+          "us30y": 4.87,
+          "jp10y": 2.247,
+          "jp30y": 3.577
+        },
+        {
+          "date": "2026-02-02",
+          "us10y": 4.29,
+          "us30y": 4.9,
+          "jp10y": 2.235,
+          "jp30y": 3.583
+        },
+        {
+          "date": "2026-02-03",
+          "us10y": 4.28,
+          "us30y": 4.9,
+          "jp10y": 2.258,
+          "jp30y": 3.58
+        },
+        {
+          "date": "2026-02-04",
+          "us10y": 4.29,
+          "us30y": 4.91,
+          "jp10y": 2.249,
+          "jp30y": 3.579
+        },
+        {
+          "date": "2026-02-05",
+          "us10y": 4.21,
+          "us30y": 4.85,
+          "jp10y": 2.231,
+          "jp30y": 3.525
+        },
+        {
+          "date": "2026-02-06",
+          "us10y": 4.22,
+          "us30y": 4.85,
+          "jp10y": 2.236,
+          "jp30y": 3.513
+        },
+        {
+          "date": "2026-02-09",
+          "us10y": 4.22,
+          "us30y": 4.85,
+          "jp10y": 2.289,
+          "jp30y": 3.52
+        },
+        {
+          "date": "2026-02-10",
+          "us10y": 4.16,
+          "us30y": 4.78,
+          "jp10y": 2.241,
+          "jp30y": 3.468
+        },
+        {
+          "date": "2026-02-11",
+          "us10y": 4.18,
+          "us30y": 4.82,
+          "jp10y": 2.241,
+          "jp30y": 3.468
+        },
+        {
+          "date": "2026-02-12",
+          "us10y": 4.09,
+          "us30y": 4.72,
+          "jp10y": 2.238,
+          "jp30y": 3.413
+        },
+        {
+          "date": "2026-02-13",
+          "us10y": 4.04,
+          "us30y": 4.69,
+          "jp10y": 2.218,
+          "jp30y": 3.422
+        },
+        {
+          "date": "2026-02-16",
+          "us10y": 4.04,
+          "us30y": 4.69,
+          "jp10y": 2.22,
+          "jp30y": 3.461
+        },
+        {
+          "date": "2026-02-17",
+          "us10y": 4.05,
+          "us30y": 4.68,
+          "jp10y": 2.143,
+          "jp30y": 3.382
+        },
+        {
+          "date": "2026-02-18",
+          "us10y": 4.09,
+          "us30y": 4.71,
+          "jp10y": 2.152,
+          "jp30y": 3.371
+        },
+        {
+          "date": "2026-02-19",
+          "us10y": 4.08,
+          "us30y": 4.7,
+          "jp10y": 2.157,
+          "jp30y": 3.34
+        },
+        {
+          "date": "2026-02-20",
+          "us10y": 4.08,
+          "us30y": 4.72,
+          "jp10y": 2.125,
+          "jp30y": 3.323
+        },
+        {
+          "date": "2026-02-23",
+          "us10y": 4.03,
+          "us30y": 4.7,
+          "jp10y": 2.125,
+          "jp30y": 3.323
+        },
+        {
+          "date": "2026-02-24",
+          "us10y": 4.04,
+          "us30y": 4.7,
+          "jp10y": 2.119,
+          "jp30y": 3.295
+        },
+        {
+          "date": "2026-02-25",
+          "us10y": 4.05,
+          "us30y": 4.7,
+          "jp10y": 2.154,
+          "jp30y": 3.38
+        },
+        {
+          "date": "2026-02-26",
+          "us10y": 4.02,
+          "us30y": 4.67,
+          "jp10y": 2.168,
+          "jp30y": 3.366
+        },
+        {
+          "date": "2026-02-27",
+          "us10y": 3.97,
+          "us30y": 4.64,
+          "jp10y": 2.132,
+          "jp30y": 3.342
+        },
+        {
+          "date": "2026-03-02",
+          "us10y": 4.05,
+          "us30y": 4.7,
+          "jp10y": 2.087,
+          "jp30y": 3.293
+        },
+        {
+          "date": "2026-03-03",
+          "us10y": 4.06,
+          "us30y": 4.7,
+          "jp10y": 2.148,
+          "jp30y": 3.337
+        },
+        {
+          "date": "2026-03-04",
+          "us10y": 4.09,
+          "us30y": 4.72,
+          "jp10y": 2.134,
+          "jp30y": 3.353
+        },
+        {
+          "date": "2026-03-05",
+          "us10y": 4.13,
+          "us30y": 4.74,
+          "jp10y": 2.175,
+          "jp30y": 3.374
+        },
+        {
+          "date": "2026-03-06",
+          "us10y": 4.15,
+          "us30y": 4.77,
+          "jp10y": 2.18,
+          "jp30y": 3.384
+        },
+        {
+          "date": "2026-03-09",
+          "us10y": 4.12,
+          "us30y": 4.72,
+          "jp10y": 2.205,
+          "jp30y": 3.44
+        },
+        {
+          "date": "2026-03-10",
+          "us10y": 4.15,
+          "us30y": 4.78,
+          "jp10y": 2.199,
+          "jp30y": 3.412
+        },
+        {
+          "date": "2026-03-11",
+          "us10y": 4.21,
+          "us30y": 4.86,
+          "jp10y": 2.178,
+          "jp30y": 3.421
+        },
+        {
+          "date": "2026-03-12",
+          "us10y": 4.27,
+          "us30y": 4.88,
+          "jp10y": 2.201,
+          "jp30y": 3.451
+        },
+        {
+          "date": "2026-03-13",
+          "us10y": 4.28,
+          "us30y": 4.9,
+          "jp10y": 2.255,
+          "jp30y": 3.479
+        },
+        {
+          "date": "2026-03-16",
+          "us10y": 4.23,
+          "us30y": 4.86,
+          "jp10y": 2.288,
+          "jp30y": 3.515
+        },
+        {
+          "date": "2026-03-17",
+          "us10y": 4.2,
+          "us30y": 4.85,
+          "jp10y": 2.279,
+          "jp30y": 3.514
+        },
+        {
+          "date": "2026-03-18",
+          "us10y": 4.26,
+          "us30y": 4.88,
+          "jp10y": 2.231,
+          "jp30y": 3.462
+        },
+        {
+          "date": "2026-03-19",
+          "us10y": 4.25,
+          "us30y": 4.83,
+          "jp10y": 2.273,
+          "jp30y": 3.491
+        },
+        {
+          "date": "2026-03-20",
+          "us10y": 4.39,
+          "us30y": 4.96,
+          "jp10y": 2.273,
+          "jp30y": 3.491
+        },
+        {
+          "date": "2026-03-23",
+          "us10y": 4.34,
+          "us30y": 4.91,
+          "jp10y": 2.322,
+          "jp30y": 3.522
+        },
+        {
+          "date": "2026-03-24",
+          "us10y": 4.39,
+          "us30y": 4.94,
+          "jp10y": 2.282,
+          "jp30y": 3.509
+        },
+        {
+          "date": "2026-03-25",
+          "us10y": 4.33,
+          "us30y": 4.89,
+          "jp10y": 2.267,
+          "jp30y": 3.479
+        },
+        {
+          "date": "2026-03-26",
+          "us10y": 4.42,
+          "us30y": 4.93,
+          "jp10y": 2.286,
+          "jp30y": 3.489
+        },
+        {
+          "date": "2026-03-27",
+          "us10y": 4.44,
+          "us30y": 4.98,
+          "jp10y": 2.38,
+          "jp30y": 3.629
+        },
+        {
+          "date": "2026-03-30",
+          "us10y": 4.35,
+          "us30y": 4.91,
+          "jp10y": 2.368,
+          "jp30y": 3.698
+        },
+        {
+          "date": "2026-03-31",
+          "us10y": 4.3,
+          "us30y": 4.88,
+          "jp10y": 2.366,
+          "jp30y": 3.64
+        },
+        {
+          "date": "2026-04-01",
+          "us10y": 4.33,
+          "us30y": 4.91,
+          "jp10y": 2.315,
+          "jp30y": 3.564
+        },
+        {
+          "date": "2026-04-02",
+          "us10y": 4.31,
+          "us30y": 4.88,
+          "jp10y": 2.395,
+          "jp30y": 3.614
+        },
+        {
+          "date": "2026-04-03",
+          "us10y": 4.35,
+          "us30y": 4.91,
+          "jp10y": 2.386,
+          "jp30y": 3.611
+        },
+        {
+          "date": "2026-04-06",
+          "us10y": 4.34,
+          "us30y": 4.89,
+          "jp10y": 2.429,
+          "jp30y": 3.672
+        },
+        {
+          "date": "2026-04-07",
+          "us10y": 4.33,
+          "us30y": 4.9,
+          "jp10y": 2.411,
+          "jp30y": 3.667
+        },
+        {
+          "date": "2026-04-08",
+          "us10y": 4.29,
+          "us30y": 4.89,
+          "jp10y": 2.374,
+          "jp30y": 3.615
+        },
+        {
+          "date": "2026-04-09",
+          "us10y": 4.29,
+          "us30y": 4.9,
+          "jp10y": 2.397,
+          "jp30y": 3.619
+        },
+        {
+          "date": "2026-04-10",
+          "us10y": 4.31,
+          "us30y": 4.91,
+          "jp10y": 2.439,
+          "jp30y": 3.638
+        },
+        {
+          "date": "2026-04-13",
+          "us10y": 4.3,
+          "us30y": 4.9,
+          "jp10y": 2.467,
+          "jp30y": 3.698
+        },
+        {
+          "date": "2026-04-14",
+          "us10y": 4.26,
+          "us30y": 4.87,
+          "jp10y": 2.423,
+          "jp30y": 3.633
+        },
+        {
+          "date": "2026-04-15",
+          "us10y": 4.29,
+          "us30y": 4.89,
+          "jp10y": 2.414,
+          "jp30y": 3.606
+        },
+        {
+          "date": "2026-04-16",
+          "us10y": 4.32,
+          "us30y": 4.93,
+          "jp10y": 2.409,
+          "jp30y": 3.623
+        },
+        {
+          "date": "2026-04-17",
+          "us10y": 4.26,
+          "us30y": 4.88,
+          "jp10y": 2.428,
+          "jp30y": 3.622
+        },
+        {
+          "date": "2026-04-20",
+          "us10y": 4.26,
+          "us30y": 4.88,
+          "jp10y": 2.405,
+          "jp30y": 3.586
+        },
+        {
+          "date": "2026-04-21",
+          "us10y": 4.3,
+          "us30y": 4.89,
+          "jp10y": 2.392,
+          "jp30y": 3.581
+        },
+        {
+          "date": "2026-04-22",
+          "us10y": 4.3,
+          "us30y": 4.9,
+          "jp10y": 2.406,
+          "jp30y": 3.597
+        },
+        {
+          "date": "2026-04-23",
+          "us10y": 4.34,
+          "us30y": 4.92,
+          "jp10y": 2.429,
+          "jp30y": 3.63
+        },
+        {
+          "date": "2026-04-24",
+          "us10y": 4.31,
+          "us30y": 4.91,
+          "jp10y": 2.443,
+          "jp30y": 3.66
+        },
+        {
+          "date": "2026-04-27",
+          "us10y": 4.35,
+          "us30y": 4.94,
+          "jp10y": 2.477,
+          "jp30y": 3.675
+        },
+        {
+          "date": "2026-04-28",
+          "us10y": 4.36,
+          "us30y": 4.94,
+          "jp10y": 2.468,
+          "jp30y": 3.647
+        },
+        {
+          "date": "2026-04-29",
+          "us10y": 4.42,
+          "us30y": 4.98,
+          "jp10y": 2.468,
+          "jp30y": 3.647
+        },
+        {
+          "date": "2026-04-30",
+          "us10y": 4.4,
+          "us30y": 4.98,
+          "jp10y": 2.52,
+          "jp30y": 3.721
+        },
+        {
+          "date": "2026-05-01",
+          "us10y": 4.39,
+          "us30y": 4.97,
+          "jp10y": 2.507,
+          "jp30y": 3.706
+        },
+        {
+          "date": "2026-05-04",
+          "us10y": 4.45,
+          "us30y": 5.02,
+          "jp10y": 2.507,
+          "jp30y": 3.706
+        },
+        {
+          "date": "2026-05-05",
+          "us10y": 4.43,
+          "us30y": 4.98,
+          "jp10y": 2.507,
+          "jp30y": 3.706
+        },
+        {
+          "date": "2026-05-06",
+          "us10y": 4.36,
+          "us30y": 4.94,
+          "jp10y": 2.507,
+          "jp30y": 3.706
+        },
+        {
+          "date": "2026-05-07",
+          "us10y": 4.41,
+          "us30y": 4.97,
+          "jp10y": 2.485,
+          "jp30y": 3.714
+        },
+        {
+          "date": "2026-05-08",
+          "us10y": 4.38,
+          "us30y": 4.95,
+          "jp10y": 2.485,
+          "jp30y": 3.706
+        },
+        {
+          "date": "2026-05-11",
+          "us10y": 4.42,
+          "us30y": 4.98,
+          "jp10y": 2.527,
+          "jp30y": 3.741
+        },
+        {
+          "date": "2026-05-12",
+          "us10y": 4.46,
+          "us30y": 5.03,
+          "jp10y": 2.546,
+          "jp30y": 3.78
+        },
+        {
+          "date": "2026-05-13",
+          "us10y": 4.46,
+          "us30y": 5.03,
+          "jp10y": 2.587,
+          "jp30y": 3.783
+        },
+        {
+          "date": "2026-05-14",
+          "us10y": 4.47,
+          "us30y": 5.02,
+          "jp10y": 2.628,
+          "jp30y": 3.852
+        },
+        {
+          "date": "2026-05-15",
+          "us10y": 4.59,
+          "us30y": 5.12,
+          "jp10y": 2.691,
+          "jp30y": 3.922
+        },
+        {
+          "date": "2026-05-18",
+          "us10y": 4.61,
+          "us30y": 5.14,
+          "jp10y": 2.729,
+          "jp30y": 4.0
+        },
+        {
+          "date": "2026-05-19",
+          "us10y": 4.67,
+          "us30y": 5.18,
+          "jp10y": 2.783,
+          "jp30y": 4.043
+        },
+        {
+          "date": "2026-05-20",
+          "us10y": 4.57,
+          "us30y": 5.11,
+          "jp10y": 2.77,
+          "jp30y": 4.0
+        },
+        {
+          "date": "2026-05-21",
+          "us10y": 4.57,
+          "us30y": 5.1,
+          "jp10y": 2.748,
+          "jp30y": 3.939
+        },
+        {
+          "date": "2026-05-22",
+          "us10y": 4.56,
+          "us30y": 5.07,
+          "jp10y": 2.749,
+          "jp30y": 3.931
+        },
+        {
+          "date": "2026-05-25",
+          "us10y": 4.56,
+          "us30y": 5.07,
+          "jp10y": 2.686,
+          "jp30y": 3.876
+        },
+        {
+          "date": "2026-05-26",
+          "us10y": 4.5,
+          "us30y": 5.03,
+          "jp10y": 2.713,
+          "jp30y": 3.866
+        },
+        {
+          "date": "2026-05-27",
+          "us10y": 4.48,
+          "us30y": 5.01,
+          "jp10y": 2.687,
+          "jp30y": 3.856
+        },
+        {
+          "date": "2026-05-28",
+          "us10y": 4.45,
+          "us30y": 4.98,
+          "jp10y": 2.692,
+          "jp30y": 3.896
+        },
+        {
+          "date": "2026-05-29",
+          "us10y": 4.45,
+          "us30y": 4.99,
+          "jp10y": 2.657,
+          "jp30y": 3.859
+        },
+        {
+          "date": "2026-06-01",
+          "us10y": 4.47,
+          "us30y": 4.99,
+          "jp10y": 2.682,
+          "jp30y": 3.863
+        },
+        {
+          "date": "2026-06-02",
+          "us10y": 4.46,
+          "us30y": 4.97,
+          "jp10y": 2.577,
+          "jp30y": 3.81
+        },
+        {
+          "date": "2026-06-03",
+          "us10y": 4.49,
+          "us30y": 4.99,
+          "jp10y": 2.645,
+          "jp30y": 3.817
+        },
+        {
+          "date": "2026-06-04",
+          "us10y": 4.47,
+          "us30y": 4.97,
+          "jp10y": 2.671,
+          "jp30y": 3.833
+        },
+        {
+          "date": "2026-06-05",
+          "us10y": 4.55,
+          "us30y": 5.01,
+          "jp10y": 2.669,
+          "jp30y": 3.841
+        },
+        {
+          "date": "2026-06-08",
+          "us10y": 4.56,
+          "us30y": 5.03,
+          "jp10y": 2.715,
+          "jp30y": 3.876
+        },
+        {
+          "date": "2026-06-09",
+          "us10y": 4.53,
+          "us30y": 5.01,
+          "jp10y": 2.669,
+          "jp30y": 3.823
+        },
+        {
+          "date": "2026-06-10",
+          "us10y": 4.55,
+          "us30y": 5.03,
+          "jp10y": 2.681,
+          "jp30y": 3.811
+        },
+        {
+          "date": "2026-06-11",
+          "us10y": 4.45,
+          "us30y": 4.95,
+          "jp10y": 2.682,
+          "jp30y": 3.823
+        },
+        {
+          "date": "2026-06-12",
+          "us10y": 4.48,
+          "us30y": 4.97,
+          "jp10y": 2.643,
+          "jp30y": 3.767
+        },
+        {
+          "date": "2026-06-15",
+          "us10y": 4.47,
+          "us30y": 4.97,
+          "jp10y": 2.589,
+          "jp30y": 3.725
+        },
+        {
+          "date": "2026-06-16",
+          "us10y": 4.43,
+          "us30y": 4.93,
+          "jp10y": 2.655,
+          "jp30y": 3.747
+        },
+        {
+          "date": "2026-06-17",
+          "us10y": 4.49,
+          "us30y": 4.93,
+          "jp10y": 2.613,
+          "jp30y": 3.709
+        },
+        {
+          "date": "2026-06-18",
+          "us10y": 4.49,
+          "us30y": 4.93,
+          "jp10y": 2.628,
+          "jp30y": 3.737
+        },
+        {
+          "date": "2026-06-19",
+          "us10y": 4.49,
+          "us30y": 4.93,
+          "jp10y": 2.656,
+          "jp30y": 3.786
+        }
+      ],
+      "periods": {
+        "daily": {
+          "label": "일봉",
+          "range": "최근 6개월",
+          "frequency": "daily",
+          "points": [
+            {
+              "date": "2025-12-18",
+              "us10y": 4.12,
+              "us30y": 4.8,
+              "jp10y": 1.972,
+              "jp30y": 3.33
+            },
+            {
+              "date": "2025-12-19",
+              "us10y": 4.16,
+              "us30y": 4.82,
+              "jp10y": 2.021,
+              "jp30y": 3.362
+            },
+            {
+              "date": "2025-12-22",
+              "us10y": 4.17,
+              "us30y": 4.84,
+              "jp10y": 2.073,
+              "jp30y": 3.374
+            },
+            {
+              "date": "2025-12-23",
+              "us10y": 4.18,
+              "us30y": 4.83,
+              "jp10y": 2.039,
+              "jp30y": 3.371
+            },
+            {
+              "date": "2025-12-24",
+              "us10y": 4.15,
+              "us30y": 4.79,
+              "jp10y": 2.044,
+              "jp30y": 3.371
+            },
+            {
+              "date": "2025-12-25",
+              "us10y": 4.15,
+              "us30y": 4.79,
+              "jp10y": 2.042,
+              "jp30y": 3.349
+            },
+            {
+              "date": "2025-12-26",
+              "us10y": 4.14,
+              "us30y": 4.81,
+              "jp10y": 2.039,
+              "jp30y": 3.335
+            },
+            {
+              "date": "2025-12-29",
+              "us10y": 4.12,
+              "us30y": 4.8,
+              "jp10y": 2.052,
+              "jp30y": 3.371
+            },
+            {
+              "date": "2025-12-30",
+              "us10y": 4.14,
+              "us30y": 4.81,
+              "jp10y": 2.066,
+              "jp30y": 3.354
+            },
+            {
+              "date": "2025-12-31",
+              "us10y": 4.18,
+              "us30y": 4.84,
+              "jp10y": 2.066,
+              "jp30y": 3.354
+            },
+            {
+              "date": "2026-01-02",
+              "us10y": 4.19,
+              "us30y": 4.86,
+              "jp10y": 2.066,
+              "jp30y": 3.354
+            },
+            {
+              "date": "2026-01-05",
+              "us10y": 4.17,
+              "us30y": 4.85,
+              "jp10y": 2.111,
+              "jp30y": 3.393
+            },
+            {
+              "date": "2026-01-06",
+              "us10y": 4.18,
+              "us30y": 4.86,
+              "jp10y": 2.123,
+              "jp30y": 3.42
+            },
+            {
+              "date": "2026-01-07",
+              "us10y": 4.15,
+              "us30y": 4.82,
+              "jp10y": 2.124,
+              "jp30y": 3.428
+            },
+            {
+              "date": "2026-01-08",
+              "us10y": 4.19,
+              "us30y": 4.85,
+              "jp10y": 2.083,
+              "jp30y": 3.435
+            },
+            {
+              "date": "2026-01-09",
+              "us10y": 4.18,
+              "us30y": 4.82,
+              "jp10y": 2.096,
+              "jp30y": 3.399
+            },
+            {
+              "date": "2026-01-12",
+              "us10y": 4.19,
+              "us30y": 4.83,
+              "jp10y": 2.096,
+              "jp30y": 3.399
+            },
+            {
+              "date": "2026-01-13",
+              "us10y": 4.18,
+              "us30y": 4.83,
+              "jp10y": 2.163,
+              "jp30y": 3.462
+            },
+            {
+              "date": "2026-01-14",
+              "us10y": 4.15,
+              "us30y": 4.79,
+              "jp10y": 2.182,
+              "jp30y": 3.486
+            },
+            {
+              "date": "2026-01-15",
+              "us10y": 4.17,
+              "us30y": 4.79,
+              "jp10y": 2.164,
+              "jp30y": 3.454
+            },
+            {
+              "date": "2026-01-16",
+              "us10y": 4.24,
+              "us30y": 4.83,
+              "jp10y": 2.182,
+              "jp30y": 3.462
+            },
+            {
+              "date": "2026-01-19",
+              "us10y": 4.24,
+              "us30y": 4.83,
+              "jp10y": 2.266,
+              "jp30y": 3.562
+            },
+            {
+              "date": "2026-01-20",
+              "us10y": 4.3,
+              "us30y": 4.91,
+              "jp10y": 2.33,
+              "jp30y": 3.765
+            },
+            {
+              "date": "2026-01-21",
+              "us10y": 4.26,
+              "us30y": 4.87,
+              "jp10y": 2.28,
+              "jp30y": 3.647
+            },
+            {
+              "date": "2026-01-22",
+              "us10y": 4.26,
+              "us30y": 4.84,
+              "jp10y": 2.239,
+              "jp30y": 3.604
+            },
+            {
+              "date": "2026-01-23",
+              "us10y": 4.24,
+              "us30y": 4.82,
+              "jp10y": 2.253,
+              "jp30y": 3.585
+            },
+            {
+              "date": "2026-01-26",
+              "us10y": 4.22,
+              "us30y": 4.8,
+              "jp10y": 2.236,
+              "jp30y": 3.568
+            },
+            {
+              "date": "2026-01-27",
+              "us10y": 4.24,
+              "us30y": 4.83,
+              "jp10y": 2.281,
+              "jp30y": 3.599
+            },
+            {
+              "date": "2026-01-28",
+              "us10y": 4.26,
+              "us30y": 4.85,
+              "jp10y": 2.237,
+              "jp30y": 3.579
+            },
+            {
+              "date": "2026-01-29",
+              "us10y": 4.24,
+              "us30y": 4.85,
+              "jp10y": 2.252,
+              "jp30y": 3.566
+            },
+            {
+              "date": "2026-01-30",
+              "us10y": 4.26,
+              "us30y": 4.87,
+              "jp10y": 2.247,
+              "jp30y": 3.577
+            },
+            {
+              "date": "2026-02-02",
+              "us10y": 4.29,
+              "us30y": 4.9,
+              "jp10y": 2.235,
+              "jp30y": 3.583
+            },
+            {
+              "date": "2026-02-03",
+              "us10y": 4.28,
+              "us30y": 4.9,
+              "jp10y": 2.258,
+              "jp30y": 3.58
+            },
+            {
+              "date": "2026-02-04",
+              "us10y": 4.29,
+              "us30y": 4.91,
+              "jp10y": 2.249,
+              "jp30y": 3.579
+            },
+            {
+              "date": "2026-02-05",
+              "us10y": 4.21,
+              "us30y": 4.85,
+              "jp10y": 2.231,
+              "jp30y": 3.525
+            },
+            {
+              "date": "2026-02-06",
+              "us10y": 4.22,
+              "us30y": 4.85,
+              "jp10y": 2.236,
+              "jp30y": 3.513
+            },
+            {
+              "date": "2026-02-09",
+              "us10y": 4.22,
+              "us30y": 4.85,
+              "jp10y": 2.289,
+              "jp30y": 3.52
+            },
+            {
+              "date": "2026-02-10",
+              "us10y": 4.16,
+              "us30y": 4.78,
+              "jp10y": 2.241,
+              "jp30y": 3.468
+            },
+            {
+              "date": "2026-02-11",
+              "us10y": 4.18,
+              "us30y": 4.82,
+              "jp10y": 2.241,
+              "jp30y": 3.468
+            },
+            {
+              "date": "2026-02-12",
+              "us10y": 4.09,
+              "us30y": 4.72,
+              "jp10y": 2.238,
+              "jp30y": 3.413
+            },
+            {
+              "date": "2026-02-13",
+              "us10y": 4.04,
+              "us30y": 4.69,
+              "jp10y": 2.218,
+              "jp30y": 3.422
+            },
+            {
+              "date": "2026-02-16",
+              "us10y": 4.04,
+              "us30y": 4.69,
+              "jp10y": 2.22,
+              "jp30y": 3.461
+            },
+            {
+              "date": "2026-02-17",
+              "us10y": 4.05,
+              "us30y": 4.68,
+              "jp10y": 2.143,
+              "jp30y": 3.382
+            },
+            {
+              "date": "2026-02-18",
+              "us10y": 4.09,
+              "us30y": 4.71,
+              "jp10y": 2.152,
+              "jp30y": 3.371
+            },
+            {
+              "date": "2026-02-19",
+              "us10y": 4.08,
+              "us30y": 4.7,
+              "jp10y": 2.157,
+              "jp30y": 3.34
+            },
+            {
+              "date": "2026-02-20",
+              "us10y": 4.08,
+              "us30y": 4.72,
+              "jp10y": 2.125,
+              "jp30y": 3.323
+            },
+            {
+              "date": "2026-02-23",
+              "us10y": 4.03,
+              "us30y": 4.7,
+              "jp10y": 2.125,
+              "jp30y": 3.323
+            },
+            {
+              "date": "2026-02-24",
+              "us10y": 4.04,
+              "us30y": 4.7,
+              "jp10y": 2.119,
+              "jp30y": 3.295
+            },
+            {
+              "date": "2026-02-25",
+              "us10y": 4.05,
+              "us30y": 4.7,
+              "jp10y": 2.154,
+              "jp30y": 3.38
+            },
+            {
+              "date": "2026-02-26",
+              "us10y": 4.02,
+              "us30y": 4.67,
+              "jp10y": 2.168,
+              "jp30y": 3.366
+            },
+            {
+              "date": "2026-02-27",
+              "us10y": 3.97,
+              "us30y": 4.64,
+              "jp10y": 2.132,
+              "jp30y": 3.342
+            },
+            {
+              "date": "2026-03-02",
+              "us10y": 4.05,
+              "us30y": 4.7,
+              "jp10y": 2.087,
+              "jp30y": 3.293
+            },
+            {
+              "date": "2026-03-03",
+              "us10y": 4.06,
+              "us30y": 4.7,
+              "jp10y": 2.148,
+              "jp30y": 3.337
+            },
+            {
+              "date": "2026-03-04",
+              "us10y": 4.09,
+              "us30y": 4.72,
+              "jp10y": 2.134,
+              "jp30y": 3.353
+            },
+            {
+              "date": "2026-03-05",
+              "us10y": 4.13,
+              "us30y": 4.74,
+              "jp10y": 2.175,
+              "jp30y": 3.374
+            },
+            {
+              "date": "2026-03-06",
+              "us10y": 4.15,
+              "us30y": 4.77,
+              "jp10y": 2.18,
+              "jp30y": 3.384
+            },
+            {
+              "date": "2026-03-09",
+              "us10y": 4.12,
+              "us30y": 4.72,
+              "jp10y": 2.205,
+              "jp30y": 3.44
+            },
+            {
+              "date": "2026-03-10",
+              "us10y": 4.15,
+              "us30y": 4.78,
+              "jp10y": 2.199,
+              "jp30y": 3.412
+            },
+            {
+              "date": "2026-03-11",
+              "us10y": 4.21,
+              "us30y": 4.86,
+              "jp10y": 2.178,
+              "jp30y": 3.421
+            },
+            {
+              "date": "2026-03-12",
+              "us10y": 4.27,
+              "us30y": 4.88,
+              "jp10y": 2.201,
+              "jp30y": 3.451
+            },
+            {
+              "date": "2026-03-13",
+              "us10y": 4.28,
+              "us30y": 4.9,
+              "jp10y": 2.255,
+              "jp30y": 3.479
+            },
+            {
+              "date": "2026-03-16",
+              "us10y": 4.23,
+              "us30y": 4.86,
+              "jp10y": 2.288,
+              "jp30y": 3.515
+            },
+            {
+              "date": "2026-03-17",
+              "us10y": 4.2,
+              "us30y": 4.85,
+              "jp10y": 2.279,
+              "jp30y": 3.514
+            },
+            {
+              "date": "2026-03-18",
+              "us10y": 4.26,
+              "us30y": 4.88,
+              "jp10y": 2.231,
+              "jp30y": 3.462
+            },
+            {
+              "date": "2026-03-19",
+              "us10y": 4.25,
+              "us30y": 4.83,
+              "jp10y": 2.273,
+              "jp30y": 3.491
+            },
+            {
+              "date": "2026-03-20",
+              "us10y": 4.39,
+              "us30y": 4.96,
+              "jp10y": 2.273,
+              "jp30y": 3.491
+            },
+            {
+              "date": "2026-03-23",
+              "us10y": 4.34,
+              "us30y": 4.91,
+              "jp10y": 2.322,
+              "jp30y": 3.522
+            },
+            {
+              "date": "2026-03-24",
+              "us10y": 4.39,
+              "us30y": 4.94,
+              "jp10y": 2.282,
+              "jp30y": 3.509
+            },
+            {
+              "date": "2026-03-25",
+              "us10y": 4.33,
+              "us30y": 4.89,
+              "jp10y": 2.267,
+              "jp30y": 3.479
+            },
+            {
+              "date": "2026-03-26",
+              "us10y": 4.42,
+              "us30y": 4.93,
+              "jp10y": 2.286,
+              "jp30y": 3.489
+            },
+            {
+              "date": "2026-03-27",
+              "us10y": 4.44,
+              "us30y": 4.98,
+              "jp10y": 2.38,
+              "jp30y": 3.629
+            },
+            {
+              "date": "2026-03-30",
+              "us10y": 4.35,
+              "us30y": 4.91,
+              "jp10y": 2.368,
+              "jp30y": 3.698
+            },
+            {
+              "date": "2026-03-31",
+              "us10y": 4.3,
+              "us30y": 4.88,
+              "jp10y": 2.366,
+              "jp30y": 3.64
+            },
+            {
+              "date": "2026-04-01",
+              "us10y": 4.33,
+              "us30y": 4.91,
+              "jp10y": 2.315,
+              "jp30y": 3.564
+            },
+            {
+              "date": "2026-04-02",
+              "us10y": 4.31,
+              "us30y": 4.88,
+              "jp10y": 2.395,
+              "jp30y": 3.614
+            },
+            {
+              "date": "2026-04-03",
+              "us10y": 4.35,
+              "us30y": 4.91,
+              "jp10y": 2.386,
+              "jp30y": 3.611
+            },
+            {
+              "date": "2026-04-06",
+              "us10y": 4.34,
+              "us30y": 4.89,
+              "jp10y": 2.429,
+              "jp30y": 3.672
+            },
+            {
+              "date": "2026-04-07",
+              "us10y": 4.33,
+              "us30y": 4.9,
+              "jp10y": 2.411,
+              "jp30y": 3.667
+            },
+            {
+              "date": "2026-04-08",
+              "us10y": 4.29,
+              "us30y": 4.89,
+              "jp10y": 2.374,
+              "jp30y": 3.615
+            },
+            {
+              "date": "2026-04-09",
+              "us10y": 4.29,
+              "us30y": 4.9,
+              "jp10y": 2.397,
+              "jp30y": 3.619
+            },
+            {
+              "date": "2026-04-10",
+              "us10y": 4.31,
+              "us30y": 4.91,
+              "jp10y": 2.439,
+              "jp30y": 3.638
+            },
+            {
+              "date": "2026-04-13",
+              "us10y": 4.3,
+              "us30y": 4.9,
+              "jp10y": 2.467,
+              "jp30y": 3.698
+            },
+            {
+              "date": "2026-04-14",
+              "us10y": 4.26,
+              "us30y": 4.87,
+              "jp10y": 2.423,
+              "jp30y": 3.633
+            },
+            {
+              "date": "2026-04-15",
+              "us10y": 4.29,
+              "us30y": 4.89,
+              "jp10y": 2.414,
+              "jp30y": 3.606
+            },
+            {
+              "date": "2026-04-16",
+              "us10y": 4.32,
+              "us30y": 4.93,
+              "jp10y": 2.409,
+              "jp30y": 3.623
+            },
+            {
+              "date": "2026-04-17",
+              "us10y": 4.26,
+              "us30y": 4.88,
+              "jp10y": 2.428,
+              "jp30y": 3.622
+            },
+            {
+              "date": "2026-04-20",
+              "us10y": 4.26,
+              "us30y": 4.88,
+              "jp10y": 2.405,
+              "jp30y": 3.586
+            },
+            {
+              "date": "2026-04-21",
+              "us10y": 4.3,
+              "us30y": 4.89,
+              "jp10y": 2.392,
+              "jp30y": 3.581
+            },
+            {
+              "date": "2026-04-22",
+              "us10y": 4.3,
+              "us30y": 4.9,
+              "jp10y": 2.406,
+              "jp30y": 3.597
+            },
+            {
+              "date": "2026-04-23",
+              "us10y": 4.34,
+              "us30y": 4.92,
+              "jp10y": 2.429,
+              "jp30y": 3.63
+            },
+            {
+              "date": "2026-04-24",
+              "us10y": 4.31,
+              "us30y": 4.91,
+              "jp10y": 2.443,
+              "jp30y": 3.66
+            },
+            {
+              "date": "2026-04-27",
+              "us10y": 4.35,
+              "us30y": 4.94,
+              "jp10y": 2.477,
+              "jp30y": 3.675
+            },
+            {
+              "date": "2026-04-28",
+              "us10y": 4.36,
+              "us30y": 4.94,
+              "jp10y": 2.468,
+              "jp30y": 3.647
+            },
+            {
+              "date": "2026-04-29",
+              "us10y": 4.42,
+              "us30y": 4.98,
+              "jp10y": 2.468,
+              "jp30y": 3.647
+            },
+            {
+              "date": "2026-04-30",
+              "us10y": 4.4,
+              "us30y": 4.98,
+              "jp10y": 2.52,
+              "jp30y": 3.721
+            },
+            {
+              "date": "2026-05-01",
+              "us10y": 4.39,
+              "us30y": 4.97,
+              "jp10y": 2.507,
+              "jp30y": 3.706
+            },
+            {
+              "date": "2026-05-04",
+              "us10y": 4.45,
+              "us30y": 5.02,
+              "jp10y": 2.507,
+              "jp30y": 3.706
+            },
+            {
+              "date": "2026-05-05",
+              "us10y": 4.43,
+              "us30y": 4.98,
+              "jp10y": 2.507,
+              "jp30y": 3.706
+            },
+            {
+              "date": "2026-05-06",
+              "us10y": 4.36,
+              "us30y": 4.94,
+              "jp10y": 2.507,
+              "jp30y": 3.706
+            },
+            {
+              "date": "2026-05-07",
+              "us10y": 4.41,
+              "us30y": 4.97,
+              "jp10y": 2.485,
+              "jp30y": 3.714
+            },
+            {
+              "date": "2026-05-08",
+              "us10y": 4.38,
+              "us30y": 4.95,
+              "jp10y": 2.485,
+              "jp30y": 3.706
+            },
+            {
+              "date": "2026-05-11",
+              "us10y": 4.42,
+              "us30y": 4.98,
+              "jp10y": 2.527,
+              "jp30y": 3.741
+            },
+            {
+              "date": "2026-05-12",
+              "us10y": 4.46,
+              "us30y": 5.03,
+              "jp10y": 2.546,
+              "jp30y": 3.78
+            },
+            {
+              "date": "2026-05-13",
+              "us10y": 4.46,
+              "us30y": 5.03,
+              "jp10y": 2.587,
+              "jp30y": 3.783
+            },
+            {
+              "date": "2026-05-14",
+              "us10y": 4.47,
+              "us30y": 5.02,
+              "jp10y": 2.628,
+              "jp30y": 3.852
+            },
+            {
+              "date": "2026-05-15",
+              "us10y": 4.59,
+              "us30y": 5.12,
+              "jp10y": 2.691,
+              "jp30y": 3.922
+            },
+            {
+              "date": "2026-05-18",
+              "us10y": 4.61,
+              "us30y": 5.14,
+              "jp10y": 2.729,
+              "jp30y": 4.0
+            },
+            {
+              "date": "2026-05-19",
+              "us10y": 4.67,
+              "us30y": 5.18,
+              "jp10y": 2.783,
+              "jp30y": 4.043
+            },
+            {
+              "date": "2026-05-20",
+              "us10y": 4.57,
+              "us30y": 5.11,
+              "jp10y": 2.77,
+              "jp30y": 4.0
+            },
+            {
+              "date": "2026-05-21",
+              "us10y": 4.57,
+              "us30y": 5.1,
+              "jp10y": 2.748,
+              "jp30y": 3.939
+            },
+            {
+              "date": "2026-05-22",
+              "us10y": 4.56,
+              "us30y": 5.07,
+              "jp10y": 2.749,
+              "jp30y": 3.931
+            },
+            {
+              "date": "2026-05-25",
+              "us10y": 4.56,
+              "us30y": 5.07,
+              "jp10y": 2.686,
+              "jp30y": 3.876
+            },
+            {
+              "date": "2026-05-26",
+              "us10y": 4.5,
+              "us30y": 5.03,
+              "jp10y": 2.713,
+              "jp30y": 3.866
+            },
+            {
+              "date": "2026-05-27",
+              "us10y": 4.48,
+              "us30y": 5.01,
+              "jp10y": 2.687,
+              "jp30y": 3.856
+            },
+            {
+              "date": "2026-05-28",
+              "us10y": 4.45,
+              "us30y": 4.98,
+              "jp10y": 2.692,
+              "jp30y": 3.896
+            },
+            {
+              "date": "2026-05-29",
+              "us10y": 4.45,
+              "us30y": 4.99,
+              "jp10y": 2.657,
+              "jp30y": 3.859
+            },
+            {
+              "date": "2026-06-01",
+              "us10y": 4.47,
+              "us30y": 4.99,
+              "jp10y": 2.682,
+              "jp30y": 3.863
+            },
+            {
+              "date": "2026-06-02",
+              "us10y": 4.46,
+              "us30y": 4.97,
+              "jp10y": 2.577,
+              "jp30y": 3.81
+            },
+            {
+              "date": "2026-06-03",
+              "us10y": 4.49,
+              "us30y": 4.99,
+              "jp10y": 2.645,
+              "jp30y": 3.817
+            },
+            {
+              "date": "2026-06-04",
+              "us10y": 4.47,
+              "us30y": 4.97,
+              "jp10y": 2.671,
+              "jp30y": 3.833
+            },
+            {
+              "date": "2026-06-05",
+              "us10y": 4.55,
+              "us30y": 5.01,
+              "jp10y": 2.669,
+              "jp30y": 3.841
+            },
+            {
+              "date": "2026-06-08",
+              "us10y": 4.56,
+              "us30y": 5.03,
+              "jp10y": 2.715,
+              "jp30y": 3.876
+            },
+            {
+              "date": "2026-06-09",
+              "us10y": 4.53,
+              "us30y": 5.01,
+              "jp10y": 2.669,
+              "jp30y": 3.823
+            },
+            {
+              "date": "2026-06-10",
+              "us10y": 4.55,
+              "us30y": 5.03,
+              "jp10y": 2.681,
+              "jp30y": 3.811
+            },
+            {
+              "date": "2026-06-11",
+              "us10y": 4.45,
+              "us30y": 4.95,
+              "jp10y": 2.682,
+              "jp30y": 3.823
+            },
+            {
+              "date": "2026-06-12",
+              "us10y": 4.48,
+              "us30y": 4.97,
+              "jp10y": 2.643,
+              "jp30y": 3.767
+            },
+            {
+              "date": "2026-06-15",
+              "us10y": 4.47,
+              "us30y": 4.97,
+              "jp10y": 2.589,
+              "jp30y": 3.725
+            },
+            {
+              "date": "2026-06-16",
+              "us10y": 4.43,
+              "us30y": 4.93,
+              "jp10y": 2.655,
+              "jp30y": 3.747
+            },
+            {
+              "date": "2026-06-17",
+              "us10y": 4.49,
+              "us30y": 4.93,
+              "jp10y": 2.613,
+              "jp30y": 3.709
+            },
+            {
+              "date": "2026-06-18",
+              "us10y": 4.49,
+              "us30y": 4.93,
+              "jp10y": 2.628,
+              "jp30y": 3.737
+            },
+            {
+              "date": "2026-06-19",
+              "us10y": 4.49,
+              "us30y": 4.93,
+              "jp10y": 2.656,
+              "jp30y": 3.786
+            }
+          ]
+        },
+        "weekly": {
+          "label": "주봉",
+          "range": "최근 2년",
+          "frequency": "weekly",
+          "points": [
+            {
+              "date": "2024-06-28",
+              "us10y": 4.36,
+              "us30y": 4.51,
+              "jp10y": 1.062,
+              "jp30y": 2.153
+            },
+            {
+              "date": "2024-07-05",
+              "us10y": 4.28,
+              "us30y": 4.47,
+              "jp10y": 1.072,
+              "jp30y": 2.2
+            },
+            {
+              "date": "2024-07-12",
+              "us10y": 4.18,
+              "us30y": 4.39,
+              "jp10y": 1.055,
+              "jp30y": 2.177
+            },
+            {
+              "date": "2024-07-19",
+              "us10y": 4.25,
+              "us30y": 4.45,
+              "jp10y": 1.053,
+              "jp30y": 2.148
+            },
+            {
+              "date": "2024-07-26",
+              "us10y": 4.2,
+              "us30y": 4.45,
+              "jp10y": 1.068,
+              "jp30y": 2.154
+            },
+            {
+              "date": "2024-08-02",
+              "us10y": 3.8,
+              "us30y": 4.11,
+              "jp10y": 0.974,
+              "jp30y": 2.098
+            },
+            {
+              "date": "2024-08-09",
+              "us10y": 3.94,
+              "us30y": 4.23,
+              "jp10y": 0.881,
+              "jp30y": 2.081
+            },
+            {
+              "date": "2024-08-16",
+              "us10y": 3.89,
+              "us30y": 4.15,
+              "jp10y": 0.898,
+              "jp30y": 2.068
+            },
+            {
+              "date": "2024-08-23",
+              "us10y": 3.81,
+              "us30y": 4.1,
+              "jp10y": 0.919,
+              "jp30y": 2.086
+            },
+            {
+              "date": "2024-08-30",
+              "us10y": 3.91,
+              "us30y": 4.2,
+              "jp10y": 0.922,
+              "jp30y": 2.111
+            },
+            {
+              "date": "2024-09-06",
+              "us10y": 3.72,
+              "us30y": 4.03,
+              "jp10y": 0.88,
+              "jp30y": 2.045
+            },
+            {
+              "date": "2024-09-13",
+              "us10y": 3.66,
+              "us30y": 3.98,
+              "jp10y": 0.878,
+              "jp30y": 2.045
+            },
+            {
+              "date": "2024-09-20",
+              "us10y": 3.73,
+              "us30y": 4.07,
+              "jp10y": 0.898,
+              "jp30y": 2.103
+            },
+            {
+              "date": "2024-09-27",
+              "us10y": 3.75,
+              "us30y": 4.1,
+              "jp10y": 0.849,
+              "jp30y": 2.122
+            },
+            {
+              "date": "2024-10-04",
+              "us10y": 3.98,
+              "us30y": 4.26,
+              "jp10y": 0.886,
+              "jp30y": 2.1
+            },
+            {
+              "date": "2024-10-11",
+              "us10y": 4.08,
+              "us30y": 4.39,
+              "jp10y": 0.95,
+              "jp30y": 2.154
+            },
+            {
+              "date": "2024-10-18",
+              "us10y": 4.08,
+              "us30y": 4.38,
+              "jp10y": 0.972,
+              "jp30y": 2.139
+            },
+            {
+              "date": "2024-10-25",
+              "us10y": 4.25,
+              "us30y": 4.51,
+              "jp10y": 0.955,
+              "jp30y": 2.159
+            },
+            {
+              "date": "2024-11-01",
+              "us10y": 4.37,
+              "us30y": 4.57,
+              "jp10y": 0.952,
+              "jp30y": 2.189
+            },
+            {
+              "date": "2024-11-08",
+              "us10y": 4.3,
+              "us30y": 4.47,
+              "jp10y": 1.011,
+              "jp30y": 2.218
+            },
+            {
+              "date": "2024-11-15",
+              "us10y": 4.43,
+              "us30y": 4.6,
+              "jp10y": 1.082,
+              "jp30y": 2.264
+            },
+            {
+              "date": "2024-11-22",
+              "us10y": 4.41,
+              "us30y": 4.6,
+              "jp10y": 1.092,
+              "jp30y": 2.255
+            },
+            {
+              "date": "2024-11-29",
+              "us10y": 4.18,
+              "us30y": 4.36,
+              "jp10y": 1.064,
+              "jp30y": 2.252
+            },
+            {
+              "date": "2024-12-06",
+              "us10y": 4.15,
+              "us30y": 4.34,
+              "jp10y": 1.068,
+              "jp30y": 2.236
+            },
+            {
+              "date": "2024-12-13",
+              "us10y": 4.4,
+              "us30y": 4.61,
+              "jp10y": 1.055,
+              "jp30y": 2.22
+            },
+            {
+              "date": "2024-12-20",
+              "us10y": 4.52,
+              "us30y": 4.72,
+              "jp10y": 1.07,
+              "jp30y": 2.229
+            },
+            {
+              "date": "2024-12-27",
+              "us10y": 4.62,
+              "us30y": 4.82,
+              "jp10y": 1.119,
+              "jp30y": 2.259
+            },
+            {
+              "date": "2025-01-03",
+              "us10y": 4.6,
+              "us30y": 4.82,
+              "jp10y": 1.111,
+              "jp30y": 2.252
+            },
+            {
+              "date": "2025-01-10",
+              "us10y": 4.77,
+              "us30y": 4.96,
+              "jp10y": 1.202,
+              "jp30y": 2.301
+            },
+            {
+              "date": "2025-01-17",
+              "us10y": 4.61,
+              "us30y": 4.84,
+              "jp10y": 1.207,
+              "jp30y": 2.29
+            },
+            {
+              "date": "2025-01-24",
+              "us10y": 4.63,
+              "us30y": 4.85,
+              "jp10y": 1.238,
+              "jp30y": 2.277
+            },
+            {
+              "date": "2025-01-31",
+              "us10y": 4.58,
+              "us30y": 4.83,
+              "jp10y": 1.25,
+              "jp30y": 2.29
+            },
+            {
+              "date": "2025-02-07",
+              "us10y": 4.49,
+              "us30y": 4.69,
+              "jp10y": 1.307,
+              "jp30y": 2.29
+            },
+            {
+              "date": "2025-02-14",
+              "us10y": 4.47,
+              "us30y": 4.69,
+              "jp10y": 1.357,
+              "jp30y": 2.31
+            },
+            {
+              "date": "2025-02-21",
+              "us10y": 4.42,
+              "us30y": 4.67,
+              "jp10y": 1.427,
+              "jp30y": 2.335
+            },
+            {
+              "date": "2025-02-28",
+              "us10y": 4.24,
+              "us30y": 4.51,
+              "jp10y": 1.378,
+              "jp30y": 2.35
+            },
+            {
+              "date": "2025-03-07",
+              "us10y": 4.32,
+              "us30y": 4.62,
+              "jp10y": 1.523,
+              "jp30y": 2.496
+            },
+            {
+              "date": "2025-03-14",
+              "us10y": 4.31,
+              "us30y": 4.62,
+              "jp10y": 1.522,
+              "jp30y": 2.535
+            },
+            {
+              "date": "2025-03-21",
+              "us10y": 4.25,
+              "us30y": 4.59,
+              "jp10y": 1.527,
+              "jp30y": 2.539
+            },
+            {
+              "date": "2025-03-28",
+              "us10y": 4.27,
+              "us30y": 4.64,
+              "jp10y": 1.551,
+              "jp30y": 2.486
+            },
+            {
+              "date": "2025-04-04",
+              "us10y": 4.01,
+              "us30y": 4.41,
+              "jp10y": 1.176,
+              "jp30y": 2.303
+            },
+            {
+              "date": "2025-04-11",
+              "us10y": 4.48,
+              "us30y": 4.85,
+              "jp10y": 1.357,
+              "jp30y": 2.661
+            },
+            {
+              "date": "2025-04-18",
+              "us10y": 4.34,
+              "us30y": 4.8,
+              "jp10y": 1.302,
+              "jp30y": 2.65
+            },
+            {
+              "date": "2025-04-25",
+              "us10y": 4.29,
+              "us30y": 4.74,
+              "jp10y": 1.347,
+              "jp30y": 2.639
+            },
+            {
+              "date": "2025-05-02",
+              "us10y": 4.33,
+              "us30y": 4.79,
+              "jp10y": 1.283,
+              "jp30y": 2.693
+            },
+            {
+              "date": "2025-05-09",
+              "us10y": 4.37,
+              "us30y": 4.83,
+              "jp10y": 1.37,
+              "jp30y": 2.802
+            },
+            {
+              "date": "2025-05-16",
+              "us10y": 4.43,
+              "us30y": 4.89,
+              "jp10y": 1.466,
+              "jp30y": 2.84
+            },
+            {
+              "date": "2025-05-23",
+              "us10y": 4.51,
+              "us30y": 5.04,
+              "jp10y": 1.559,
+              "jp30y": 2.925
+            },
+            {
+              "date": "2025-05-30",
+              "us10y": 4.41,
+              "us30y": 4.92,
+              "jp10y": 1.518,
+              "jp30y": 2.846
+            },
+            {
+              "date": "2025-06-06",
+              "us10y": 4.51,
+              "us30y": 4.97,
+              "jp10y": 1.477,
+              "jp30y": 2.78
+            },
+            {
+              "date": "2025-06-13",
+              "us10y": 4.41,
+              "us30y": 4.9,
+              "jp10y": 1.429,
+              "jp30y": 2.781
+            },
+            {
+              "date": "2025-06-20",
+              "us10y": 4.38,
+              "us30y": 4.89,
+              "jp10y": 1.424,
+              "jp30y": 2.798
+            },
+            {
+              "date": "2025-06-27",
+              "us10y": 4.29,
+              "us30y": 4.85,
+              "jp10y": 1.459,
+              "jp30y": 2.8
+            },
+            {
+              "date": "2025-07-04",
+              "us10y": 4.35,
+              "us30y": 4.86,
+              "jp10y": 1.444,
+              "jp30y": 2.852
+            },
+            {
+              "date": "2025-07-11",
+              "us10y": 4.43,
+              "us30y": 4.96,
+              "jp10y": 1.507,
+              "jp30y": 2.992
+            },
+            {
+              "date": "2025-07-18",
+              "us10y": 4.44,
+              "us30y": 5.0,
+              "jp10y": 1.528,
+              "jp30y": 3.014
+            },
+            {
+              "date": "2025-07-25",
+              "us10y": 4.4,
+              "us30y": 4.92,
+              "jp10y": 1.605,
+              "jp30y": 3.006
+            },
+            {
+              "date": "2025-08-01",
+              "us10y": 4.23,
+              "us30y": 4.81,
+              "jp10y": 1.56,
+              "jp30y": 3.037
+            },
+            {
+              "date": "2025-08-08",
+              "us10y": 4.27,
+              "us30y": 4.85,
+              "jp10y": 1.502,
+              "jp30y": 3.014
+            },
+            {
+              "date": "2025-08-15",
+              "us10y": 4.33,
+              "us30y": 4.92,
+              "jp10y": 1.574,
+              "jp30y": 3.032
+            },
+            {
+              "date": "2025-08-22",
+              "us10y": 4.26,
+              "us30y": 4.88,
+              "jp10y": 1.626,
+              "jp30y": 3.12
+            },
+            {
+              "date": "2025-08-29",
+              "us10y": 4.23,
+              "us30y": 4.92,
+              "jp10y": 1.613,
+              "jp30y": 3.096
+            },
+            {
+              "date": "2025-09-05",
+              "us10y": 4.1,
+              "us30y": 4.78,
+              "jp10y": 1.59,
+              "jp30y": 3.128
+            },
+            {
+              "date": "2025-09-12",
+              "us10y": 4.06,
+              "us30y": 4.68,
+              "jp10y": 1.613,
+              "jp30y": 3.103
+            },
+            {
+              "date": "2025-09-19",
+              "us10y": 4.14,
+              "us30y": 4.75,
+              "jp10y": 1.655,
+              "jp30y": 3.072
+            },
+            {
+              "date": "2025-09-26",
+              "us10y": 4.2,
+              "us30y": 4.77,
+              "jp10y": 1.669,
+              "jp30y": 3.084
+            },
+            {
+              "date": "2025-10-03",
+              "us10y": 4.13,
+              "us30y": 4.71,
+              "jp10y": 1.667,
+              "jp30y": 3.072
+            },
+            {
+              "date": "2025-10-10",
+              "us10y": 4.05,
+              "us30y": 4.63,
+              "jp10y": 1.697,
+              "jp30y": 3.187
+            },
+            {
+              "date": "2025-10-17",
+              "us10y": 4.02,
+              "us30y": 4.6,
+              "jp10y": 1.638,
+              "jp30y": 3.134
+            },
+            {
+              "date": "2025-10-24",
+              "us10y": 4.02,
+              "us30y": 4.59,
+              "jp10y": 1.667,
+              "jp30y": 3.081
+            },
+            {
+              "date": "2025-10-31",
+              "us10y": 4.11,
+              "us30y": 4.67,
+              "jp10y": 1.67,
+              "jp30y": 3.068
+            },
+            {
+              "date": "2025-11-07",
+              "us10y": 4.11,
+              "us30y": 4.7,
+              "jp10y": 1.688,
+              "jp30y": 3.117
+            },
+            {
+              "date": "2025-11-14",
+              "us10y": 4.14,
+              "us30y": 4.74,
+              "jp10y": 1.714,
+              "jp30y": 3.205
+            },
+            {
+              "date": "2025-11-21",
+              "us10y": 4.06,
+              "us30y": 4.71,
+              "jp10y": 1.792,
+              "jp30y": 3.291
+            },
+            {
+              "date": "2025-11-28",
+              "us10y": 4.02,
+              "us30y": 4.67,
+              "jp10y": 1.812,
+              "jp30y": 3.3
+            },
+            {
+              "date": "2025-12-05",
+              "us10y": 4.14,
+              "us30y": 4.79,
+              "jp10y": 1.951,
+              "jp30y": 3.315
+            },
+            {
+              "date": "2025-12-12",
+              "us10y": 4.19,
+              "us30y": 4.85,
+              "jp10y": 1.956,
+              "jp30y": 3.309
+            },
+            {
+              "date": "2025-12-19",
+              "us10y": 4.16,
+              "us30y": 4.82,
+              "jp10y": 2.021,
+              "jp30y": 3.362
+            },
+            {
+              "date": "2025-12-26",
+              "us10y": 4.14,
+              "us30y": 4.81,
+              "jp10y": 2.039,
+              "jp30y": 3.335
+            },
+            {
+              "date": "2026-01-02",
+              "us10y": 4.19,
+              "us30y": 4.86,
+              "jp10y": 2.066,
+              "jp30y": 3.354
+            },
+            {
+              "date": "2026-01-09",
+              "us10y": 4.18,
+              "us30y": 4.82,
+              "jp10y": 2.096,
+              "jp30y": 3.399
+            },
+            {
+              "date": "2026-01-16",
+              "us10y": 4.24,
+              "us30y": 4.83,
+              "jp10y": 2.182,
+              "jp30y": 3.462
+            },
+            {
+              "date": "2026-01-23",
+              "us10y": 4.24,
+              "us30y": 4.82,
+              "jp10y": 2.253,
+              "jp30y": 3.585
+            },
+            {
+              "date": "2026-01-30",
+              "us10y": 4.26,
+              "us30y": 4.87,
+              "jp10y": 2.247,
+              "jp30y": 3.577
+            },
+            {
+              "date": "2026-02-06",
+              "us10y": 4.22,
+              "us30y": 4.85,
+              "jp10y": 2.236,
+              "jp30y": 3.513
+            },
+            {
+              "date": "2026-02-13",
+              "us10y": 4.04,
+              "us30y": 4.69,
+              "jp10y": 2.218,
+              "jp30y": 3.422
+            },
+            {
+              "date": "2026-02-20",
+              "us10y": 4.08,
+              "us30y": 4.72,
+              "jp10y": 2.125,
+              "jp30y": 3.323
+            },
+            {
+              "date": "2026-02-27",
+              "us10y": 3.97,
+              "us30y": 4.64,
+              "jp10y": 2.132,
+              "jp30y": 3.342
+            },
+            {
+              "date": "2026-03-06",
+              "us10y": 4.15,
+              "us30y": 4.77,
+              "jp10y": 2.18,
+              "jp30y": 3.384
+            },
+            {
+              "date": "2026-03-13",
+              "us10y": 4.28,
+              "us30y": 4.9,
+              "jp10y": 2.255,
+              "jp30y": 3.479
+            },
+            {
+              "date": "2026-03-20",
+              "us10y": 4.39,
+              "us30y": 4.96,
+              "jp10y": 2.273,
+              "jp30y": 3.491
+            },
+            {
+              "date": "2026-03-27",
+              "us10y": 4.44,
+              "us30y": 4.98,
+              "jp10y": 2.38,
+              "jp30y": 3.629
+            },
+            {
+              "date": "2026-04-03",
+              "us10y": 4.35,
+              "us30y": 4.91,
+              "jp10y": 2.386,
+              "jp30y": 3.611
+            },
+            {
+              "date": "2026-04-10",
+              "us10y": 4.31,
+              "us30y": 4.91,
+              "jp10y": 2.439,
+              "jp30y": 3.638
+            },
+            {
+              "date": "2026-04-17",
+              "us10y": 4.26,
+              "us30y": 4.88,
+              "jp10y": 2.428,
+              "jp30y": 3.622
+            },
+            {
+              "date": "2026-04-24",
+              "us10y": 4.31,
+              "us30y": 4.91,
+              "jp10y": 2.443,
+              "jp30y": 3.66
+            },
+            {
+              "date": "2026-05-01",
+              "us10y": 4.39,
+              "us30y": 4.97,
+              "jp10y": 2.507,
+              "jp30y": 3.706
+            },
+            {
+              "date": "2026-05-08",
+              "us10y": 4.38,
+              "us30y": 4.95,
+              "jp10y": 2.485,
+              "jp30y": 3.706
+            },
+            {
+              "date": "2026-05-15",
+              "us10y": 4.59,
+              "us30y": 5.12,
+              "jp10y": 2.691,
+              "jp30y": 3.922
+            },
+            {
+              "date": "2026-05-22",
+              "us10y": 4.56,
+              "us30y": 5.07,
+              "jp10y": 2.749,
+              "jp30y": 3.931
+            },
+            {
+              "date": "2026-05-29",
+              "us10y": 4.45,
+              "us30y": 4.99,
+              "jp10y": 2.657,
+              "jp30y": 3.859
+            },
+            {
+              "date": "2026-06-05",
+              "us10y": 4.55,
+              "us30y": 5.01,
+              "jp10y": 2.669,
+              "jp30y": 3.841
+            },
+            {
+              "date": "2026-06-12",
+              "us10y": 4.48,
+              "us30y": 4.97,
+              "jp10y": 2.643,
+              "jp30y": 3.767
+            },
+            {
+              "date": "2026-06-19",
+              "us10y": 4.49,
+              "us30y": 4.93,
+              "jp10y": 2.656,
+              "jp30y": 3.786
+            }
+          ]
+        },
+        "monthly": {
+          "label": "월봉",
+          "range": "최근 5년",
+          "frequency": "monthly",
+          "points": [
+            {
+              "date": "2021-07-30",
+              "us10y": 1.24,
+              "us30y": 1.89,
+              "jp10y": 0.022,
+              "jp30y": 0.642
+            },
+            {
+              "date": "2021-08-31",
+              "us10y": 1.3,
+              "us30y": 1.92,
+              "jp10y": 0.03,
+              "jp30y": 0.654
+            },
+            {
+              "date": "2021-09-30",
+              "us10y": 1.52,
+              "us30y": 2.08,
+              "jp10y": 0.081,
+              "jp30y": 0.677
+            },
+            {
+              "date": "2021-10-29",
+              "us10y": 1.55,
+              "us30y": 1.93,
+              "jp10y": 0.101,
+              "jp30y": 0.674
+            },
+            {
+              "date": "2021-11-30",
+              "us10y": 1.43,
+              "us30y": 1.78,
+              "jp10y": 0.067,
+              "jp30y": 0.671
+            },
+            {
+              "date": "2021-12-31",
+              "us10y": 1.52,
+              "us30y": 1.9,
+              "jp10y": 0.089,
+              "jp30y": 0.693
+            },
+            {
+              "date": "2022-01-31",
+              "us10y": 1.79,
+              "us30y": 2.11,
+              "jp10y": 0.177,
+              "jp30y": 0.768
+            },
+            {
+              "date": "2022-02-28",
+              "us10y": 1.83,
+              "us30y": 2.17,
+              "jp10y": 0.191,
+              "jp30y": 0.867
+            },
+            {
+              "date": "2022-03-31",
+              "us10y": 2.32,
+              "us30y": 2.44,
+              "jp10y": 0.218,
+              "jp30y": 0.906
+            },
+            {
+              "date": "2022-04-29",
+              "us10y": 2.89,
+              "us30y": 2.96,
+              "jp10y": 0.22,
+              "jp30y": 0.974
+            },
+            {
+              "date": "2022-05-31",
+              "us10y": 2.85,
+              "us30y": 3.07,
+              "jp10y": 0.246,
+              "jp30y": 1.021
+            },
+            {
+              "date": "2022-06-30",
+              "us10y": 2.98,
+              "us30y": 3.14,
+              "jp10y": 0.242,
+              "jp30y": 1.213
+            },
+            {
+              "date": "2022-07-29",
+              "us10y": 2.67,
+              "us30y": 3.0,
+              "jp10y": 0.185,
+              "jp30y": 1.204
+            },
+            {
+              "date": "2022-08-31",
+              "us10y": 3.15,
+              "us30y": 3.27,
+              "jp10y": 0.235,
+              "jp30y": 1.204
+            },
+            {
+              "date": "2022-09-30",
+              "us10y": 3.83,
+              "us30y": 3.79,
+              "jp10y": 0.277,
+              "jp30y": 1.391
+            },
+            {
+              "date": "2022-10-31",
+              "us10y": 4.1,
+              "us30y": 4.22,
+              "jp10y": 0.253,
+              "jp30y": 1.417
+            },
+            {
+              "date": "2022-11-30",
+              "us10y": 3.68,
+              "us30y": 3.8,
+              "jp10y": 0.276,
+              "jp30y": 1.5
+            },
+            {
+              "date": "2022-12-30",
+              "us10y": 3.88,
+              "us30y": 3.97,
+              "jp10y": 0.454,
+              "jp30y": 1.578
+            },
+            {
+              "date": "2023-01-31",
+              "us10y": 3.52,
+              "us30y": 3.65,
+              "jp10y": 0.511,
+              "jp30y": 1.6
+            },
+            {
+              "date": "2023-02-28",
+              "us10y": 3.92,
+              "us30y": 3.93,
+              "jp10y": 0.524,
+              "jp30y": 1.393
+            },
+            {
+              "date": "2023-03-31",
+              "us10y": 3.48,
+              "us30y": 3.67,
+              "jp10y": 0.389,
+              "jp30y": 1.274
+            },
+            {
+              "date": "2023-04-28",
+              "us10y": 3.44,
+              "us30y": 3.67,
+              "jp10y": 0.403,
+              "jp30y": 1.247
+            },
+            {
+              "date": "2023-05-31",
+              "us10y": 3.64,
+              "us30y": 3.85,
+              "jp10y": 0.448,
+              "jp30y": 1.273
+            },
+            {
+              "date": "2023-06-30",
+              "us10y": 3.81,
+              "us30y": 3.85,
+              "jp10y": 0.426,
+              "jp30y": 1.262
+            },
+            {
+              "date": "2023-07-31",
+              "us10y": 3.97,
+              "us30y": 4.02,
+              "jp10y": 0.605,
+              "jp30y": 1.458
+            },
+            {
+              "date": "2023-08-31",
+              "us10y": 4.09,
+              "us30y": 4.2,
+              "jp10y": 0.657,
+              "jp30y": 1.598
+            },
+            {
+              "date": "2023-09-29",
+              "us10y": 4.59,
+              "us30y": 4.73,
+              "jp10y": 0.774,
+              "jp30y": 1.649
+            },
+            {
+              "date": "2023-10-31",
+              "us10y": 4.88,
+              "us30y": 5.04,
+              "jp10y": 0.952,
+              "jp30y": 1.864
+            },
+            {
+              "date": "2023-11-30",
+              "us10y": 4.37,
+              "us30y": 4.54,
+              "jp10y": 0.691,
+              "jp30y": 1.683
+            },
+            {
+              "date": "2023-12-29",
+              "us10y": 3.88,
+              "us30y": 4.03,
+              "jp10y": 0.647,
+              "jp30y": 1.662
+            },
+            {
+              "date": "2024-01-31",
+              "us10y": 3.99,
+              "us30y": 4.22,
+              "jp10y": 0.737,
+              "jp30y": 1.79
+            },
+            {
+              "date": "2024-02-29",
+              "us10y": 4.25,
+              "us30y": 4.38,
+              "jp10y": 0.724,
+              "jp30y": 1.734
+            },
+            {
+              "date": "2024-03-29",
+              "us10y": 4.2,
+              "us30y": 4.34,
+              "jp10y": 0.75,
+              "jp30y": 1.789
+            },
+            {
+              "date": "2024-04-30",
+              "us10y": 4.69,
+              "us30y": 4.79,
+              "jp10y": 0.879,
+              "jp30y": 1.911
+            },
+            {
+              "date": "2024-05-31",
+              "us10y": 4.51,
+              "us30y": 4.65,
+              "jp10y": 1.08,
+              "jp30y": 2.155
+            },
+            {
+              "date": "2024-06-28",
+              "us10y": 4.36,
+              "us30y": 4.51,
+              "jp10y": 1.062,
+              "jp30y": 2.153
+            },
+            {
+              "date": "2024-07-31",
+              "us10y": 4.09,
+              "us30y": 4.35,
+              "jp10y": 1.07,
+              "jp30y": 2.176
+            },
+            {
+              "date": "2024-08-30",
+              "us10y": 3.91,
+              "us30y": 4.2,
+              "jp10y": 0.922,
+              "jp30y": 2.111
+            },
+            {
+              "date": "2024-09-30",
+              "us10y": 3.81,
+              "us30y": 4.14,
+              "jp10y": 0.894,
+              "jp30y": 2.092
+            },
+            {
+              "date": "2024-10-31",
+              "us10y": 4.28,
+              "us30y": 4.47,
+              "jp10y": 0.947,
+              "jp30y": 2.189
+            },
+            {
+              "date": "2024-11-29",
+              "us10y": 4.18,
+              "us30y": 4.36,
+              "jp10y": 1.064,
+              "jp30y": 2.252
+            },
+            {
+              "date": "2024-12-31",
+              "us10y": 4.58,
+              "us30y": 4.78,
+              "jp10y": 1.111,
+              "jp30y": 2.252
+            },
+            {
+              "date": "2025-01-31",
+              "us10y": 4.58,
+              "us30y": 4.83,
+              "jp10y": 1.25,
+              "jp30y": 2.29
+            },
+            {
+              "date": "2025-02-28",
+              "us10y": 4.24,
+              "us30y": 4.51,
+              "jp10y": 1.378,
+              "jp30y": 2.35
+            },
+            {
+              "date": "2025-03-31",
+              "us10y": 4.23,
+              "us30y": 4.59,
+              "jp10y": 1.497,
+              "jp30y": 2.48
+            },
+            {
+              "date": "2025-04-30",
+              "us10y": 4.17,
+              "us30y": 4.66,
+              "jp10y": 1.33,
+              "jp30y": 2.645
+            },
+            {
+              "date": "2025-05-30",
+              "us10y": 4.41,
+              "us30y": 4.92,
+              "jp10y": 1.518,
+              "jp30y": 2.846
+            },
+            {
+              "date": "2025-06-30",
+              "us10y": 4.24,
+              "us30y": 4.78,
+              "jp10y": 1.462,
+              "jp30y": 2.803
+            },
+            {
+              "date": "2025-07-31",
+              "us10y": 4.37,
+              "us30y": 4.89,
+              "jp10y": 1.559,
+              "jp30y": 3.026
+            },
+            {
+              "date": "2025-08-29",
+              "us10y": 4.23,
+              "us30y": 4.92,
+              "jp10y": 1.613,
+              "jp30y": 3.096
+            },
+            {
+              "date": "2025-09-30",
+              "us10y": 4.16,
+              "us30y": 4.73,
+              "jp10y": 1.662,
+              "jp30y": 3.067
+            },
+            {
+              "date": "2025-10-31",
+              "us10y": 4.11,
+              "us30y": 4.67,
+              "jp10y": 1.67,
+              "jp30y": 3.068
+            },
+            {
+              "date": "2025-11-28",
+              "us10y": 4.02,
+              "us30y": 4.67,
+              "jp10y": 1.812,
+              "jp30y": 3.3
+            },
+            {
+              "date": "2025-12-31",
+              "us10y": 4.18,
+              "us30y": 4.84,
+              "jp10y": 2.066,
+              "jp30y": 3.354
+            },
+            {
+              "date": "2026-01-30",
+              "us10y": 4.26,
+              "us30y": 4.87,
+              "jp10y": 2.247,
+              "jp30y": 3.577
+            },
+            {
+              "date": "2026-02-27",
+              "us10y": 3.97,
+              "us30y": 4.64,
+              "jp10y": 2.132,
+              "jp30y": 3.342
+            },
+            {
+              "date": "2026-03-31",
+              "us10y": 4.3,
+              "us30y": 4.88,
+              "jp10y": 2.366,
+              "jp30y": 3.64
+            },
+            {
+              "date": "2026-04-30",
+              "us10y": 4.4,
+              "us30y": 4.98,
+              "jp10y": 2.52,
+              "jp30y": 3.721
+            },
+            {
+              "date": "2026-05-29",
+              "us10y": 4.45,
+              "us30y": 4.99,
+              "jp10y": 2.657,
+              "jp30y": 3.859
+            },
+            {
+              "date": "2026-06-19",
+              "us10y": 4.49,
+              "us30y": 4.93,
+              "jp10y": 2.656,
+              "jp30y": 3.786
+            }
+          ]
+        }
+      },
+      "latest": {
+        "date": "2026-06-19",
+        "us10y": 4.49,
+        "us30y": 4.93,
+        "jp10y": 2.656,
+        "jp30y": 3.786
+      }
+    },
+    "dollar_index": {
+      "title": "광의 달러지수",
+      "series_id": "DTWEXBGS",
+      "label": "Trade Weighted U.S. Dollar Index: Broad, Goods and Services",
+      "unit": "index",
+      "source": "FRED DTWEXBGS",
+      "frequency": "daily",
+      "points": [
+        {
+          "date": "2025-09-24",
+          "value": 120.1707
+        },
+        {
+          "date": "2025-09-25",
+          "value": 120.5419
+        },
+        {
+          "date": "2025-09-26",
+          "value": 120.4349
+        },
+        {
+          "date": "2025-09-29",
+          "value": 120.115
+        },
+        {
+          "date": "2025-09-30",
+          "value": 120.1368
+        },
+        {
+          "date": "2025-10-01",
+          "value": 120.1502
+        },
+        {
+          "date": "2025-10-02",
+          "value": 120.4296
+        },
+        {
+          "date": "2025-10-03",
+          "value": 120.0881
+        },
+        {
+          "date": "2025-10-06",
+          "value": 120.2722
+        },
+        {
+          "date": "2025-10-07",
+          "value": 120.4884
+        },
+        {
+          "date": "2025-10-08",
+          "value": 120.7766
+        },
+        {
+          "date": "2025-10-09",
+          "value": 121.0902
+        },
+        {
+          "date": "2025-10-10",
+          "value": 121.1163
+        },
+        {
+          "date": "2025-10-14",
+          "value": 121.1822
+        },
+        {
+          "date": "2025-10-15",
+          "value": 120.8642
+        },
+        {
+          "date": "2025-10-16",
+          "value": 120.6698
+        },
+        {
+          "date": "2025-10-17",
+          "value": 120.7028
+        },
+        {
+          "date": "2025-10-20",
+          "value": 120.6209
+        },
+        {
+          "date": "2025-10-21",
+          "value": 120.8895
+        },
+        {
+          "date": "2025-10-22",
+          "value": 120.8958
+        },
+        {
+          "date": "2025-10-23",
+          "value": 120.9531
+        },
+        {
+          "date": "2025-10-24",
+          "value": 120.9345
+        },
+        {
+          "date": "2025-10-27",
+          "value": 120.7988
+        },
+        {
+          "date": "2025-10-28",
+          "value": 120.6361
+        },
+        {
+          "date": "2025-10-29",
+          "value": 120.5312
+        },
+        {
+          "date": "2025-10-30",
+          "value": 121.2832
+        },
+        {
+          "date": "2025-10-31",
+          "value": 121.3859
+        },
+        {
+          "date": "2025-11-03",
+          "value": 121.4512
+        },
+        {
+          "date": "2025-11-04",
+          "value": 121.8271
+        },
+        {
+          "date": "2025-11-05",
+          "value": 121.8482
+        },
+        {
+          "date": "2025-11-06",
+          "value": 121.6948
+        },
+        {
+          "date": "2025-11-07",
+          "value": 121.388
+        },
+        {
+          "date": "2025-11-10",
+          "value": 121.2984
+        },
+        {
+          "date": "2025-11-12",
+          "value": 121.0458
+        },
+        {
+          "date": "2025-11-13",
+          "value": 120.7725
+        },
+        {
+          "date": "2025-11-14",
+          "value": 120.9666
+        },
+        {
+          "date": "2025-11-17",
+          "value": 121.1146
+        },
+        {
+          "date": "2025-11-18",
+          "value": 121.2127
+        },
+        {
+          "date": "2025-11-19",
+          "value": 121.4978
+        },
+        {
+          "date": "2025-11-20",
+          "value": 121.6889
+        },
+        {
+          "date": "2025-11-21",
+          "value": 121.8653
+        },
+        {
+          "date": "2025-11-24",
+          "value": 121.9171
+        },
+        {
+          "date": "2025-11-25",
+          "value": 121.6335
+        },
+        {
+          "date": "2025-11-26",
+          "value": 121.2437
+        },
+        {
+          "date": "2025-11-28",
+          "value": 121.0527
+        },
+        {
+          "date": "2025-12-01",
+          "value": 120.9862
+        },
+        {
+          "date": "2025-12-02",
+          "value": 121.1467
+        },
+        {
+          "date": "2025-12-03",
+          "value": 120.7336
+        },
+        {
+          "date": "2025-12-04",
+          "value": 120.6766
+        },
+        {
+          "date": "2025-12-05",
+          "value": 120.6863
+        },
+        {
+          "date": "2025-12-08",
+          "value": 120.776
+        },
+        {
+          "date": "2025-12-09",
+          "value": 120.6832
+        },
+        {
+          "date": "2025-12-10",
+          "value": 120.6752
+        },
+        {
+          "date": "2025-12-11",
+          "value": 119.98
+        },
+        {
+          "date": "2025-12-12",
+          "value": 120.1442
+        },
+        {
+          "date": "2025-12-15",
+          "value": 119.9561
+        },
+        {
+          "date": "2025-12-16",
+          "value": 119.8902
+        },
+        {
+          "date": "2025-12-17",
+          "value": 120.155
+        },
+        {
+          "date": "2025-12-18",
+          "value": 120.0528
+        },
+        {
+          "date": "2025-12-19",
+          "value": 120.1652
+        },
+        {
+          "date": "2025-12-22",
+          "value": 119.9912
+        },
+        {
+          "date": "2025-12-23",
+          "value": 119.7057
+        },
+        {
+          "date": "2025-12-24",
+          "value": 119.4372
+        },
+        {
+          "date": "2025-12-26",
+          "value": 119.4723
+        },
+        {
+          "date": "2025-12-29",
+          "value": 119.5899
+        },
+        {
+          "date": "2025-12-30",
+          "value": 119.4939
+        },
+        {
+          "date": "2025-12-31",
+          "value": 119.7456
+        },
+        {
+          "date": "2026-01-02",
+          "value": 119.6059
+        },
+        {
+          "date": "2026-01-05",
+          "value": 119.6192
+        },
+        {
+          "date": "2026-01-06",
+          "value": 119.7807
+        },
+        {
+          "date": "2026-01-07",
+          "value": 119.8719
+        },
+        {
+          "date": "2026-01-08",
+          "value": 120.0904
+        },
+        {
+          "date": "2026-01-09",
+          "value": 120.2215
+        },
+        {
+          "date": "2026-01-12",
+          "value": 119.9958
+        },
+        {
+          "date": "2026-01-13",
+          "value": 120.1401
+        },
+        {
+          "date": "2026-01-14",
+          "value": 119.9537
+        },
+        {
+          "date": "2026-01-15",
+          "value": 119.9951
+        },
+        {
+          "date": "2026-01-16",
+          "value": 120.0838
+        },
+        {
+          "date": "2026-01-20",
+          "value": 119.4455
+        },
+        {
+          "date": "2026-01-21",
+          "value": 119.3431
+        },
+        {
+          "date": "2026-01-22",
+          "value": 119.1962
+        },
+        {
+          "date": "2026-01-23",
+          "value": 118.8976
+        },
+        {
+          "date": "2026-01-26",
+          "value": 118.0525
+        },
+        {
+          "date": "2026-01-27",
+          "value": 117.4523
+        },
+        {
+          "date": "2026-01-28",
+          "value": 117.5117
+        },
+        {
+          "date": "2026-01-29",
+          "value": 117.4396
+        },
+        {
+          "date": "2026-01-30",
+          "value": 117.8996
+        },
+        {
+          "date": "2026-02-02",
+          "value": 118.3609
+        },
+        {
+          "date": "2026-02-03",
+          "value": 117.9764
+        },
+        {
+          "date": "2026-02-04",
+          "value": 118.2602
+        },
+        {
+          "date": "2026-02-05",
+          "value": 118.5034
+        },
+        {
+          "date": "2026-02-06",
+          "value": 118.2407
+        },
+        {
+          "date": "2026-02-09",
+          "value": 117.6392
+        },
+        {
+          "date": "2026-02-10",
+          "value": 117.5216
+        },
+        {
+          "date": "2026-02-11",
+          "value": 117.4601
+        },
+        {
+          "date": "2026-02-12",
+          "value": 117.5376
+        },
+        {
+          "date": "2026-02-13",
+          "value": 117.5258
+        },
+        {
+          "date": "2026-02-17",
+          "value": 117.7375
+        },
+        {
+          "date": "2026-02-18",
+          "value": 117.8426
+        },
+        {
+          "date": "2026-02-19",
+          "value": 118.2354
+        },
+        {
+          "date": "2026-02-20",
+          "value": 117.9917
+        },
+        {
+          "date": "2026-02-23",
+          "value": 117.9395
+        },
+        {
+          "date": "2026-02-24",
+          "value": 117.9463
+        },
+        {
+          "date": "2026-02-25",
+          "value": 117.769
+        },
+        {
+          "date": "2026-02-26",
+          "value": 117.9042
+        },
+        {
+          "date": "2026-02-27",
+          "value": 117.8223
+        },
+        {
+          "date": "2026-03-02",
+          "value": 118.667
+        },
+        {
+          "date": "2026-03-03",
+          "value": 119.4341
+        },
+        {
+          "date": "2026-03-04",
+          "value": 119.0705
+        },
+        {
+          "date": "2026-03-05",
+          "value": 119.5683
+        },
+        {
+          "date": "2026-03-06",
+          "value": 119.491
+        },
+        {
+          "date": "2026-03-09",
+          "value": 119.5151
+        },
+        {
+          "date": "2026-03-10",
+          "value": 118.7255
+        },
+        {
+          "date": "2026-03-11",
+          "value": 119.2885
+        },
+        {
+          "date": "2026-03-12",
+          "value": 119.8227
+        },
+        {
+          "date": "2026-03-13",
+          "value": 120.5518
+        },
+        {
+          "date": "2026-03-16",
+          "value": 120.097
+        },
+        {
+          "date": "2026-03-17",
+          "value": 119.8328
+        },
+        {
+          "date": "2026-03-18",
+          "value": 119.9276
+        },
+        {
+          "date": "2026-03-19",
+          "value": 120.1802
+        },
+        {
+          "date": "2026-03-20",
+          "value": 120.2757
+        },
+        {
+          "date": "2026-03-23",
+          "value": 119.9371
+        },
+        {
+          "date": "2026-03-24",
+          "value": 120.1295
+        },
+        {
+          "date": "2026-03-25",
+          "value": 120.1282
+        },
+        {
+          "date": "2026-03-26",
+          "value": 120.389
+        },
+        {
+          "date": "2026-03-27",
+          "value": 120.8851
+        },
+        {
+          "date": "2026-03-30",
+          "value": 121.2851
+        },
+        {
+          "date": "2026-03-31",
+          "value": 121.035
+        },
+        {
+          "date": "2026-04-01",
+          "value": 120.1198
+        },
+        {
+          "date": "2026-04-02",
+          "value": 120.503
+        },
+        {
+          "date": "2026-04-03",
+          "value": 120.6565
+        },
+        {
+          "date": "2026-04-06",
+          "value": 120.4302
+        },
+        {
+          "date": "2026-04-07",
+          "value": 120.32
+        },
+        {
+          "date": "2026-04-08",
+          "value": 119.0596
+        },
+        {
+          "date": "2026-04-09",
+          "value": 118.8998
+        },
+        {
+          "date": "2026-04-10",
+          "value": 118.8552
+        },
+        {
+          "date": "2026-04-13",
+          "value": 118.9916
+        },
+        {
+          "date": "2026-04-14",
+          "value": 118.3581
+        },
+        {
+          "date": "2026-04-15",
+          "value": 118.3623
+        },
+        {
+          "date": "2026-04-16",
+          "value": 118.3616
+        },
+        {
+          "date": "2026-04-17",
+          "value": 118.0795
+        },
+        {
+          "date": "2026-04-20",
+          "value": 118.2374
+        },
+        {
+          "date": "2026-04-21",
+          "value": 118.4331
+        },
+        {
+          "date": "2026-04-22",
+          "value": 118.6004
+        },
+        {
+          "date": "2026-04-23",
+          "value": 118.7155
+        },
+        {
+          "date": "2026-04-24",
+          "value": 118.7294
+        },
+        {
+          "date": "2026-04-27",
+          "value": 118.5458
+        },
+        {
+          "date": "2026-04-28",
+          "value": 118.7717
+        },
+        {
+          "date": "2026-04-29",
+          "value": 119.0975
+        },
+        {
+          "date": "2026-04-30",
+          "value": 118.671
+        },
+        {
+          "date": "2026-05-01",
+          "value": 118.3926
+        },
+        {
+          "date": "2026-05-04",
+          "value": 118.8264
+        },
+        {
+          "date": "2026-05-05",
+          "value": 118.6207
+        },
+        {
+          "date": "2026-05-06",
+          "value": 118.0982
+        },
+        {
+          "date": "2026-05-07",
+          "value": 118.0116
+        },
+        {
+          "date": "2026-05-08",
+          "value": 118.0392
+        },
+        {
+          "date": "2026-05-11",
+          "value": 118.0562
+        },
+        {
+          "date": "2026-05-12",
+          "value": 118.5238
+        },
+        {
+          "date": "2026-05-13",
+          "value": 118.4737
+        },
+        {
+          "date": "2026-05-14",
+          "value": 118.6696
+        },
+        {
+          "date": "2026-05-15",
+          "value": 119.2825
+        },
+        {
+          "date": "2026-05-18",
+          "value": 119.0574
+        },
+        {
+          "date": "2026-05-19",
+          "value": 119.451
+        },
+        {
+          "date": "2026-05-20",
+          "value": 119.1624
+        },
+        {
+          "date": "2026-05-21",
+          "value": 119.369
+        },
+        {
+          "date": "2026-05-22",
+          "value": 119.2868
+        },
+        {
+          "date": "2026-05-26",
+          "value": 119.1696
+        },
+        {
+          "date": "2026-05-27",
+          "value": 119.1829
+        },
+        {
+          "date": "2026-05-28",
+          "value": 119.0318
+        },
+        {
+          "date": "2026-05-29",
+          "value": 118.8783
+        },
+        {
+          "date": "2026-06-01",
+          "value": 119.1653
+        },
+        {
+          "date": "2026-06-02",
+          "value": 119.0359
+        },
+        {
+          "date": "2026-06-03",
+          "value": 119.3848
+        },
+        {
+          "date": "2026-06-04",
+          "value": 119.3615
+        },
+        {
+          "date": "2026-06-05",
+          "value": 120.0831
+        },
+        {
+          "date": "2026-06-08",
+          "value": 120.034
+        },
+        {
+          "date": "2026-06-09",
+          "value": 119.9617
+        },
+        {
+          "date": "2026-06-10",
+          "value": 119.9134
+        },
+        {
+          "date": "2026-06-11",
+          "value": 120.1174
+        },
+        {
+          "date": "2026-06-12",
+          "value": 119.5073
+        }
+      ],
+      "latest": {
+        "date": "2026-06-12",
+        "value": 119.5073
+      }
+    },
+    "liquidity": {
+      "title": "달러 유동성",
+      "unit": "billions_usd",
+      "frequency": "mixed_daily_weekly_monthly",
+      "formula": "Net Fed Liquidity = WALCL - WTREGEN - RRPONTSYD",
+      "series": [
+        {
+          "key": "net_fed_liquidity",
+          "label": "Net Fed Liquidity",
+          "source": "FRED WALCL - WTREGEN - RRPONTSYD"
+        },
+        {
+          "key": "fed_assets",
+          "label": "Fed 총자산",
+          "source": "FRED WALCL"
+        },
+        {
+          "key": "reserves",
+          "label": "은행 지급준비금",
+          "source": "FRED WRESBAL"
+        },
+        {
+          "key": "rrp",
+          "label": "ON RRP",
+          "source": "FRED RRPONTSYD"
+        },
+        {
+          "key": "tga",
+          "label": "TGA",
+          "source": "FRED WTREGEN"
+        }
+      ],
+      "points": [
+        {
+          "date": "2025-06-18",
+          "net_fed_liquidity": 6138.244,
+          "fed_assets": 6681.056,
+          "tga": 337.762,
+          "rrp": 205.05,
+          "reserves": 3406.366,
+          "m2": 21938.8
+        },
+        {
+          "date": "2025-06-20",
+          "net_fed_liquidity": 6205.0109999999995,
+          "fed_assets": 6681.056,
+          "tga": 337.762,
+          "rrp": 138.283,
+          "reserves": 3406.366,
+          "m2": 21938.8
+        },
+        {
+          "date": "2025-06-23",
+          "net_fed_liquidity": 6177.974999999999,
+          "fed_assets": 6681.056,
+          "tga": 337.762,
+          "rrp": 165.319,
+          "reserves": 3406.366,
+          "m2": 21938.8
+        },
+        {
+          "date": "2025-06-24",
+          "net_fed_liquidity": 6155.927,
+          "fed_assets": 6681.056,
+          "tga": 337.762,
+          "rrp": 187.367,
+          "reserves": 3406.366,
+          "m2": 21938.8
+        },
+        {
+          "date": "2025-06-25",
+          "net_fed_liquidity": 6086.946,
+          "fed_assets": 6662.2,
+          "tga": 364.375,
+          "rrp": 210.879,
+          "reserves": 3369.328,
+          "m2": 21938.8
+        },
+        {
+          "date": "2025-06-26",
+          "net_fed_liquidity": 6045.393,
+          "fed_assets": 6662.2,
+          "tga": 364.375,
+          "rrp": 252.432,
+          "reserves": 3369.328,
+          "m2": 21938.8
+        },
+        {
+          "date": "2025-06-27",
+          "net_fed_liquidity": 6012.083,
+          "fed_assets": 6662.2,
+          "tga": 364.375,
+          "rrp": 285.742,
+          "reserves": 3369.328,
+          "m2": 21938.8
+        },
+        {
+          "date": "2025-06-30",
+          "net_fed_liquidity": 5837.094,
+          "fed_assets": 6662.2,
+          "tga": 364.375,
+          "rrp": 460.731,
+          "reserves": 3369.328,
+          "m2": 21938.8
+        },
+        {
+          "date": "2025-07-01",
+          "net_fed_liquidity": 6052.295,
+          "fed_assets": 6662.2,
+          "tga": 364.375,
+          "rrp": 245.53,
+          "reserves": 3369.328,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-02",
+          "net_fed_liquidity": 6062.775000000001,
+          "fed_assets": 6659.598,
+          "tga": 359.516,
+          "rrp": 237.307,
+          "reserves": 3225.98,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-03",
+          "net_fed_liquidity": 6085.417,
+          "fed_assets": 6659.598,
+          "tga": 359.516,
+          "rrp": 214.665,
+          "reserves": 3225.98,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-07",
+          "net_fed_liquidity": 6082.052000000001,
+          "fed_assets": 6659.598,
+          "tga": 359.516,
+          "rrp": 218.03,
+          "reserves": 3225.98,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-08",
+          "net_fed_liquidity": 6080.667,
+          "fed_assets": 6659.598,
+          "tga": 359.516,
+          "rrp": 219.415,
+          "reserves": 3225.98,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-09",
+          "net_fed_liquidity": 6114.75,
+          "fed_assets": 6661.912,
+          "tga": 319.889,
+          "rrp": 227.273,
+          "reserves": 3330.249,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-10",
+          "net_fed_liquidity": 6158.684,
+          "fed_assets": 6661.912,
+          "tga": 319.889,
+          "rrp": 183.339,
+          "reserves": 3330.249,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-11",
+          "net_fed_liquidity": 6160.386,
+          "fed_assets": 6661.912,
+          "tga": 319.889,
+          "rrp": 181.637,
+          "reserves": 3330.249,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-14",
+          "net_fed_liquidity": 6124.182,
+          "fed_assets": 6661.912,
+          "tga": 319.889,
+          "rrp": 217.841,
+          "reserves": 3330.249,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-15",
+          "net_fed_liquidity": 6143.746,
+          "fed_assets": 6661.912,
+          "tga": 319.889,
+          "rrp": 198.277,
+          "reserves": 3330.249,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-16",
+          "net_fed_liquidity": 6165.94,
+          "fed_assets": 6659.273,
+          "tga": 296.247,
+          "rrp": 197.086,
+          "reserves": 3398.822,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-17",
+          "net_fed_liquidity": 6169.366,
+          "fed_assets": 6659.273,
+          "tga": 296.247,
+          "rrp": 193.66,
+          "reserves": 3398.822,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-18",
+          "net_fed_liquidity": 6163.728,
+          "fed_assets": 6659.273,
+          "tga": 296.247,
+          "rrp": 199.298,
+          "reserves": 3398.822,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-21",
+          "net_fed_liquidity": 6149.36,
+          "fed_assets": 6659.273,
+          "tga": 296.247,
+          "rrp": 213.666,
+          "reserves": 3398.822,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-22",
+          "net_fed_liquidity": 6166.652,
+          "fed_assets": 6659.273,
+          "tga": 296.247,
+          "rrp": 196.374,
+          "reserves": 3398.822,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-23",
+          "net_fed_liquidity": 6144.907,
+          "fed_assets": 6657.715,
+          "tga": 323.176,
+          "rrp": 189.632,
+          "reserves": 3362.277,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-24",
+          "net_fed_liquidity": 6202.353,
+          "fed_assets": 6657.715,
+          "tga": 323.176,
+          "rrp": 132.186,
+          "reserves": 3362.277,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-25",
+          "net_fed_liquidity": 6184.03,
+          "fed_assets": 6657.715,
+          "tga": 323.176,
+          "rrp": 150.509,
+          "reserves": 3362.277,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-28",
+          "net_fed_liquidity": 6164.076,
+          "fed_assets": 6657.715,
+          "tga": 323.176,
+          "rrp": 170.463,
+          "reserves": 3362.277,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-29",
+          "net_fed_liquidity": 6163.521,
+          "fed_assets": 6657.715,
+          "tga": 323.176,
+          "rrp": 171.018,
+          "reserves": 3362.277,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-30",
+          "net_fed_liquidity": 6116.590000000001,
+          "fed_assets": 6642.578,
+          "tga": 370.507,
+          "rrp": 155.481,
+          "reserves": 3347.414,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-07-31",
+          "net_fed_liquidity": 6057.626000000001,
+          "fed_assets": 6642.578,
+          "tga": 370.507,
+          "rrp": 214.445,
+          "reserves": 3347.414,
+          "m2": 22020.0
+        },
+        {
+          "date": "2025-08-01",
+          "net_fed_liquidity": 6174.645,
+          "fed_assets": 6642.578,
+          "tga": 370.507,
+          "rrp": 97.426,
+          "reserves": 3347.414,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-04",
+          "net_fed_liquidity": 6146.341000000001,
+          "fed_assets": 6642.578,
+          "tga": 370.507,
+          "rrp": 125.73,
+          "reserves": 3347.414,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-05",
+          "net_fed_liquidity": 6187.715000000001,
+          "fed_assets": 6642.578,
+          "tga": 370.507,
+          "rrp": 84.356,
+          "reserves": 3347.414,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-06",
+          "net_fed_liquidity": 6127.834,
+          "fed_assets": 6640.843,
+          "tga": 421.043,
+          "rrp": 91.966,
+          "reserves": 3332.492,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-07",
+          "net_fed_liquidity": 6141.839,
+          "fed_assets": 6640.843,
+          "tga": 421.043,
+          "rrp": 77.961,
+          "reserves": 3332.492,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-08",
+          "net_fed_liquidity": 6139.497,
+          "fed_assets": 6640.843,
+          "tga": 421.043,
+          "rrp": 80.303,
+          "reserves": 3332.492,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-11",
+          "net_fed_liquidity": 6137.586,
+          "fed_assets": 6640.843,
+          "tga": 421.043,
+          "rrp": 82.214,
+          "reserves": 3332.492,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-12",
+          "net_fed_liquidity": 6162.308,
+          "fed_assets": 6640.843,
+          "tga": 421.043,
+          "rrp": 57.492,
+          "reserves": 3332.492,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-13",
+          "net_fed_liquidity": 6082.1089999999995,
+          "fed_assets": 6643.615,
+          "tga": 504.304,
+          "rrp": 57.202,
+          "reserves": 3320.05,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-14",
+          "net_fed_liquidity": 6110.4929999999995,
+          "fed_assets": 6643.615,
+          "tga": 504.304,
+          "rrp": 28.818,
+          "reserves": 3320.05,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-15",
+          "net_fed_liquidity": 6105.554,
+          "fed_assets": 6643.615,
+          "tga": 504.304,
+          "rrp": 33.757,
+          "reserves": 3320.05,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-18",
+          "net_fed_liquidity": 6101.071,
+          "fed_assets": 6643.615,
+          "tga": 504.304,
+          "rrp": 38.24,
+          "reserves": 3320.05,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-19",
+          "net_fed_liquidity": 6116.967,
+          "fed_assets": 6643.615,
+          "tga": 504.304,
+          "rrp": 22.344,
+          "reserves": 3320.05,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-20",
+          "net_fed_liquidity": 6063.8820000000005,
+          "fed_assets": 6618.415,
+          "tga": 519.534,
+          "rrp": 34.999,
+          "reserves": 3317.292,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-21",
+          "net_fed_liquidity": 6073.523,
+          "fed_assets": 6618.415,
+          "tga": 519.534,
+          "rrp": 25.358,
+          "reserves": 3317.292,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-22",
+          "net_fed_liquidity": 6062.606000000001,
+          "fed_assets": 6618.415,
+          "tga": 519.534,
+          "rrp": 36.275,
+          "reserves": 3317.292,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-25",
+          "net_fed_liquidity": 6051.314,
+          "fed_assets": 6618.415,
+          "tga": 519.534,
+          "rrp": 47.567,
+          "reserves": 3317.292,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-26",
+          "net_fed_liquidity": 6070.307000000001,
+          "fed_assets": 6618.415,
+          "tga": 519.534,
+          "rrp": 28.574,
+          "reserves": 3317.292,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-27",
+          "net_fed_liquidity": 5978.642000000001,
+          "fed_assets": 6603.384,
+          "tga": 589.998,
+          "rrp": 34.744,
+          "reserves": 3224.967,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-28",
+          "net_fed_liquidity": 5981.42,
+          "fed_assets": 6603.384,
+          "tga": 589.998,
+          "rrp": 31.966,
+          "reserves": 3224.967,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-08-29",
+          "net_fed_liquidity": 5935.488,
+          "fed_assets": 6603.384,
+          "tga": 589.998,
+          "rrp": 77.898,
+          "reserves": 3224.967,
+          "m2": 22086.9
+        },
+        {
+          "date": "2025-09-01",
+          "net_fed_liquidity": 5935.488,
+          "fed_assets": 6603.384,
+          "tga": 589.998,
+          "rrp": 77.898,
+          "reserves": 3224.967,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-02",
+          "net_fed_liquidity": 5992.320000000001,
+          "fed_assets": 6603.384,
+          "tga": 589.998,
+          "rrp": 21.066,
+          "reserves": 3224.967,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-03",
+          "net_fed_liquidity": 5986.635,
+          "fed_assets": 6602.071,
+          "tga": 597.513,
+          "rrp": 17.923,
+          "reserves": 3181.701,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-04",
+          "net_fed_liquidity": 5984.43,
+          "fed_assets": 6602.071,
+          "tga": 597.513,
+          "rrp": 20.128,
+          "reserves": 3181.701,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-05",
+          "net_fed_liquidity": 5983.561,
+          "fed_assets": 6602.071,
+          "tga": 597.513,
+          "rrp": 20.997,
+          "reserves": 3181.701,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-08",
+          "net_fed_liquidity": 5985.142,
+          "fed_assets": 6602.071,
+          "tga": 597.513,
+          "rrp": 19.416,
+          "reserves": 3181.701,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-09",
+          "net_fed_liquidity": 5981.643,
+          "fed_assets": 6602.071,
+          "tga": 597.513,
+          "rrp": 22.915,
+          "reserves": 3181.701,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-10",
+          "net_fed_liquidity": 5904.2880000000005,
+          "fed_assets": 6605.962,
+          "tga": 672.274,
+          "rrp": 29.4,
+          "reserves": 3160.774,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-11",
+          "net_fed_liquidity": 5906.791,
+          "fed_assets": 6605.962,
+          "tga": 672.274,
+          "rrp": 26.897,
+          "reserves": 3160.774,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-12",
+          "net_fed_liquidity": 5916.357,
+          "fed_assets": 6605.962,
+          "tga": 672.274,
+          "rrp": 17.331,
+          "reserves": 3160.774,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-15",
+          "net_fed_liquidity": 5916.734,
+          "fed_assets": 6605.962,
+          "tga": 672.274,
+          "rrp": 16.954,
+          "reserves": 3160.774,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-16",
+          "net_fed_liquidity": 5914.871,
+          "fed_assets": 6605.962,
+          "tga": 672.274,
+          "rrp": 18.817,
+          "reserves": 3160.774,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-17",
+          "net_fed_liquidity": 5838.258,
+          "fed_assets": 6608.597,
+          "tga": 756.376,
+          "rrp": 13.963,
+          "reserves": 3073.355,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-18",
+          "net_fed_liquidity": 5838.513999999999,
+          "fed_assets": 6608.597,
+          "tga": 756.376,
+          "rrp": 13.707,
+          "reserves": 3073.355,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-19",
+          "net_fed_liquidity": 5840.857999999999,
+          "fed_assets": 6608.597,
+          "tga": 756.376,
+          "rrp": 11.363,
+          "reserves": 3073.355,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-22",
+          "net_fed_liquidity": 5838.048,
+          "fed_assets": 6608.597,
+          "tga": 756.376,
+          "rrp": 14.173,
+          "reserves": 3073.355,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-23",
+          "net_fed_liquidity": 5837.8189999999995,
+          "fed_assets": 6608.597,
+          "tga": 756.376,
+          "rrp": 14.402,
+          "reserves": 3073.355,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-24",
+          "net_fed_liquidity": 5774.367000000001,
+          "fed_assets": 6608.395,
+          "tga": 804.856,
+          "rrp": 29.172,
+          "reserves": 3002.218,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-25",
+          "net_fed_liquidity": 5778.170000000001,
+          "fed_assets": 6608.395,
+          "tga": 804.856,
+          "rrp": 25.369,
+          "reserves": 3002.218,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-26",
+          "net_fed_liquidity": 5755.466,
+          "fed_assets": 6608.395,
+          "tga": 804.856,
+          "rrp": 48.073,
+          "reserves": 3002.218,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-29",
+          "net_fed_liquidity": 5747.319,
+          "fed_assets": 6608.395,
+          "tga": 804.856,
+          "rrp": 56.22,
+          "reserves": 3002.218,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-09-30",
+          "net_fed_liquidity": 5754.468000000001,
+          "fed_assets": 6608.395,
+          "tga": 804.856,
+          "rrp": 49.071,
+          "reserves": 3002.218,
+          "m2": 22170.3
+        },
+        {
+          "date": "2025-10-01",
+          "net_fed_liquidity": 5771.8009999999995,
+          "fed_assets": 6587.119,
+          "tga": 805.139,
+          "rrp": 10.179,
+          "reserves": 2966.094,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-02",
+          "net_fed_liquidity": 5773.544,
+          "fed_assets": 6587.119,
+          "tga": 805.139,
+          "rrp": 8.436,
+          "reserves": 2966.094,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-03",
+          "net_fed_liquidity": 5756.588,
+          "fed_assets": 6587.119,
+          "tga": 805.139,
+          "rrp": 25.392,
+          "reserves": 2966.094,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-06",
+          "net_fed_liquidity": 5760.204,
+          "fed_assets": 6587.119,
+          "tga": 805.139,
+          "rrp": 21.776,
+          "reserves": 2966.094,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-07",
+          "net_fed_liquidity": 5777.357999999999,
+          "fed_assets": 6587.119,
+          "tga": 805.139,
+          "rrp": 4.622,
+          "reserves": 2966.094,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-08",
+          "net_fed_liquidity": 5778.156,
+          "fed_assets": 6590.815,
+          "tga": 807.428,
+          "rrp": 5.231,
+          "reserves": 2998.471,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-09",
+          "net_fed_liquidity": 5778.891,
+          "fed_assets": 6590.815,
+          "tga": 807.428,
+          "rrp": 4.496,
+          "reserves": 2998.471,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-10",
+          "net_fed_liquidity": 5779.263,
+          "fed_assets": 6590.815,
+          "tga": 807.428,
+          "rrp": 4.124,
+          "reserves": 2998.471,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-14",
+          "net_fed_liquidity": 5779.871,
+          "fed_assets": 6590.815,
+          "tga": 807.428,
+          "rrp": 3.516,
+          "reserves": 2998.471,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-15",
+          "net_fed_liquidity": 5781.3769999999995,
+          "fed_assets": 6596.454,
+          "tga": 809.593,
+          "rrp": 5.484,
+          "reserves": 3019.028,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-16",
+          "net_fed_liquidity": 5779.901,
+          "fed_assets": 6596.454,
+          "tga": 809.593,
+          "rrp": 6.96,
+          "reserves": 3019.028,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-17",
+          "net_fed_liquidity": 5782.759,
+          "fed_assets": 6596.454,
+          "tga": 809.593,
+          "rrp": 4.102,
+          "reserves": 3019.028,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-20",
+          "net_fed_liquidity": 5780.93,
+          "fed_assets": 6596.454,
+          "tga": 809.593,
+          "rrp": 5.931,
+          "reserves": 3019.028,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-21",
+          "net_fed_liquidity": 5782.162,
+          "fed_assets": 6596.454,
+          "tga": 809.593,
+          "rrp": 4.699,
+          "reserves": 3019.028,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-22",
+          "net_fed_liquidity": 5677.527,
+          "fed_assets": 6589.533,
+          "tga": 908.001,
+          "rrp": 4.005,
+          "reserves": 2933.037,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-23",
+          "net_fed_liquidity": 5674.591,
+          "fed_assets": 6589.533,
+          "tga": 908.001,
+          "rrp": 6.941,
+          "reserves": 2933.037,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-24",
+          "net_fed_liquidity": 5679.097,
+          "fed_assets": 6589.533,
+          "tga": 908.001,
+          "rrp": 2.435,
+          "reserves": 2933.037,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-27",
+          "net_fed_liquidity": 5670.89,
+          "fed_assets": 6589.533,
+          "tga": 908.001,
+          "rrp": 10.642,
+          "reserves": 2933.037,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-28",
+          "net_fed_liquidity": 5667.436000000001,
+          "fed_assets": 6589.533,
+          "tga": 908.001,
+          "rrp": 14.096,
+          "reserves": 2933.037,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-29",
+          "net_fed_liquidity": 5609.54,
+          "fed_assets": 6587.034,
+          "tga": 957.99,
+          "rrp": 19.504,
+          "reserves": 2848.021,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-30",
+          "net_fed_liquidity": 5609.878,
+          "fed_assets": 6587.034,
+          "tga": 957.99,
+          "rrp": 19.166,
+          "reserves": 2848.021,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-10-31",
+          "net_fed_liquidity": 5577.242,
+          "fed_assets": 6587.034,
+          "tga": 957.99,
+          "rrp": 51.802,
+          "reserves": 2848.021,
+          "m2": 22245.1
+        },
+        {
+          "date": "2025-11-01",
+          "net_fed_liquidity": 5577.242,
+          "fed_assets": 6587.034,
+          "tga": 957.99,
+          "rrp": 51.802,
+          "reserves": 2848.021,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-03",
+          "net_fed_liquidity": 5605.2519999999995,
+          "fed_assets": 6587.034,
+          "tga": 957.99,
+          "rrp": 23.792,
+          "reserves": 2848.021,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-04",
+          "net_fed_liquidity": 5612.061,
+          "fed_assets": 6587.034,
+          "tga": 957.99,
+          "rrp": 16.983,
+          "reserves": 2848.021,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-05",
+          "net_fed_liquidity": 5618.938999999999,
+          "fed_assets": 6572.732,
+          "tga": 940.979,
+          "rrp": 12.814,
+          "reserves": 2862.569,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-06",
+          "net_fed_liquidity": 5620.999,
+          "fed_assets": 6572.732,
+          "tga": 940.979,
+          "rrp": 10.754,
+          "reserves": 2862.569,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-07",
+          "net_fed_liquidity": 5626.849999999999,
+          "fed_assets": 6572.732,
+          "tga": 940.979,
+          "rrp": 4.903,
+          "reserves": 2862.569,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-10",
+          "net_fed_liquidity": 5624.601,
+          "fed_assets": 6572.732,
+          "tga": 940.979,
+          "rrp": 7.152,
+          "reserves": 2862.569,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-12",
+          "net_fed_liquidity": 5620.76,
+          "fed_assets": 6580.462,
+          "tga": 953.816,
+          "rrp": 5.886,
+          "reserves": 2855.03,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-13",
+          "net_fed_liquidity": 5622.885,
+          "fed_assets": 6580.462,
+          "tga": 953.816,
+          "rrp": 3.761,
+          "reserves": 2855.03,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-14",
+          "net_fed_liquidity": 5625.087,
+          "fed_assets": 6580.462,
+          "tga": 953.816,
+          "rrp": 1.559,
+          "reserves": 2855.03,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-17",
+          "net_fed_liquidity": 5623.474000000001,
+          "fed_assets": 6580.462,
+          "tga": 953.816,
+          "rrp": 3.172,
+          "reserves": 2855.03,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-18",
+          "net_fed_liquidity": 5625.741000000001,
+          "fed_assets": 6580.462,
+          "tga": 953.816,
+          "rrp": 0.905,
+          "reserves": 2855.03,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-19",
+          "net_fed_liquidity": 5612.228,
+          "fed_assets": 6555.283,
+          "tga": 941.926,
+          "rrp": 1.129,
+          "reserves": 2888.643,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-20",
+          "net_fed_liquidity": 5606.8369999999995,
+          "fed_assets": 6555.283,
+          "tga": 941.926,
+          "rrp": 6.52,
+          "reserves": 2888.643,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-21",
+          "net_fed_liquidity": 5610.854,
+          "fed_assets": 6555.283,
+          "tga": 941.926,
+          "rrp": 2.503,
+          "reserves": 2888.643,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-24",
+          "net_fed_liquidity": 5612.28,
+          "fed_assets": 6555.283,
+          "tga": 941.926,
+          "rrp": 1.077,
+          "reserves": 2888.643,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-25",
+          "net_fed_liquidity": 5611.043,
+          "fed_assets": 6555.283,
+          "tga": 941.926,
+          "rrp": 2.314,
+          "reserves": 2888.643,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-26",
+          "net_fed_liquidity": 5646.808,
+          "fed_assets": 6552.419,
+          "tga": 903.394,
+          "rrp": 2.217,
+          "reserves": 2896.586,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-11-28",
+          "net_fed_liquidity": 5641.464,
+          "fed_assets": 6552.419,
+          "tga": 903.394,
+          "rrp": 7.561,
+          "reserves": 2896.586,
+          "m2": 22277.4
+        },
+        {
+          "date": "2025-12-01",
+          "net_fed_liquidity": 5645.785,
+          "fed_assets": 6552.419,
+          "tga": 903.394,
+          "rrp": 3.24,
+          "reserves": 2896.586,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-02",
+          "net_fed_liquidity": 5643.405,
+          "fed_assets": 6552.419,
+          "tga": 903.394,
+          "rrp": 5.62,
+          "reserves": 2896.586,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-03",
+          "net_fed_liquidity": 5596.099999999999,
+          "fed_assets": 6535.781,
+          "tga": 937.167,
+          "rrp": 2.514,
+          "reserves": 2858.284,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-04",
+          "net_fed_liquidity": 5596.380999999999,
+          "fed_assets": 6535.781,
+          "tga": 937.167,
+          "rrp": 2.233,
+          "reserves": 2858.284,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-05",
+          "net_fed_liquidity": 5597.129,
+          "fed_assets": 6535.781,
+          "tga": 937.167,
+          "rrp": 1.485,
+          "reserves": 2858.284,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-08",
+          "net_fed_liquidity": 5596.910999999999,
+          "fed_assets": 6535.781,
+          "tga": 937.167,
+          "rrp": 1.703,
+          "reserves": 2858.284,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-09",
+          "net_fed_liquidity": 5595.402999999999,
+          "fed_assets": 6535.781,
+          "tga": 937.167,
+          "rrp": 3.211,
+          "reserves": 2858.284,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-10",
+          "net_fed_liquidity": 5675.312,
+          "fed_assets": 6539.303,
+          "tga": 858.946,
+          "rrp": 5.045,
+          "reserves": 2932.112,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-11",
+          "net_fed_liquidity": 5677.483,
+          "fed_assets": 6539.303,
+          "tga": 858.946,
+          "rrp": 2.874,
+          "reserves": 2932.112,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-12",
+          "net_fed_liquidity": 5679.519,
+          "fed_assets": 6539.303,
+          "tga": 858.946,
+          "rrp": 0.838,
+          "reserves": 2932.112,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-15",
+          "net_fed_liquidity": 5677.756,
+          "fed_assets": 6539.303,
+          "tga": 858.946,
+          "rrp": 2.601,
+          "reserves": 2932.112,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-16",
+          "net_fed_liquidity": 5678.803,
+          "fed_assets": 6539.303,
+          "tga": 858.946,
+          "rrp": 1.554,
+          "reserves": 2932.112,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-17",
+          "net_fed_liquidity": 5713.407,
+          "fed_assets": 6556.861,
+          "tga": 833.093,
+          "rrp": 10.361,
+          "reserves": 2959.044,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-18",
+          "net_fed_liquidity": 5712.06,
+          "fed_assets": 6556.861,
+          "tga": 833.093,
+          "rrp": 11.708,
+          "reserves": 2959.044,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-19",
+          "net_fed_liquidity": 5720.7210000000005,
+          "fed_assets": 6556.861,
+          "tga": 833.093,
+          "rrp": 3.047,
+          "reserves": 2959.044,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-22",
+          "net_fed_liquidity": 5722.245,
+          "fed_assets": 6556.861,
+          "tga": 833.093,
+          "rrp": 1.523,
+          "reserves": 2959.044,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-23",
+          "net_fed_liquidity": 5717.875,
+          "fed_assets": 6556.861,
+          "tga": 833.093,
+          "rrp": 5.893,
+          "reserves": 2959.044,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-24",
+          "net_fed_liquidity": 5739.308,
+          "fed_assets": 6581.231,
+          "tga": 837.12,
+          "rrp": 4.803,
+          "reserves": 2955.581,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-26",
+          "net_fed_liquidity": 5723.772,
+          "fed_assets": 6581.231,
+          "tga": 837.12,
+          "rrp": 20.339,
+          "reserves": 2955.581,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-29",
+          "net_fed_liquidity": 5733.5599999999995,
+          "fed_assets": 6581.231,
+          "tga": 837.12,
+          "rrp": 10.551,
+          "reserves": 2955.581,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-30",
+          "net_fed_liquidity": 5731.506,
+          "fed_assets": 6581.231,
+          "tga": 837.12,
+          "rrp": 12.605,
+          "reserves": 2955.581,
+          "m2": 22353.5
+        },
+        {
+          "date": "2025-12-31",
+          "net_fed_liquidity": 5697.3189999999995,
+          "fed_assets": 6640.618,
+          "tga": 837.306,
+          "rrp": 105.993,
+          "reserves": 2957.41,
+          "m2": 22353.5
+        },
+        {
+          "date": "2026-01-01",
+          "net_fed_liquidity": 5697.3189999999995,
+          "fed_assets": 6640.618,
+          "tga": 837.306,
+          "rrp": 105.993,
+          "reserves": 2957.41,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-02",
+          "net_fed_liquidity": 5797.6449999999995,
+          "fed_assets": 6640.618,
+          "tga": 837.306,
+          "rrp": 5.667,
+          "reserves": 2957.41,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-05",
+          "net_fed_liquidity": 5796.827,
+          "fed_assets": 6640.618,
+          "tga": 837.306,
+          "rrp": 6.485,
+          "reserves": 2957.41,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-06",
+          "net_fed_liquidity": 5800.73,
+          "fed_assets": 6640.618,
+          "tga": 837.306,
+          "rrp": 2.582,
+          "reserves": 2957.41,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-07",
+          "net_fed_liquidity": 5772.871999999999,
+          "fed_assets": 6573.602,
+          "tga": 796.148,
+          "rrp": 4.582,
+          "reserves": 2996.379,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-08",
+          "net_fed_liquidity": 5774.371,
+          "fed_assets": 6573.602,
+          "tga": 796.148,
+          "rrp": 3.083,
+          "reserves": 2996.379,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-09",
+          "net_fed_liquidity": 5774.174,
+          "fed_assets": 6573.602,
+          "tga": 796.148,
+          "rrp": 3.28,
+          "reserves": 2996.379,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-12",
+          "net_fed_liquidity": 5774.052,
+          "fed_assets": 6573.602,
+          "tga": 796.148,
+          "rrp": 3.402,
+          "reserves": 2996.379,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-13",
+          "net_fed_liquidity": 5774.177,
+          "fed_assets": 6573.602,
+          "tga": 796.148,
+          "rrp": 3.277,
+          "reserves": 2996.379,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-14",
+          "net_fed_liquidity": 5799.302,
+          "fed_assets": 6581.7,
+          "tga": 779.175,
+          "rrp": 3.223,
+          "reserves": 3049.63,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-15",
+          "net_fed_liquidity": 5800.522,
+          "fed_assets": 6581.7,
+          "tga": 779.175,
+          "rrp": 2.003,
+          "reserves": 3049.63,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-16",
+          "net_fed_liquidity": 5801.303,
+          "fed_assets": 6581.7,
+          "tga": 779.175,
+          "rrp": 1.222,
+          "reserves": 3049.63,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-20",
+          "net_fed_liquidity": 5799.018999999999,
+          "fed_assets": 6581.7,
+          "tga": 779.175,
+          "rrp": 3.506,
+          "reserves": 3049.63,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-21",
+          "net_fed_liquidity": 5711.974999999999,
+          "fed_assets": 6584.58,
+          "tga": 869.261,
+          "rrp": 3.344,
+          "reserves": 2954.903,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-22",
+          "net_fed_liquidity": 5713.2609999999995,
+          "fed_assets": 6584.58,
+          "tga": 869.261,
+          "rrp": 2.058,
+          "reserves": 2954.903,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-23",
+          "net_fed_liquidity": 5714.392,
+          "fed_assets": 6584.58,
+          "tga": 869.261,
+          "rrp": 0.927,
+          "reserves": 2954.903,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-26",
+          "net_fed_liquidity": 5713.83,
+          "fed_assets": 6584.58,
+          "tga": 869.261,
+          "rrp": 1.489,
+          "reserves": 2954.903,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-27",
+          "net_fed_liquidity": 5714.066,
+          "fed_assets": 6584.58,
+          "tga": 869.261,
+          "rrp": 1.253,
+          "reserves": 2954.903,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-28",
+          "net_fed_liquidity": 5663.423,
+          "fed_assets": 6587.568,
+          "tga": 923.042,
+          "rrp": 1.103,
+          "reserves": 2901.6,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-29",
+          "net_fed_liquidity": 5661.674,
+          "fed_assets": 6587.568,
+          "tga": 923.042,
+          "rrp": 2.852,
+          "reserves": 2901.6,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-01-30",
+          "net_fed_liquidity": 5654.897,
+          "fed_assets": 6587.568,
+          "tga": 923.042,
+          "rrp": 9.629,
+          "reserves": 2901.6,
+          "m2": 22429.3
+        },
+        {
+          "date": "2026-02-01",
+          "net_fed_liquidity": 5654.897,
+          "fed_assets": 6587.568,
+          "tga": 923.042,
+          "rrp": 9.629,
+          "reserves": 2901.6,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-02",
+          "net_fed_liquidity": 5654.111,
+          "fed_assets": 6587.568,
+          "tga": 923.042,
+          "rrp": 10.415,
+          "reserves": 2901.6,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-03",
+          "net_fed_liquidity": 5662.741,
+          "fed_assets": 6587.568,
+          "tga": 923.042,
+          "rrp": 1.785,
+          "reserves": 2901.6,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-04",
+          "net_fed_liquidity": 5694.722,
+          "fed_assets": 6605.909,
+          "tga": 908.773,
+          "rrp": 2.414,
+          "reserves": 2925.17,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-05",
+          "net_fed_liquidity": 5695.388,
+          "fed_assets": 6605.909,
+          "tga": 908.773,
+          "rrp": 1.748,
+          "reserves": 2925.17,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-06",
+          "net_fed_liquidity": 5694.025,
+          "fed_assets": 6605.909,
+          "tga": 908.773,
+          "rrp": 3.111,
+          "reserves": 2925.17,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-09",
+          "net_fed_liquidity": 5695.83,
+          "fed_assets": 6605.909,
+          "tga": 908.773,
+          "rrp": 1.306,
+          "reserves": 2925.17,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-10",
+          "net_fed_liquidity": 5695.688999999999,
+          "fed_assets": 6605.909,
+          "tga": 908.773,
+          "rrp": 1.447,
+          "reserves": 2925.17,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-11",
+          "net_fed_liquidity": 5706.027999999999,
+          "fed_assets": 6622.382,
+          "tga": 915.306,
+          "rrp": 1.048,
+          "reserves": 2939.557,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-12",
+          "net_fed_liquidity": 5704.231999999999,
+          "fed_assets": 6622.382,
+          "tga": 915.306,
+          "rrp": 2.844,
+          "reserves": 2939.557,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-13",
+          "net_fed_liquidity": 5706.698999999999,
+          "fed_assets": 6622.382,
+          "tga": 915.306,
+          "rrp": 0.377,
+          "reserves": 2939.557,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-17",
+          "net_fed_liquidity": 5706.634999999999,
+          "fed_assets": 6622.382,
+          "tga": 915.306,
+          "rrp": 0.441,
+          "reserves": 2939.557,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-18",
+          "net_fed_liquidity": 5699.812000000001,
+          "fed_assets": 6613.395,
+          "tga": 912.727,
+          "rrp": 0.856,
+          "reserves": 2949.804,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-19",
+          "net_fed_liquidity": 5700.036000000001,
+          "fed_assets": 6613.395,
+          "tga": 912.727,
+          "rrp": 0.632,
+          "reserves": 2949.804,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-20",
+          "net_fed_liquidity": 5700.1720000000005,
+          "fed_assets": 6613.395,
+          "tga": 912.727,
+          "rrp": 0.496,
+          "reserves": 2949.804,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-23",
+          "net_fed_liquidity": 5699.791,
+          "fed_assets": 6613.395,
+          "tga": 912.727,
+          "rrp": 0.877,
+          "reserves": 2949.804,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-24",
+          "net_fed_liquidity": 5699.751,
+          "fed_assets": 6613.395,
+          "tga": 912.727,
+          "rrp": 0.917,
+          "reserves": 2949.804,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-25",
+          "net_fed_liquidity": 5725.026,
+          "fed_assets": 6613.797,
+          "tga": 887.612,
+          "rrp": 1.159,
+          "reserves": 2965.765,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-26",
+          "net_fed_liquidity": 5722.388999999999,
+          "fed_assets": 6613.797,
+          "tga": 887.612,
+          "rrp": 3.796,
+          "reserves": 2965.765,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-02-27",
+          "net_fed_liquidity": 5709.866999999999,
+          "fed_assets": 6613.797,
+          "tga": 887.612,
+          "rrp": 16.318,
+          "reserves": 2965.765,
+          "m2": 22627.0
+        },
+        {
+          "date": "2026-03-01",
+          "net_fed_liquidity": 5709.866999999999,
+          "fed_assets": 6613.797,
+          "tga": 887.612,
+          "rrp": 16.318,
+          "reserves": 2965.765,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-02",
+          "net_fed_liquidity": 5725.557999999999,
+          "fed_assets": 6613.797,
+          "tga": 887.612,
+          "rrp": 0.627,
+          "reserves": 2965.765,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-03",
+          "net_fed_liquidity": 5724.981999999999,
+          "fed_assets": 6613.797,
+          "tga": 887.612,
+          "rrp": 1.203,
+          "reserves": 2965.765,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-04",
+          "net_fed_liquidity": 5795.964,
+          "fed_assets": 6628.894,
+          "tga": 832.053,
+          "rrp": 0.877,
+          "reserves": 3015.531,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-05",
+          "net_fed_liquidity": 5794.048000000001,
+          "fed_assets": 6628.894,
+          "tga": 832.053,
+          "rrp": 2.793,
+          "reserves": 3015.531,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-06",
+          "net_fed_liquidity": 5795.329000000001,
+          "fed_assets": 6628.894,
+          "tga": 832.053,
+          "rrp": 1.512,
+          "reserves": 3015.531,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-09",
+          "net_fed_liquidity": 5796.509,
+          "fed_assets": 6628.894,
+          "tga": 832.053,
+          "rrp": 0.332,
+          "reserves": 3015.531,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-10",
+          "net_fed_liquidity": 5796.563,
+          "fed_assets": 6628.894,
+          "tga": 832.053,
+          "rrp": 0.278,
+          "reserves": 3015.531,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-11",
+          "net_fed_liquidity": 5807.606000000001,
+          "fed_assets": 6646.344,
+          "tga": 838.186,
+          "rrp": 0.552,
+          "reserves": 3037.665,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-12",
+          "net_fed_liquidity": 5808.021000000001,
+          "fed_assets": 6646.344,
+          "tga": 838.186,
+          "rrp": 0.137,
+          "reserves": 3037.665,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-13",
+          "net_fed_liquidity": 5807.731000000001,
+          "fed_assets": 6646.344,
+          "tga": 838.186,
+          "rrp": 0.427,
+          "reserves": 3037.665,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-16",
+          "net_fed_liquidity": 5807.576,
+          "fed_assets": 6646.344,
+          "tga": 838.186,
+          "rrp": 0.582,
+          "reserves": 3037.665,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-17",
+          "net_fed_liquidity": 5807.361000000001,
+          "fed_assets": 6646.344,
+          "tga": 838.186,
+          "rrp": 0.797,
+          "reserves": 3037.665,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-18",
+          "net_fed_liquidity": 5802.189,
+          "fed_assets": 6655.939,
+          "tga": 853.052,
+          "rrp": 0.698,
+          "reserves": 3019.995,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-19",
+          "net_fed_liquidity": 5802.250000000001,
+          "fed_assets": 6655.939,
+          "tga": 853.052,
+          "rrp": 0.637,
+          "reserves": 3019.995,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-20",
+          "net_fed_liquidity": 5802.0650000000005,
+          "fed_assets": 6655.939,
+          "tga": 853.052,
+          "rrp": 0.822,
+          "reserves": 3019.995,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-23",
+          "net_fed_liquidity": 5802.030000000001,
+          "fed_assets": 6655.939,
+          "tga": 853.052,
+          "rrp": 0.857,
+          "reserves": 3019.995,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-24",
+          "net_fed_liquidity": 5801.764000000001,
+          "fed_assets": 6655.939,
+          "tga": 853.052,
+          "rrp": 1.123,
+          "reserves": 3019.995,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-25",
+          "net_fed_liquidity": 5782.307,
+          "fed_assets": 6657.161,
+          "tga": 874.077,
+          "rrp": 0.777,
+          "reserves": 2993.955,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-26",
+          "net_fed_liquidity": 5782.199,
+          "fed_assets": 6657.161,
+          "tga": 874.077,
+          "rrp": 0.885,
+          "reserves": 2993.955,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-27",
+          "net_fed_liquidity": 5782.092,
+          "fed_assets": 6657.161,
+          "tga": 874.077,
+          "rrp": 0.992,
+          "reserves": 2993.955,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-30",
+          "net_fed_liquidity": 5782.331999999999,
+          "fed_assets": 6657.161,
+          "tga": 874.077,
+          "rrp": 0.752,
+          "reserves": 2993.955,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-03-31",
+          "net_fed_liquidity": 5767.302,
+          "fed_assets": 6657.161,
+          "tga": 874.077,
+          "rrp": 15.782,
+          "reserves": 2993.955,
+          "m2": 22686.4
+        },
+        {
+          "date": "2026-04-01",
+          "net_fed_liquidity": 5825.519,
+          "fed_assets": 6675.344,
+          "tga": 847.718,
+          "rrp": 2.107,
+          "reserves": 3026.708,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-02",
+          "net_fed_liquidity": 5827.299,
+          "fed_assets": 6675.344,
+          "tga": 847.718,
+          "rrp": 0.327,
+          "reserves": 3026.708,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-06",
+          "net_fed_liquidity": 5827.399,
+          "fed_assets": 6675.344,
+          "tga": 847.718,
+          "rrp": 0.227,
+          "reserves": 3026.708,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-07",
+          "net_fed_liquidity": 5812.281,
+          "fed_assets": 6675.344,
+          "tga": 847.718,
+          "rrp": 15.345,
+          "reserves": 3026.708,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-08",
+          "net_fed_liquidity": 5945.318,
+          "fed_assets": 6693.871,
+          "tga": 748.376,
+          "rrp": 0.177,
+          "reserves": 3116.247,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-09",
+          "net_fed_liquidity": 5945.093,
+          "fed_assets": 6693.871,
+          "tga": 748.376,
+          "rrp": 0.402,
+          "reserves": 3116.247,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-10",
+          "net_fed_liquidity": 5944.988,
+          "fed_assets": 6693.871,
+          "tga": 748.376,
+          "rrp": 0.507,
+          "reserves": 3116.247,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-13",
+          "net_fed_liquidity": 5945.268,
+          "fed_assets": 6693.871,
+          "tga": 748.376,
+          "rrp": 0.227,
+          "reserves": 3116.247,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-14",
+          "net_fed_liquidity": 5945.189,
+          "fed_assets": 6693.871,
+          "tga": 748.376,
+          "rrp": 0.306,
+          "reserves": 3116.247,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-15",
+          "net_fed_liquidity": 5954.119,
+          "fed_assets": 6705.696,
+          "tga": 751.354,
+          "rrp": 0.223,
+          "reserves": 3129.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-16",
+          "net_fed_liquidity": 5954.183999999999,
+          "fed_assets": 6705.696,
+          "tga": 751.354,
+          "rrp": 0.158,
+          "reserves": 3129.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-17",
+          "net_fed_liquidity": 5954.205,
+          "fed_assets": 6705.696,
+          "tga": 751.354,
+          "rrp": 0.137,
+          "reserves": 3129.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-20",
+          "net_fed_liquidity": 5953.839,
+          "fed_assets": 6705.696,
+          "tga": 751.354,
+          "rrp": 0.503,
+          "reserves": 3129.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-21",
+          "net_fed_liquidity": 5953.535,
+          "fed_assets": 6705.696,
+          "tga": 751.354,
+          "rrp": 0.807,
+          "reserves": 3129.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-22",
+          "net_fed_liquidity": 5700.9130000000005,
+          "fed_assets": 6707.419,
+          "tga": 1005.968,
+          "rrp": 0.538,
+          "reserves": 2901.825,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-23",
+          "net_fed_liquidity": 5701.337,
+          "fed_assets": 6707.419,
+          "tga": 1005.968,
+          "rrp": 0.114,
+          "reserves": 2901.825,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-24",
+          "net_fed_liquidity": 5701.369,
+          "fed_assets": 6707.419,
+          "tga": 1005.968,
+          "rrp": 0.082,
+          "reserves": 2901.825,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-27",
+          "net_fed_liquidity": 5701.088,
+          "fed_assets": 6707.419,
+          "tga": 1005.968,
+          "rrp": 0.363,
+          "reserves": 2901.825,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-28",
+          "net_fed_liquidity": 5700.808,
+          "fed_assets": 6707.419,
+          "tga": 1005.968,
+          "rrp": 0.643,
+          "reserves": 2901.825,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-29",
+          "net_fed_liquidity": 5717.273999999999,
+          "fed_assets": 6699.95,
+          "tga": 981.929,
+          "rrp": 0.747,
+          "reserves": 2918.599,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-04-30",
+          "net_fed_liquidity": 5709.759999999999,
+          "fed_assets": 6699.95,
+          "tga": 981.929,
+          "rrp": 8.261,
+          "reserves": 2918.599,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-01",
+          "net_fed_liquidity": 5717.414,
+          "fed_assets": 6699.95,
+          "tga": 981.929,
+          "rrp": 0.607,
+          "reserves": 2918.599,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-04",
+          "net_fed_liquidity": 5717.402999999999,
+          "fed_assets": 6699.95,
+          "tga": 981.929,
+          "rrp": 0.618,
+          "reserves": 2918.599,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-05",
+          "net_fed_liquidity": 5716.898999999999,
+          "fed_assets": 6699.95,
+          "tga": 981.929,
+          "rrp": 1.122,
+          "reserves": 2918.599,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-06",
+          "net_fed_liquidity": 5830.111000000001,
+          "fed_assets": 6709.505,
+          "tga": 877.761,
+          "rrp": 1.633,
+          "reserves": 3032.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-07",
+          "net_fed_liquidity": 5830.9710000000005,
+          "fed_assets": 6709.505,
+          "tga": 877.761,
+          "rrp": 0.773,
+          "reserves": 3032.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-08",
+          "net_fed_liquidity": 5830.957,
+          "fed_assets": 6709.505,
+          "tga": 877.761,
+          "rrp": 0.787,
+          "reserves": 3032.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-11",
+          "net_fed_liquidity": 5830.611000000001,
+          "fed_assets": 6709.505,
+          "tga": 877.761,
+          "rrp": 1.133,
+          "reserves": 3032.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-12",
+          "net_fed_liquidity": 5830.545000000001,
+          "fed_assets": 6709.505,
+          "tga": 877.761,
+          "rrp": 1.199,
+          "reserves": 3032.588,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-13",
+          "net_fed_liquidity": 5886.1990000000005,
+          "fed_assets": 6728.502,
+          "tga": 838.584,
+          "rrp": 3.719,
+          "reserves": 3102.81,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-14",
+          "net_fed_liquidity": 5887.884000000001,
+          "fed_assets": 6728.502,
+          "tga": 838.584,
+          "rrp": 2.034,
+          "reserves": 3102.81,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-15",
+          "net_fed_liquidity": 5889.271000000001,
+          "fed_assets": 6728.502,
+          "tga": 838.584,
+          "rrp": 0.647,
+          "reserves": 3102.81,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-18",
+          "net_fed_liquidity": 5882.725,
+          "fed_assets": 6728.502,
+          "tga": 838.584,
+          "rrp": 7.193,
+          "reserves": 3102.81,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-19",
+          "net_fed_liquidity": 5877.0070000000005,
+          "fed_assets": 6728.502,
+          "tga": 838.584,
+          "rrp": 12.911,
+          "reserves": 3102.81,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-20",
+          "net_fed_liquidity": 5907.483,
+          "fed_assets": 6713.643,
+          "tga": 781.293,
+          "rrp": 24.867,
+          "reserves": 3129.562,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-21",
+          "net_fed_liquidity": 5929.069,
+          "fed_assets": 6713.643,
+          "tga": 781.293,
+          "rrp": 3.281,
+          "reserves": 3129.562,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-22",
+          "net_fed_liquidity": 5931.385,
+          "fed_assets": 6713.643,
+          "tga": 781.293,
+          "rrp": 0.965,
+          "reserves": 3129.562,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-26",
+          "net_fed_liquidity": 5930.563,
+          "fed_assets": 6713.643,
+          "tga": 781.293,
+          "rrp": 1.787,
+          "reserves": 3129.562,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-27",
+          "net_fed_liquidity": 5872.2339999999995,
+          "fed_assets": 6704.383,
+          "tga": 830.296,
+          "rrp": 1.853,
+          "reserves": 3066.56,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-28",
+          "net_fed_liquidity": 5872.924,
+          "fed_assets": 6704.383,
+          "tga": 830.296,
+          "rrp": 1.163,
+          "reserves": 3066.56,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-05-29",
+          "net_fed_liquidity": 5862.41,
+          "fed_assets": 6704.383,
+          "tga": 830.296,
+          "rrp": 11.677,
+          "reserves": 3066.56,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-01",
+          "net_fed_liquidity": 5872.785,
+          "fed_assets": 6704.383,
+          "tga": 830.296,
+          "rrp": 1.302,
+          "reserves": 3066.56,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-02",
+          "net_fed_liquidity": 5871.584999999999,
+          "fed_assets": 6704.383,
+          "tga": 830.296,
+          "rrp": 2.502,
+          "reserves": 3066.56,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-03",
+          "net_fed_liquidity": 5833.72,
+          "fed_assets": 6711.495,
+          "tga": 875.713,
+          "rrp": 2.062,
+          "reserves": 3013.902,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-04",
+          "net_fed_liquidity": 5834.66,
+          "fed_assets": 6711.495,
+          "tga": 875.713,
+          "rrp": 1.122,
+          "reserves": 3013.902,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-05",
+          "net_fed_liquidity": 5835.021,
+          "fed_assets": 6711.495,
+          "tga": 875.713,
+          "rrp": 0.761,
+          "reserves": 3013.902,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-08",
+          "net_fed_liquidity": 5833.95,
+          "fed_assets": 6711.495,
+          "tga": 875.713,
+          "rrp": 1.832,
+          "reserves": 3013.902,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-09",
+          "net_fed_liquidity": 5835.205,
+          "fed_assets": 6711.495,
+          "tga": 875.713,
+          "rrp": 0.577,
+          "reserves": 3013.902,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-10",
+          "net_fed_liquidity": 5896.888,
+          "fed_assets": 6725.397,
+          "tga": 828.122,
+          "rrp": 0.387,
+          "reserves": 3080.723,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-11",
+          "net_fed_liquidity": 5896.815,
+          "fed_assets": 6725.397,
+          "tga": 828.122,
+          "rrp": 0.46,
+          "reserves": 3080.723,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-12",
+          "net_fed_liquidity": 5896.821,
+          "fed_assets": 6725.397,
+          "tga": 828.122,
+          "rrp": 0.454,
+          "reserves": 3080.723,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-15",
+          "net_fed_liquidity": 5896.6939999999995,
+          "fed_assets": 6725.397,
+          "tga": 828.122,
+          "rrp": 0.581,
+          "reserves": 3080.723,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-16",
+          "net_fed_liquidity": 5886.554,
+          "fed_assets": 6725.397,
+          "tga": 828.122,
+          "rrp": 10.721,
+          "reserves": 3080.723,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-17",
+          "net_fed_liquidity": 5848.883,
+          "fed_assets": 6736.424,
+          "tga": 880.713,
+          "rrp": 6.828,
+          "reserves": 3033.444,
+          "m2": 22804.5
+        },
+        {
+          "date": "2026-06-18",
+          "net_fed_liquidity": 5855.46,
+          "fed_assets": 6736.424,
+          "tga": 880.713,
+          "rrp": 0.251,
+          "reserves": 3033.444,
+          "m2": 22804.5
+        }
+      ],
+      "latest": {
+        "date": "2026-06-18",
+        "net_fed_liquidity": 5855.46,
+        "fed_assets": 6736.424,
+        "tga": 880.713,
+        "rrp": 0.251,
+        "reserves": 3033.444,
+        "m2": 22804.5
+      }
+    }
+  },
+  "contributors": [
+    {
+      "label": "Nasdaq Heat",
+      "value": "84/100",
+      "detail": "formula=WeeklyHeat*0.6+MonthlyHeat*0.4; weekly=81; monthly=89",
+      "tone": "neutral"
+    },
+    {
+      "label": "금리 스트레스",
+      "value": "68/100",
+      "detail": "inputs=4/4; latest=2026-06-19; formula=weighted average",
+      "tone": "neutral"
+    },
+    {
+      "label": "Panic/Boom 계산",
+      "value": "panic=43; boom=75",
+      "detail": "trend=78; vix=56; credit=10",
+      "tone": "neutral"
+    },
+    {
+      "label": "환율/달러/유동성",
+      "value": "FX 25 / 달러 44",
+      "detail": "liquidity=57; equity_damage=55",
+      "tone": "neutral"
+    }
+  ],
+  "data": {
+    "source": "FRED NASDAQCOM + FRED UST/VIX/HY/JPY + MOF JGB",
+    "mode": "system_data_only",
+    "uses_ai": false,
+    "formula_version": "snapick_formula_v1",
+    "series_id": "NASDAQCOM",
+    "latest_daily_close": 26517.93,
+    "latest_daily_date": "2026-06-18",
+    "weekly_bar_date": "2026-06-18",
+    "monthly_bar_date": "2026-05-29",
+    "bond_data_date": "2026-06-19",
+    "volatility_data_date": "2026-06-17",
+    "credit_data_date": "2026-06-17",
+    "fx_data_date": "2026-06-12",
+    "history_start_date": "2025-06-27",
+    "last_updated": "2026-06-19",
+    "confidence": 100,
+    "data_coverage": 100,
+    "confidence_label": "데이터 커버리지",
+    "confidence_note": "시스템 수집값과 코드 산식만 사용합니다. 결측 항목은 빈 값으로 둡니다.",
+    "interpretation_mode": "disabled",
+    "data_policy": "collected_series_snapshot_until_backend_deploy",
+    "missing_value_policy": "missing_inputs_return_null",
+    "synthetic_values": false,
+    "model_generated_fields": [],
+    "data_gaps": [],
+    "method_notes": [
+      "NASDAQ input: FRED NASDAQCOM",
+      "US rates/VIX/credit/FX/dollar/liquidity inputs: FRED",
+      "Japan JGB inputs: Japan MOF CSV",
+      "Intraday/1-minute feed: not connected",
+      "Formula weights are code constants and must be backtested before production use"
+    ],
+    "static_asset": "snappiko-preview.json"
+  },
+  "warnings": [],
+  "cache": {
+    "hit": false,
+    "ttl_seconds": 900
+  }
+}

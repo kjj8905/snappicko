@@ -382,6 +382,29 @@ function staticPreviewResponse(path) {
   return { found: false, data: null };
 }
 
+async function staticPreviewAssetResponse(path) {
+  if (!isStaticPreviewHost()) {
+    return { found: false, data: null };
+  }
+
+  const url = new URL(path, window.location.origin);
+  if (url.pathname !== "/api/snappiko/index") {
+    return staticPreviewResponse(path);
+  }
+
+  try {
+    const response = await fetch(new URL("./snappiko-preview.json", window.location.href), {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      return staticPreviewResponse(path);
+    }
+    return { found: true, data: await response.json() };
+  } catch {
+    return staticPreviewResponse(path);
+  }
+}
+
 function staticMutationResponse(path, payload = null) {
   if (!isStaticPreviewHost()) {
     return { found: false, data: null };
@@ -2704,10 +2727,17 @@ function getFriendlyFetchError(error, fallbackMessage) {
 }
 
 async function fetchJson(path) {
+  if (isStaticPreviewHost()) {
+    const fallback = await staticPreviewAssetResponse(path);
+    if (fallback.found) {
+      return fallback.data;
+    }
+  }
+
   try {
     const response = await fetch(apiUrl(path));
     if (!response.ok) {
-      const fallback = staticPreviewResponse(path);
+      const fallback = await staticPreviewAssetResponse(path);
       if (fallback.found) {
         return fallback.data;
       }
@@ -2716,7 +2746,7 @@ async function fetchJson(path) {
 
     return response.json();
   } catch (error) {
-    const fallback = staticPreviewResponse(path);
+    const fallback = await staticPreviewAssetResponse(path);
     if (fallback.found) {
       return fallback.data;
     }
