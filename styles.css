@@ -3923,12 +3923,16 @@ textarea.forum-input {
 }
 
 .mobile-nav-button {
-  min-height: 44px;
+  min-height: 48px;
+  padding: 4px 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border: 0;
   border-radius: 6px;
   color: var(--muted-strong);
   background: transparent;
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 1.2;
   font-weight: 900;
 }
 
@@ -4033,6 +4037,10 @@ textarea.forum-input {
     -webkit-text-size-adjust: 100%;
   }
 
+  body {
+    font-size: 16px;
+  }
+
   .topbar {
     grid-template-columns: auto 1fr;
     height: 62px;
@@ -4048,7 +4056,8 @@ textarea.forum-input {
   }
 
   .layout {
-    width: calc(100% - 24px);
+    width: 100%;
+    padding: 0 12px;
   }
 
   .content-area {
@@ -4671,5 +4680,431 @@ textarea.forum-input {
 @media (max-width: 768px) {
   .signal-help-panel {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-hero,
+  .home-search-card,
+  .home-stat-grid article,
+  .home-radar-panel,
+  .breaking-hero,
+  .breaking-news-card,
+  .breaking-learning-panel {
+    border-color: rgba(255, 255, 255, 0.11);
+  }
+
+  .home-stat-grid article,
+  .home-radar-panel,
+  .breaking-news-card,
+  .breaking-learning-panel {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+      #1b2028;
+  }
+
+  .home-stat-grid span,
+  .home-search-card label,
+  .home-chip-list span,
+  .home-recommend-list span,
+  .home-recent-view-list span {
+    color: #aeb8c7;
+    font-size: 14px;
+  }
+
+  .home-stat-grid small,
+  .home-empty,
+  .home-recommend-list small,
+  .home-search-result-list span,
+  .home-search-result-list small,
+  .home-recent-view-list small {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .breaking-hero {
+    margin-bottom: 14px;
+    border-color: rgba(252, 213, 53, 0.24);
+    background:
+      linear-gradient(135deg, rgba(252, 213, 53, 0.08), transparent 42%),
+      #111827;
+  }
+
+  .breaking-hero h1 {
+    font-size: 27px;
+    line-height: 1.18;
+  }
+
+  .breaking-hero p {
+    font-size: 16px;
+    line-height: 1.48;
+  }
+
+  .breaking-news-board {
+    gap: 14px;
+  }
+
+  .breaking-news-grid {
+    gap: 12px;
+  }
+
+  .breaking-news-card {
+    gap: 14px;
+    min-height: 212px;
+    padding: 20px;
+  }
+
+  .breaking-news-card.is-hot {
+    border-color: rgba(252, 213, 53, 0.64);
+    box-shadow: 0 0 0 1px rgba(252, 213, 53, 0.16);
+  }
+
+  .breaking-news-age {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 16px;
+  }
+
+  .breaking-news-card h2 {
+    font-size: 24px;
+    line-height: 1.28;
+    text-wrap: balance;
+  }
+
+  .breaking-news-card p {
+    font-size: 15px;
+  }
+
+  .breaking-news-footer {
+    gap: 10px;
+  }
+
+  .breaking-news-source {
+    color: #aeb8c7;
+    font-size: 14px;
+  }
+
+  .breaking-news-actions button {
+    min-height: 42px;
+    font-size: 13px;
+  }
+
+  .breaking-learning-header {
+    display: grid;
+    gap: 8px;
+  }
+
+  .breaking-learning-input,
+  .breaking-learning-button {
+    min-height: 46px;
+    font-size: 15px;
+  }
+
+  .snappiko-view.is-active {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 84px;
+  }
+
+  .snappiko-hero {
+    order: 1;
+    margin-bottom: 0;
+    border-color: rgba(252, 213, 53, 0.28);
+    background:
+      linear-gradient(135deg, rgba(252, 213, 53, 0.08), transparent 42%),
+      #111827;
+  }
+
+  .snappiko-hero h1 {
+    font-size: 27px;
+    line-height: 1.18;
+  }
+
+  .snappiko-hero p {
+    font-size: 16px;
+    line-height: 1.48;
+  }
+
+  .snappiko-cycle-layout,
+  .snappiko-detail-grid {
+    display: contents;
+  }
+
+  .snappiko-main-board {
+    order: 2;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 0;
+    border-color: rgba(252, 213, 53, 0.32);
+    background:
+      linear-gradient(135deg, rgba(252, 213, 53, 0.12), transparent 52%),
+      #1b2028;
+  }
+
+  .snappiko-main-copy h2 {
+    margin: 10px 0 8px;
+  }
+
+  .snappiko-main-copy h2 strong {
+    font-size: 56px;
+  }
+
+  .snappiko-main-copy h2 span,
+  .snappiko-main-copy p {
+    font-size: 16px;
+  }
+
+  .snappiko-gauge-arc {
+    width: 210px;
+    height: 116px;
+  }
+
+  .snappiko-gauge-arc::before {
+    width: 210px;
+    height: 210px;
+    border-width: 26px;
+  }
+
+  .snappiko-main-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .snappiko-main-stats div {
+    min-height: 86px;
+    padding: 14px;
+    background: rgba(11, 14, 17, 0.42);
+  }
+
+  .snappiko-main-stats span {
+    color: #aeb8c7;
+    font-size: 14px;
+  }
+
+  .snappiko-main-stats strong {
+    font-size: 24px;
+  }
+
+  .snappiko-grid {
+    order: 3;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .snappiko-card {
+    position: relative;
+    min-height: 124px;
+    padding: 16px;
+    border-color: rgba(255, 255, 255, 0.10);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+      #1b2028;
+  }
+
+  .snappiko-card.is-primary {
+    background:
+      linear-gradient(135deg, rgba(252, 213, 53, 0.14), transparent 58%),
+      #1b2028;
+  }
+
+  .snappiko-card span {
+    color: #aeb8c7;
+    font-size: 14px;
+  }
+
+  .snappiko-card strong {
+    font-size: 32px;
+  }
+
+  .snappiko-card small {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .snappiko-bond-panel {
+    order: 4;
+  }
+
+  .snappiko-liquidity-panel {
+    order: 5;
+  }
+
+  .snappiko-intel-grid {
+    order: 6;
+    margin-bottom: 0;
+  }
+
+  .snappiko-cycle-board {
+    order: 7;
+  }
+
+  .snappiko-explain {
+    order: 8;
+    margin-top: 0;
+  }
+
+  .snappiko-detail-grid > .snappiko-panel:not(.snappiko-bond-panel):not(.snappiko-liquidity-panel) {
+    order: 9;
+  }
+
+  .snappiko-source-note {
+    order: 10;
+  }
+
+  .snappiko-panel,
+  .snappiko-guideline-panel {
+    border-color: rgba(255, 255, 255, 0.10);
+    background: #1b2028;
+  }
+
+  .snappiko-panel-head {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .snappiko-panel-head h2 {
+    font-size: 21px;
+  }
+
+  .snappiko-panel-head span {
+    color: #aeb8c7;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .snappiko-bond-chart-head,
+  .snappiko-dollar-head {
+    gap: 8px;
+  }
+
+  .snappiko-bond-chart-head strong {
+    font-size: 20px;
+  }
+
+  .snappiko-bond-chart-head span {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  #snappikoDollarIndexBadge {
+    width: fit-content;
+  }
+
+  .snappiko-bond-chart-card,
+  .snappiko-liquidity-chart-card,
+  .snappiko-dollar-card,
+  .snappiko-liquidity-score-card,
+  .snappiko-liquidity-component,
+  .snappiko-heat-block,
+  .snappiko-contributor,
+  .snappiko-component,
+  .snappiko-related-item {
+    border-color: rgba(255, 255, 255, 0.10);
+    background: rgba(11, 14, 17, 0.38);
+  }
+
+  .snappiko-bond-chart-card,
+  .snappiko-liquidity-chart-card {
+    margin-inline: -6px;
+    padding: 12px;
+  }
+
+  .snappiko-bond-chart {
+    min-height: 318px;
+    padding: 8px 6px;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      rgba(11, 14, 17, 0.72);
+    background-size: 100% 62px, 58px 100%, auto;
+  }
+
+  .snappiko-bond-chart svg {
+    height: 290px;
+  }
+
+  .snappiko-chart-lines path {
+    stroke-width: 4.4;
+  }
+
+  .snappiko-chart-lines path.is-focus {
+    stroke-width: 5.4;
+  }
+
+  .snappiko-chart-empty {
+    min-height: 288px;
+    border: 1px dashed rgba(252, 213, 53, 0.20);
+    border-radius: 8px;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      rgba(11, 14, 17, 0.72);
+    background-size: 100% 58px, 58px 100%, auto;
+    color: #d8dee8;
+    font-size: 16px;
+  }
+
+  .snappiko-bond-legend,
+  .snappiko-liquidity-legend {
+    display: flex;
+    gap: 8px;
+    margin-inline: -12px;
+    overflow-x: auto;
+    padding: 0 12px 2px;
+    scrollbar-width: none;
+  }
+
+  .snappiko-bond-legend::-webkit-scrollbar,
+  .snappiko-liquidity-legend::-webkit-scrollbar {
+    display: none;
+  }
+
+  .snappiko-bond-legend span,
+  .snappiko-liquidity-legend span {
+    flex: 0 0 148px;
+    min-height: 64px;
+    font-size: 14px;
+  }
+
+  .snappiko-bond-legend strong,
+  .snappiko-liquidity-legend strong {
+    font-size: 16px;
+  }
+
+  .snappiko-history-bars {
+    height: 148px;
+    background:
+      linear-gradient(to top, rgba(34, 197, 94, 0.14), rgba(252, 213, 53, 0.12), rgba(239, 68, 68, 0.14)),
+      #111820;
+  }
+
+  .snappiko-history-bar-row {
+    min-height: 106px;
+  }
+
+  .snappiko-heat-block > div:first-child {
+    display: grid;
+    align-items: flex-start;
+  }
+
+  .snappiko-heat-block span,
+  .snappiko-component span,
+  .snappiko-liquidity-component span {
+    color: #aeb8c7;
+    font-size: 14px;
+  }
+
+  .snappiko-heat-block strong {
+    font-size: 29px;
+  }
+
+  .snappiko-heat-block small,
+  .snappiko-component small,
+  .snappiko-liquidity-component small,
+  .snappiko-related-item small,
+  .snappiko-source-note {
+    font-size: 14px;
+    line-height: 1.45;
   }
 }
