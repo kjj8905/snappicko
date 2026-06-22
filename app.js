@@ -80,6 +80,194 @@ let alertSettings = loadStorageObject(snapPickStorageKeys.alertSettings);
 let planInterest = loadStorageObject(snapPickStorageKeys.planInterest);
 let lastModalTrigger = null;
 
+const staticPreviewNews = [
+  {
+    title: "[속보] 원일티엔아이, 한국가스기술공사와 113억원 규모 수소설비 공급...",
+    origin_url: "https://www.cbci.co.kr/news/articleView.html?idxno=583681",
+    naver_url: "https://www.cbci.co.kr/news/articleView.html?idxno=583681",
+    canonical_url: "https://www.cbci.co.kr/news/articleView.html?idxno=583681",
+    source_host: "cbci.co.kr",
+    description: "원일티엔아이가 한국가스기술공사와 113억원 규모 설비 제작·설치 계약을 체결했다고 공시했습니다.",
+    pub_date: "2026-06-22T13:24:00+09:00",
+    collected_at: "2026-06-22T13:25:56+09:00",
+    id: "static-breaking-001",
+  },
+  {
+    title: "[속보] 한울반도체, 주가 상한가 도달…오전 장중 VI 2차례 발동하기도",
+    origin_url: "https://www.cbci.co.kr/news/articleView.html?idxno=583679",
+    naver_url: "https://www.cbci.co.kr/news/articleView.html?idxno=583679",
+    canonical_url: "https://www.cbci.co.kr/news/articleView.html?idxno=583679",
+    source_host: "cbci.co.kr",
+    description: "한울반도체가 장중 상한가에 도달하며 강세를 나타냈습니다.",
+    pub_date: "2026-06-22T13:22:00+09:00",
+    collected_at: "2026-06-22T13:23:34+09:00",
+    id: "static-breaking-002",
+  },
+  {
+    title: "[속보] 25년만에 대장주 교체…SK하닉, 삼전 제치고 시총 1위",
+    origin_url: "https://www.dt.co.kr/article/12068784?ref=naver",
+    naver_url: "https://n.news.naver.com/mnews/article/029/0003032964?sid=101",
+    canonical_url: "https://www.dt.co.kr/article/12068784?ref=naver",
+    source_host: "dt.co.kr",
+    description: "SK하이닉스가 삼성전자를 제치고 코스피 시가총액 1위에 올랐다는 보도입니다.",
+    pub_date: "2026-06-22T13:21:00+09:00",
+    collected_at: "2026-06-22T13:23:34+09:00",
+    id: "static-breaking-003",
+  },
+  {
+    title: "[속보] SK하이닉스, 삼성전자 제치고 시총 1위…26년 만에 대장주 교체",
+    origin_url: "http://www.yonhapnewstv.co.kr/news/AKR20260622130631kyo",
+    naver_url: "https://n.news.naver.com/mnews/article/422/0000877138?sid=101",
+    canonical_url: "http://www.yonhapnewstv.co.kr/news/AKR20260622130631kyo",
+    source_host: "yonhapnewstv.co.kr",
+    description: "코스피 시가총액 상위주 변화 관련 속보입니다.",
+    pub_date: "2026-06-22T13:07:00+09:00",
+    collected_at: "2026-06-22T13:08:26+09:00",
+    id: "static-breaking-004",
+  },
+];
+
+const staticPreviewSignals = {
+  FREE_CAPITAL_INCREASE: {
+    condition: "무상증자",
+    corp_name: "코미코",
+    stock_code: "",
+    disclosure_time: "2026.05.12 09:00",
+    metrics: [
+      { label: "증자 비율", value: "1:1" },
+      { label: "기준일", value: "2026.05.27" },
+      { label: "출처", value: "DART 샘플" },
+    ],
+    recommendation_type: "강력신호",
+    confidence: 90,
+    recommendation_reason: "보통주 1주당 1주의 신주를 배정하는 무상증자 샘플입니다. 백엔드 배포 전 화면 검증용 데이터입니다.",
+    dart_url: sampleFreeCapitalIncreaseUrl,
+    report_name: "주요사항보고서(무상증자결정)",
+  },
+  SINGLE_SALES_CONTRACT: {
+    condition: "단일판매계약",
+    corp_name: "엘케이켐",
+    stock_code: "",
+    disclosure_time: "2026.05.14 09:01",
+    metrics: [
+      { label: "매출 대비", value: "105.13%" },
+      { label: "계약기간", value: "2026-05-14 ~ 2027-04-30" },
+      { label: "출처", value: "DART 샘플" },
+    ],
+    recommendation_type: "강력신호",
+    confidence: 90,
+    recommendation_reason: "최근 매출액 대비 105.13% 규모의 단일판매계약 샘플입니다. 백엔드 배포 전 화면 검증용 데이터입니다.",
+    dart_url: "https://dart.fss.or.kr/api/link.jsp?rcpNo=20260514901528",
+    report_name: "단일판매ㆍ공급계약체결",
+  },
+  PAID_CAPITAL_INCREASE: {
+    condition: "제3자배정 유상증자",
+    corp_name: "하이퍼코퍼레이션",
+    stock_code: "",
+    disclosure_time: "2022.11.29 16:53",
+    metrics: [
+      { label: "희석률", value: "7.86%" },
+      { label: "증자방식", value: "제3자배정증자" },
+      { label: "출처", value: "DART 샘플" },
+    ],
+    recommendation_type: "관찰신호",
+    confidence: 80,
+    recommendation_reason: "제3자배정 방식과 희석률을 함께 확인하는 유상증자 샘플입니다. 백엔드 배포 전 화면 검증용 데이터입니다.",
+    dart_url: samplePaidCapitalIncreaseUrl,
+    report_name: "주요사항보고서(유상증자결정)",
+  },
+  BUYBACK: {
+    condition: "자기주식취득",
+    corp_name: "티쓰리",
+    stock_code: "",
+    disclosure_time: "2025.11.21 14:01",
+    metrics: [
+      { label: "취득비율", value: "3.74%" },
+      { label: "취득예정주식수", value: "2,194,185" },
+      { label: "출처", value: "DART 샘플" },
+    ],
+    recommendation_type: "관찰신호",
+    confidence: 80,
+    recommendation_reason: "자사주 취득비율과 취득 기간을 확인하는 자기주식취득 샘플입니다. 백엔드 배포 전 화면 검증용 데이터입니다.",
+    dart_url: sampleBuybackUrl,
+    report_name: "주요사항보고서(자기주식취득결정)",
+  },
+};
+
+const staticPreviewSnappiko = {
+  status: "static_preview",
+  generated_at: "2026-06-22T13:33:58+09:00",
+  overall: {
+    score: 340,
+    max: 1000,
+    label: "300-399",
+    phase: { label: "300-399", ratio: 34, percentile: 47, tone: "neutral" },
+    phase_label: "300-399",
+    phase_ratio: 34,
+    state_percentile: 47,
+    weekly_change: 0,
+  },
+  nasdaq_heat: {
+    score: 84,
+    max: 100,
+    label: "80-89",
+    weekly: { period_label: "주봉", score: 81, max: 100, label: "80-89", as_of: "2026-06-18", components: [] },
+    monthly: { period_label: "월봉", score: 88, max: 100, label: "80-89", as_of: "2026-05-29", components: [] },
+  },
+  bond_stress: {
+    score: 87,
+    max: 100,
+    label: "80-89",
+    latest_date: "2026-06-20",
+    markets: [
+      { label: "미국 10Y", value: "4.57%", detail: "20거래일 +23bp", score: 94, components: [] },
+      { label: "미국 30Y", value: "5.10%", detail: "20거래일 +18bp", score: 100, components: [] },
+      { label: "일본 10Y", value: "2.686%", detail: "월중 +18bp", score: 87, components: [] },
+      { label: "일본 30Y", value: "3.876%", detail: "월중 +17bp", score: 88, components: [] },
+    ],
+  },
+  panic_boom: { panic_score: 34, boom_score: 66, panic_max: 100, boom_max: 100, fragility_overlay: 0 },
+  cycle_map: [
+    { group: "과열", label: "나스닥 과열", score: 84, phase: "80-89", description: "주봉·월봉 확정 기준" },
+    { group: "금리", label: "채권 스트레스", score: 87, phase: "80-89", description: "미국/일본 장기금리" },
+    { group: "유동성", label: "달러 유동성", score: null, phase: "대기", description: "백엔드 연결 후 갱신" },
+  ],
+  history: [
+    { date: "2026-05-29", score: 318 },
+    { date: "2026-06-05", score: 328 },
+    { date: "2026-06-12", score: 340 },
+    { date: "2026-06-19", score: 340 },
+  ],
+  dollar_index: { value: "119.28", score: 31, max: 100, phase: "관찰", detail: "FRED DTWEXBGS 정적 미리보기" },
+  liquidity: { score: null, max: 100, value: "정적 미리보기", label: "백엔드 대기", detail: "Fed/TGA/RRP/Reserve 데이터는 백엔드 배포 후 표시됩니다." },
+  charts: {},
+  data: {
+    source: "정적 미리보기",
+    latest_daily_date: "2026-06-20",
+    weekly_bar_date: "2026-06-18",
+    monthly_bar_date: "2026-05-29",
+    bond_data_date: "2026-06-20",
+    last_updated: "2026-06-22 13:33",
+    confidence: 52,
+    data_coverage: 52,
+    confidence_label: "정적 미리보기",
+    data_gaps: ["실시간 백엔드 API 배포 전에는 고정 스냅샷을 표시합니다."],
+    method_notes: ["백엔드 연결 시 실시간 수집값으로 교체됩니다."],
+    uses_ai: false,
+    interpretation_mode: "disabled",
+    data_policy: "static_snapshot_until_backend_deploy",
+    missing_value_policy: "missing_inputs_return_null",
+    synthetic_values: false,
+    model_generated_fields: [],
+  },
+  contributors: [
+    { label: "Nasdaq Heat", value: "84 / 100", score: 84, tone: "warning", detail: "정적 미리보기" },
+    { label: "Bond Stress", value: "87 / 100", score: 87, tone: "danger", detail: "정적 미리보기" },
+    { label: "Dollar Index", value: "119.28", score: 31, tone: "neutral", detail: "정적 미리보기" },
+  ],
+  warnings: ["정적 미리보기 모드입니다. 실시간 수집은 백엔드 배포 후 활성화됩니다."],
+};
+
 function apiBaseUrl() {
   const configuredBase =
     window.DARTSCOPE_API_BASE ||
@@ -101,6 +289,147 @@ function apiBaseUrl() {
 
 function apiUrl(path) {
   return new URL(path, apiBaseUrl());
+}
+
+function hasConfiguredApiBase() {
+  return Boolean(
+    window.DARTSCOPE_API_BASE ||
+      document.querySelector('meta[name="dartscope-api-base"]')?.getAttribute("content"),
+  );
+}
+
+function isStaticPreviewHost() {
+  return !hasConfiguredApiBase() && ["snappiko.com", "www.snappiko.com"].includes(window.location.hostname);
+}
+
+function cloneStaticData(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function staticPreviewStatus() {
+  return {
+    poll_in_progress: false,
+    seconds_until_next_poll: 0,
+    last_error: "",
+    static_preview: true,
+    store: {
+      seen_count: 4,
+      total_new_count: 4,
+      last_new_count: 4,
+      display_max_age_hours: 24,
+    },
+  };
+}
+
+function staticBreakingStatus() {
+  return {
+    poll_in_progress: false,
+    seconds_until_next_poll: 0,
+    last_error: "",
+    provider: "static",
+    store: {
+      history_count: staticPreviewNews.length,
+      total_new_count: staticPreviewNews.length,
+      total_skipped_count: 0,
+      display_max_age_hours: 24,
+    },
+    relevance: {
+      enabled: true,
+      provider: "static",
+      last_summary: {
+        static_preview: true,
+      },
+      learning: {
+        total_samples: 0,
+        approved_samples: 0,
+        rejected_samples: 0,
+        manual_approval_count: 0,
+        finance_candidates: [],
+        reject_candidates: [],
+        manual_approvals: [],
+      },
+    },
+  };
+}
+
+function staticPreviewResponse(path) {
+  if (!isStaticPreviewHost()) {
+    return { found: false, data: null };
+  }
+
+  const url = new URL(path, window.location.origin);
+  const pathname = url.pathname;
+  if (pathname === "/api/rss/status") {
+    return { found: true, data: staticPreviewStatus() };
+  }
+  if (pathname === "/api/rss/new" || pathname === "/api/rss/history") {
+    return { found: true, data: [] };
+  }
+  if (pathname === "/api/breaking/status") {
+    return { found: true, data: staticBreakingStatus() };
+  }
+  if (pathname === "/api/breaking/news") {
+    const limit = Number(url.searchParams.get("limit") || staticPreviewNews.length);
+    return { found: true, data: cloneStaticData(staticPreviewNews).slice(0, limit) };
+  }
+  if (pathname === "/api/snappiko/index") {
+    return { found: true, data: cloneStaticData(staticPreviewSnappiko) };
+  }
+  if (pathname === "/api/community/posts" || pathname === "/api/personal/portfolio") {
+    return { found: true, data: pathname.includes("portfolio") ? { records: [], monthly_records: [], summary: null } : { posts: [] } };
+  }
+
+  return { found: false, data: null };
+}
+
+function staticMutationResponse(path, payload = null) {
+  if (!isStaticPreviewHost()) {
+    return { found: false, data: null };
+  }
+
+  const url = new URL(path, window.location.origin);
+  const pathname = url.pathname;
+  if (pathname.startsWith("/api/growth/")) {
+    return { found: true, data: { ok: true, static_preview: true, item: payload } };
+  }
+  if (pathname === "/api/community/posts") {
+    return { found: true, data: { posts: communityPosts } };
+  }
+  if (pathname.includes("/comments") || pathname.includes("/reactions")) {
+    return { found: true, data: { posts: communityPosts } };
+  }
+  if (pathname === "/api/personal/portfolio") {
+    return { found: true, data: { records: portfolioRecords, monthly_records: portfolioMonthlyRecords, summary: portfolioSummary } };
+  }
+
+  return { found: false, data: null };
+}
+
+function staticAnalyzeDisclosure(config) {
+  if (!isStaticPreviewHost()) {
+    return null;
+  }
+
+  const signal = staticPreviewSignals[config.categoryCode];
+  if (!signal) {
+    return null;
+  }
+
+  return {
+    ...cloneStaticData(signal),
+    category_code: config.categoryCode,
+    category_label: config.label,
+    is_sample: true,
+    is_static_preview: true,
+    source_disclosure: {
+      origin: "static_preview",
+      label: "정적 미리보기",
+      corp_name: signal.corp_name,
+      report_name: signal.report_name,
+      published_at: signal.disclosure_time,
+    },
+    observed_at: new Date().toISOString(),
+  };
 }
 
 function escapeHtml(value) {
@@ -1432,9 +1761,11 @@ function updateBreakingStatusText() {
   const filterLabel =
     relevance.enabled === false
       ? "금융필터 꺼짐"
-      : relevance.provider === "gemini"
-        ? "Gemini 금융필터"
-        : "키워드 금융필터";
+      : relevance.provider === "static"
+        ? "정적 미리보기"
+        : relevance.provider === "gemini"
+          ? "Gemini 금융필터"
+          : "키워드 금융필터";
   const cardCount = Math.min(breakingNewsItems.length, breakingCardLimit);
   const archiveCount = Math.max(0, breakingNewsItems.length - breakingCardLimit);
   count.textContent = `${cardCount}개 카드${archiveCount ? ` · 목록 ${archiveCount}개` : ""}`;
@@ -1552,6 +1883,7 @@ function formatSnappikoChange(value) {
 function translateSnappikoStatus(value) {
   const map = {
     system_data: "시스템 산출",
+    static_preview: "정적 미리보기",
     system_unavailable: "시스템 대기",
     draft: "시스템 산출",
     stale: "캐시",
@@ -2372,12 +2704,24 @@ function getFriendlyFetchError(error, fallbackMessage) {
 }
 
 async function fetchJson(path) {
-  const response = await fetch(apiUrl(path));
-  if (!response.ok) {
-    throw new Error(`API 오류 ${response.status}`);
-  }
+  try {
+    const response = await fetch(apiUrl(path));
+    if (!response.ok) {
+      const fallback = staticPreviewResponse(path);
+      if (fallback.found) {
+        return fallback.data;
+      }
+      throw new Error(`API 오류 ${response.status}`);
+    }
 
-  return response.json();
+    return response.json();
+  } catch (error) {
+    const fallback = staticPreviewResponse(path);
+    if (fallback.found) {
+      return fallback.data;
+    }
+    throw error;
+  }
 }
 
 async function sendJson(path, method, payload = null) {
@@ -2392,7 +2736,16 @@ async function sendJson(path, method, payload = null) {
     options.body = JSON.stringify(payload);
   }
 
-  const response = await fetch(apiUrl(path), options);
+  let response = null;
+  try {
+    response = await fetch(apiUrl(path), options);
+  } catch (error) {
+    const fallback = staticMutationResponse(path, payload);
+    if (fallback.found) {
+      return fallback.data;
+    }
+    throw error;
+  }
   let data = null;
   try {
     data = await response.json();
@@ -2401,6 +2754,10 @@ async function sendJson(path, method, payload = null) {
   }
 
   if (!response.ok) {
+    const fallback = staticMutationResponse(path, payload);
+    if (fallback.found) {
+      return fallback.data;
+    }
     const detail = Array.isArray(data?.detail) ? data.detail.map((item) => item.msg).join(", ") : data?.detail;
     throw new Error(data?.error || detail || `API 오류 ${response.status}`);
   }
@@ -2888,6 +3245,11 @@ function findLatestDisclosure(categoryCode, candidates) {
 async function analyzeDisclosure(config, candidates) {
   const latest = findLatestDisclosure(config.categoryCode, candidates);
   const latestDisclosure = latest.disclosure;
+  const staticSignal = staticAnalyzeDisclosure(config);
+  if (staticSignal) {
+    return staticSignal;
+  }
+
   const url = apiUrl(config.endpoint);
   url.searchParams.set("url", latestDisclosure?.dart_url || config.sampleUrl);
   url.searchParams.set("published_at", latestDisclosure?.published_at || config.samplePublishedAt);
