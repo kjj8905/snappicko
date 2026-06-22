@@ -1,989 +1,884 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6269248806672306"
-     crossorigin="anonymous"></script>
-<meta name="naver-site-verification" content="588df416ff6a2827e7c04dda62d18946a4b475f6" />
-<meta name="google-site-verification" content="mweApcvfL2CGBz8TYevVi3dOeasKN1nlfSkn5YNDgnU" />
-<meta name="description" content="호재 공시를 실시간으로 보여주는 스냅피코">
+  <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6269248806672306" crossorigin="anonymous"></script>
+    <meta name="naver-site-verification" content="588df416ff6a2827e7c04dda62d18946a4b475f6" />
+    <meta name="google-site-verification" content="mweApcvfL2CGBz8TYevVi3dOeasKN1nlfSkn5YNDgnU" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="dartscope-api-base" content="" />
+    <meta
+      name="description"
+      content="SnapPick은 DART 공시, 금융 속보, 스냅픽코 위험지수를 한 화면에서 추적하는 실시간 투자 레이더입니다."
+    />
+    <title>SnapPick - 실시간 공시·속보 투자 레이더</title>
+    <link rel="stylesheet" href="./styles.css?v=final-mvp" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="DartScope 홈">
+          <span class="brand-mark">⌁</span>
+          <span>
+            <strong>DartScope</strong>
+          </span>
+        </a>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snappiko – 실시간 AI 주식/코인 정보</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'deep-navy':  '#0A1929',
-            'midnight':   '#050A14',
-            'accent-blue':'#3B82F6',
-            'card-bg':    '#0F172A',
-            'positive':   '#10B981',
-            'negative':   '#EF4444',
-            'neutral':    '#6B7280',
-            'condition-a':'#3B82F6',
-            'condition-b':'#8B5CF6',
-            'condition-c':'#EC4899',
-            'condition-d':'#F59E0B',
-            'condition-e':'#10B981',
-            'bright-green': '#4ade80',
-            'bright-yellow': '#FACC15',
-          },
-          boxShadow: {
-            'soft':'0 4px 12px rgba(0,0,0,0.15)'
-          }
-        }
-      }
-    };
-  </script>
-
-  <style>
-    body { font-family: 'Noto Sans KR', sans-serif; background: linear-gradient(to bottom, #0A1929, #050A14); color: #E5E7EB; }
-    .ticker-wrapper { display: inline-block; animation: ticker 30s linear infinite; }
-    .ticker-item { display: inline-block; padding: 0 1.5rem; }
-    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-    @media (max-width: 768px) { .ticker-wrapper { animation: ticker 15s linear infinite; } }
-    .confidence-bar-bg { height: 6px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; }
-    .confidence-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #3B82F6, #60A5FA); }
-    .tab-active { border-bottom: 2px solid #3B82F6; color: #fff !important; }
-    .stock-card { transition: all .2s ease; border: 1px solid transparent; }
-    .stock-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,.2); }
-    .favorite-star { transition: all .2s ease; }
-    .favorite-star.active { color: #F59E0B; transform: scale(1.2); }
-    .notification-toggle { position: relative; width: 48px; height: 24px; }
-    .notification-toggle input { opacity: 0; width: 0; height: 0; }
-    .notification-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #374151; transition: .4s; border-radius: 24px; }
-    .notification-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-    input:checked + .notification-slider { background-color: #3B82F6; }
-    input:checked + .notification-slider:before { transform: translateX(24px); }
-    .stock-update { animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: .6; } 100% { opacity: 1; } }
-    .condition-badge { font-size: .7rem; padding: .15rem .4rem; border-radius: 4px; margin-right: .5rem; font-weight: 500; }
-    .filter-btn { background: rgba(107,114,128,.2); color: #9CA3AF; }
-    .filter-btn.active { background: rgba(59,130,246,.2); color: #3B82F6; }
-    .metric-box { display: flex; justify-content: space-between; align-items: center; font-size: .825rem; background: rgba(255,255,255,.05); border-radius: 4px; padding: .35rem .5rem; }
-    .metric-label { color: #A1A1AA; }
-    .metric-value { font-weight: 500; }
-    .post-card { border-bottom: 1px solid rgba(255,255,255,.05); padding-bottom: 1.25rem; margin-bottom: 1.25rem; }
-    .post-card:last-child { border-bottom: none; margin-bottom: 0; }
-    .post-header { display: flex; justify-content: space-between; align-items: center; }
-    .forum-badge { font-size: .75rem; background: #374151; padding: .15rem .5rem; border-radius: .25rem; display: inline-flex; align-items: center; }
-    .like-btn { cursor: pointer; transition: all .2s ease; }
-    .like-btn:hover { background-color: #4A5568; }
-    .like-btn.liked svg { fill: #3B82F6; stroke: #3B82F6; color: #3B82F6;}
-    .like-btn.liked span { color: #60A5FA; }
-    .category-tab-btn { transition: color .2s ease, border-color .2s ease; }
-    .main-nav-link.active { color: #E5E7EB; background-color: rgba(59, 130, 246, 0.3); }
-    .main-nav-link { color: #9CA3AF; }
-    .main-nav-link:hover { background-color: rgba(55, 65, 81, 0.7); color: #E5E7EB; }
-    .modal-input { appearance: none; border-radius: 0.375rem; border: 1px solid #4B5563; background-color: #1F2937; padding: 0.5rem 0.75rem; color: white; }
-    .modal-input::placeholder { color: #6B7280; }
-    .modal-input:focus { outline: none; ring-width: 1px; ring-color: #3B82F6; border-color: #3B82F6; }
-    .feedback-success { color: #10B981; }
-    .feedback-error { color: #EF4444; }
-    @keyframes luxurious-pulse-glow {
-        0%, 100% { box-shadow: 0 0 5px 1px rgba(250, 204, 21, 0.25); }
-        50% { box-shadow: 0 0 14px 5px rgba(250, 204, 21, 0.55); }
-    }
-    .high-confidence-card-border { animation: luxurious-pulse-glow 3.2s infinite ease-in-out; }
-  </style>
-</head>
-<body class="min-h-screen pb-12">
-
-  <header class="sticky top-0 z-50 bg-deep-navy/95 backdrop-blur-sm shadow-md">
-    <div class="container mx-auto flex items-center justify-between px-4 py-3">
-      <div class="flex items-center flex-shrink-0">
-        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-accent-blue" fill="currentColor" viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/><path d="M16 10h2V4h-2v6zm0 10h2v-6h-2v6z"/></svg>
-        <span class="ml-1.5 sm:ml-2 text-lg sm:text-xl font-bold text-white flex-shrink-0">Snappiko</span>
-        <nav id="main-navigation" class="ml-2 sm:ml-4 md:ml-6 flex items-baseline space-x-1 sm:space-x-2">
-            <a href="#stocks" id="nav-stocks" class="main-nav-link active px-1.5 py-1 sm:px-3 sm:py-2 rounded-md text-xs sm:text-sm font-medium whitespace-nowrap" aria-current="page">주식</a>
-            <a href="#coins" id="nav-coins" class="main-nav-link px-1.5 py-1 sm:px-3 sm:py-2 rounded-md text-xs sm:text-sm font-medium whitespace-nowrap">코인</a>
+        <nav class="desktop-nav" aria-label="디자인 메뉴">
+          <button class="nav-button is-active" type="button" data-view-target="market" data-nav-key="stock">주식</button>
+          <button class="nav-button" type="button" data-view-target="market" data-nav-key="disclosure">공시</button>
+          <button class="nav-button" type="button" data-view-target="personal" data-nav-key="personal">주인장기록</button>
+          <button class="nav-button" type="button" data-view-target="breaking" data-nav-key="breaking">속보뉴스</button>
+          <button class="nav-button" type="button" data-view-target="snappiko" data-nav-key="snappiko">스냅픽코 지수</button>
         </nav>
-      </div>
-      <div class="flex items-center flex-shrink-0">
-        <span class="mr-1.5 sm:mr-2 text-xs sm:text-sm hidden md:inline">알림</span>
-        <label class="notification-toggle mr-2 sm:mr-4">
-          <input type="checkbox" id="notification-toggle" checked>
-          <span class="notification-slider"></span>
-        </label>
-        <div id="auth-container" class="flex items-center">
-            <button id="signup-btn-header" class="text-xs sm:text-sm text-gray-300 hover:text-white transition focus:outline-none mr-1.5 sm:mr-3 whitespace-nowrap">회원가입</button>
-            <button id="login-btn-header" class="text-xs sm:text-sm text-gray-300 hover:text-white transition focus:outline-none whitespace-nowrap">로그인</button>
-            <span id="welcome-message" class="text-xs sm:text-sm text-gray-300 mr-1.5 sm:mr-3 hidden whitespace-nowrap"></span>
-            <button id="logout-btn-header" class="text-xs sm:text-sm text-gray-300 hover:text-white transition focus:outline-none hidden whitespace-nowrap">로그아웃</button>
+
+        <div class="topbar-actions">
+          <button class="text-button" type="button" data-modal-target="trust">신뢰센터</button>
+          <button class="text-button" type="button" data-modal-target="signup">로그인</button>
+          <button class="primary-button" type="button" data-modal-target="signup">시작하기</button>
         </div>
-      </div>
-    </div>
-  </header>
+      </header>
 
-  <div id="stock-service-content">
-    <section class="bg-deep-navy border-b border-gray-800 py-3">
-      <div class="container mx-auto flex items-center justify-between px-4">
-        <div class="ticker-container flex-1 overflow-hidden whitespace-nowrap">
-          <div class="ticker-wrapper" id="ticker-wrapper-1"></div>
-          <div class="ticker-wrapper" aria-hidden="true" id="ticker-wrapper-2"></div>
-        </div>
-      </div>
-    </section>
+      <main class="layout">
+        <section class="content-area">
+          <section class="view-section is-active" data-view="market">
+          <section class="home-hero" aria-labelledby="homeHeroTitle">
+            <div class="home-hero-copy">
+              <span class="badge warning">LIVE INVESTMENT RADAR</span>
+              <h1 id="homeHeroTitle">공시·속보·위험지수를 한 화면에서 보는 투자 레이더</h1>
+              <p>
+                DART 공시, 금융 속보, 스냅픽코 지수를 연결해 시장 변화를 빠르게 확인하고 관심 신호를 저장합니다.
+              </p>
+              <div class="home-hero-actions">
+                <button class="primary-button" type="button" id="saveInterestButton">관심 신호 설정</button>
+                <button class="secondary-button" type="button" data-modal-target="alert">알림 설정</button>
+                <button class="secondary-button" type="button" data-view-target="breaking" data-nav-key="breaking">실시간 속보 보기</button>
+              </div>
+              <div class="home-trust-strip" aria-label="데이터 출처">
+                <span>DART RSS</span>
+                <span>Naver News API</span>
+                <span>FRED/MOF Data</span>
+                <span>DATA ONLY Index</span>
+                <button type="button" data-modal-target="trust">운영 정책</button>
+              </div>
+            </div>
 
-    <section id="status-update-banner-container"
-             class="container mx-auto px-4 pt-3 transform transition-opacity duration-500 ease-in-out opacity-0 hidden">
-        <div id="status-update-banner-content"
-             class="bg-positive text-white px-4 py-2.5 rounded-md shadow-lg flex items-center w-full">
-            <span class="text-lg mr-2.5">⚡️</span>
-            <span id="status-update-banner-message" class="text-sm"></span>
-        </div>
-    </section>
+            <div class="home-search-card">
+              <label for="homeSearchInput">종목명, 공시 조건, 키워드 검색</label>
+              <div class="home-search-box">
+                <input id="homeSearchInput" type="search" placeholder="예: 무상증자, 자사주취득, 환율" autocomplete="off" />
+                <button class="primary-button" type="button" id="homeSearchButton">검색</button>
+              </div>
+              <div class="search-suggestion-panel" id="homeSearchSuggestions"></div>
+              <div class="home-search-results" id="homeSearchResults" aria-live="polite"></div>
+            </div>
+          </section>
 
-    <div class="container mx-auto px-4 py-4">
-      <div class="h-[90px] flex items-center justify-center rounded-lg bg-gray-800/50 text-sm text-gray-500">광고 배너 영역 (728×90)</div>
-    </div>
+          <section class="home-stat-grid" aria-label="실시간 서비스 통계">
+            <article>
+              <span>공시 감시</span>
+              <strong id="homeDisclosureCount">--</strong>
+              <small id="homeDisclosureMeta">DART RSS 연결 대기</small>
+            </article>
+            <article>
+              <span>금융 속보</span>
+              <strong id="homeBreakingCount">--</strong>
+              <small id="homeBreakingMeta">네이버 속보 연결 대기</small>
+            </article>
+            <article>
+              <span>스냅픽코</span>
+              <strong id="homeSnappikoScore">--</strong>
+              <small id="homeSnappikoMeta">위험지수 대기</small>
+            </article>
+            <article>
+              <span>내 기록</span>
+              <strong id="homePortfolioCount">--</strong>
+              <small id="homePortfolioMeta">주인장기록 대기</small>
+            </article>
+          </section>
 
-    <section class="container mx-auto flex flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between">
-      <div class="relative w-full md:w-64">
-        <select id="condition-filter-select" class="w-full appearance-none rounded-lg border border-gray-700 bg-card-bg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-blue">
-          <option value="all">모든 공시 조건</option>
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-          <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-        </div>
-      </div>
-      <div class="flex w-full gap-2 overflow-x-auto pb-2 md:w-auto md:pb-0" id="filter-buttons-group">
-        <button data-filter="all"       class="filter-btn active rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0">전체 추천</button>
-        <button data-filter="favorites" class="filter-btn rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0">관심종목</button>
-        <button data-filter="new"       class="filter-btn rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0">NEW</button>
-        <button data-filter="today"     class="filter-btn rounded-lg px-4 py-2 text-sm font-medium transition flex-shrink-0 hidden">오늘만</button> 
-        <button id="refresh-data-btn"    class="ml-auto flex items-center rounded-lg bg-gray-700 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-600 md:ml-0 flex-shrink-0">
-          <svg class="mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-          새로고침
-        </button>
-      </div>
-    </section>
-
-    <section class="container mx-auto px-4 py-4">
-      <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold">지금 주목할만한 종목</h2>
-          <div class="hidden md:flex flex-col text-xs text-gray-400 items-end">
-              <span>마지막 업데이트: <span id="last-update-time">--:--:--</span></span>
-              <span>다음 업데이트: <span id="update-countdown">--:--</span></span>
-          </div>
-      </div>
-      <div id="stock-category-tabs" class="flex border-b border-gray-700 mb-6 overflow-x-auto pb-px">
-          <button class="category-tab-btn tab-active px-4 sm:px-6 py-3 font-medium text-sm focus:outline-none whitespace-nowrap" data-category="realtime_news_stocks">실시간 호재 종목</button>
-          <button class="category-tab-btn text-gray-400 hover:text-gray-200 px-4 sm:px-6 py-3 font-medium text-sm focus:outline-none whitespace-nowrap" data-category="low_pbr_stocks">저 PBR 종목</button>
-          <button class="category-tab-btn text-gray-400 hover:text-gray-200 px-4 sm:px-6 py-3 font-medium text-sm focus:outline-none whitespace-nowrap" data-category="treasury_over_50">자사주 50% 이상 종목</button>
-          <button class="category-tab-btn text-gray-400 hover:text-gray-200 px-4 sm:px-6 py-3 font-medium text-sm focus:outline-none whitespace-nowrap" data-category="treasury_accumulating">자사주 축적형 기업</button>
-      </div>
-      <div id="stock-cards-container" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
-    </section>
-
-    <div class="container mx-auto px-4 py-4">
-      <div class="h-[100px] flex items-center justify-center rounded-lg bg-gray-800/50 text-sm text-gray-500">인피드 광고 영역 (320×100)</div>
-    </div>
-
-    <section class="container mx-auto px-4 py-6">
-      <h2 class="mb-4 text-xl font-bold">최근 발견된 조건별 종목</h2>
-      <div class="overflow-hidden rounded-lg bg-card-bg shadow-soft">
-        <div class="flex overflow-x-auto border-b border-gray-700" id="condition-tabs-nav">
-          <button class="tab-btn tab-active whitespace-nowrap px-6 py-3 font-medium" data-tab-id="tab-condition-a">무상증자</button>
-          <button class="tab-btn whitespace-nowrap px-6 py-3 font-medium text-gray-400" data-tab-id="tab-condition-b">단일판매계약</button>
-          <button class="tab-btn whitespace-nowrap px-6 py-3 font-medium text-gray-400" data-tab-id="tab-condition-c">제3자유상증자</button>
-          <button class="tab-btn whitespace-nowrap px-6 py-3 font-medium text-gray-400" data-tab-id="tab-condition-d">자사주취득</button>
-          <button class="tab-btn whitespace-nowrap px-6 py-3 font-medium text-gray-400" data-tab-id="tab-condition-e">외국증권사매수</button>
-        </div>
-        <div id="tab-condition-a" class="tab-content p-4"></div>
-        <div id="tab-condition-b" class="tab-content hidden p-4"></div>
-        <div id="tab-condition-c" class="tab-content hidden p-4"></div>
-        <div id="tab-condition-d" class="tab-content hidden p-4"></div>
-        <div id="tab-condition-e" class="tab-content hidden p-4"></div>
-      </div>
-    </section>
-
-    <div class="container mx-auto hidden px-4 py-4 lg:block">
-      <div class="mx-auto flex h-[600px] w-[300px] items-center justify-center rounded-lg bg-gray-800/50 text-sm text-gray-500">사이드 광고 영역 (300×600)</div>
-    </div>
-
-    <section class="container mx-auto px-4 py-6">
-      <h2 class="mb-4 text-xl font-bold">종합 토론방</h2>
-      <div class="rounded-lg bg-card-bg p-6 shadow-soft">
-        <div id="forum-posts-container"></div>
-        <div class="mt-8 pt-6 border-t border-gray-700">
-          <div class="mb-2 flex items-center">
-            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-accent-blue/20 text-sm font-bold text-accent-blue">나</div>
-            <span class="ml-2 text-sm font-medium">새 게시물 작성하기</span>
-          </div>
-          <div class="flex items-start gap-2"><input id="new-post-title-input" type="text" placeholder="제목을 입력하세요" class="w-full mb-2 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-accent-blue" /></div>
-          <div class="flex"><textarea id="new-post-body-input" placeholder="토론방에 새 글을 남겨보세요" rows="3" class="flex-1 rounded-l-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-accent-blue"></textarea><button id="new-post-submit-btn" class="rounded-r-lg bg-accent-blue px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 self-stretch">등록</button></div>
-        </div>
-      </div>
-    </section>
-  </div> <div id="coin-service-content" class="container mx-auto px-4 py-20 text-center hidden">
-      <svg class="mx-auto h-16 w-16 text-accent-blue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-      </svg>
-      <h1 class="mt-6 text-2xl font-bold text-gray-200">코인 서비스</h1>
-      <p class="mt-2 text-gray-400">코인 관련 정보는 현재 준비 중입니다. 곧 만나보실 수 있습니다!</p>
-  </div>
-
-  <div id="toast-notification"
-       class="fixed bottom-6 right-6 bg-positive text-white px-5 py-3 rounded-lg shadow-xl text-sm
-              transform transition-all duration-300 ease-in-out opacity-0 translate-y-10 hidden
-              flex items-center space-x-3">
-    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-    <span id="toast-message-content"></span>
-  </div>
-
-  <div id="signup-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-[100] p-4">
-    <div class="bg-card-bg p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-md">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl sm:text-2xl font-bold text-white">회원가입</h2>
-            <button id="close-signup-modal-btn" class="text-gray-400 hover:text-white text-2xl">&times;</button>
-        </div>
-        <form id="signup-form" class="space-y-4" novalidate>
-            <div>
-                <label for="signup-id" class="block text-sm font-medium text-gray-300 mb-1">아이디</label>
-                <div class="flex">
-                    <input type="text" id="signup-id" name="signup-id" required autocomplete="username"
-                           class="modal-input flex-grow rounded-l-md sm:text-sm" placeholder="영문, 숫자 포함 6~12자">
-                    <button type="button" id="check-id-duplicate-btn" 
-                            class="bg-gray-600 hover:bg-gray-500 text-white px-3 py-2 text-xs sm:text-sm font-medium rounded-r-md whitespace-nowrap">중복확인</button>
+          <section class="home-radar-grid" aria-label="개인화 투자 레이더">
+            <article class="home-radar-panel">
+              <div class="section-header compact">
+                <div>
+                  <h2>내 관심 신호</h2>
                 </div>
-                <p id="signup-id-feedback" class="text-xs mt-1 h-4"></p> 
-            </div>
-            <div>
-                <label for="signup-password" class="block text-sm font-medium text-gray-300 mb-1">비밀번호</label>
-                <input type="password" id="signup-password" name="signup-password" required autocomplete="new-password"
-                       class="modal-input w-full sm:text-sm" placeholder="8자 이상, 문자/숫자/특수문자 포함">
-            </div>
-            <div>
-                <label for="signup-password-confirm" class="block text-sm font-medium text-gray-300 mb-1">비밀번호 확인</label>
-                <input type="password" id="signup-password-confirm" name="signup-password-confirm" required autocomplete="new-password"
-                       class="modal-input w-full sm:text-sm" placeholder="비밀번호를 다시 입력하세요">
-                <p id="signup-password-feedback" class="text-xs mt-1 h-4"></p>
-            </div>
-            <div class="pt-2">
-                <button type="submit" 
-                        class="w-full bg-accent-blue hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-navy focus:ring-accent-blue transition duration-150 ease-in-out">
-                    가입하기
-                </button>
-            </div>
-        </form>
-    </div>
-  </div>
+                <button class="text-button" type="button" id="clearInterestButton">초기화</button>
+              </div>
+              <div class="home-chip-list" id="favoriteSignalList"></div>
+            </article>
+            <article class="home-radar-panel">
+              <div class="section-header compact">
+                <div>
+                  <h2>최근 검색어</h2>
+                </div>
+              </div>
+              <div class="home-chip-list" id="recentSearchList"></div>
+            </article>
+            <article class="home-radar-panel">
+              <div class="section-header compact">
+                <div>
+                  <h2>추천 확인 항목</h2>
+                </div>
+              </div>
+              <div class="home-recommend-list" id="recommendationList"></div>
+            </article>
+            <article class="home-radar-panel">
+              <div class="section-header compact">
+                <div>
+                  <h2>최근 본 항목</h2>
+                </div>
+                <button class="text-button" type="button" id="clearViewedButton">초기화</button>
+              </div>
+              <div class="home-recent-view-list" id="recentViewedList"></div>
+            </article>
+          </section>
 
-  <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-[100] p-4">
-      <div class="bg-card-bg p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-md">
-          <div class="flex justify-between items-center mb-6">
-              <h2 class="text-xl sm:text-2xl font-bold text-white">로그인</h2>
-              <button id="close-login-modal-btn" class="text-gray-400 hover:text-white text-2xl">&times;</button>
-          </div>
-          <form id="login-form" class="space-y-4" novalidate>
+          <section class="pro-plan-panel" aria-labelledby="proPlanTitle">
+            <div class="pro-plan-copy">
+              <span class="badge positive">PRO WAITLIST</span>
+              <h2 id="proPlanTitle">반복 확인이 필요한 투자자를 위한 프로 기능</h2>
+              <p>
+                결제 기능을 붙이기 전 단계입니다. 어떤 기능에 비용을 낼 의사가 있는지 먼저 저장하고, 실제 수요가 확인된 항목부터 개발합니다.
+              </p>
+            </div>
+            <div class="pro-plan-grid" aria-label="무료와 프로 기능 비교">
+              <article class="pro-plan-card">
+                <span>Free</span>
+                <strong>현재 데이터 레이더</strong>
+                <ul>
+                  <li>DART 공시 분석 카드</li>
+                  <li>금융 속보 필터</li>
+                  <li>스냅픽코 DATA ONLY 지수</li>
+                </ul>
+              </article>
+              <article class="pro-plan-card is-featured">
+                <span>Pro 후보</span>
+                <strong>알림과 검증 중심 워크스페이스</strong>
+                <ul>
+                  <li>관심 조건 즉시 알림</li>
+                  <li>스냅픽코 임계값 감시</li>
+                  <li>고급 필터와 백테스트 리포트</li>
+                </ul>
+              </article>
+            </div>
+            <div class="pro-plan-actions">
+              <button class="primary-button" type="button" data-modal-target="plan">프로 관심 등록</button>
+              <button class="secondary-button" type="button" data-modal-target="trust">운영 정책 확인</button>
+            </div>
+          </section>
+
+          <section class="ad-banner is-active">DART 공시 원문 분석 기반 신호 카드</section>
+
+          <section class="control-area">
+            <div class="condition-row">
+              <select class="condition-select" aria-label="공시 조건">
+                <option>모든 공시 조건</option>
+                <option>무상증자</option>
+                <option>단일판매계약</option>
+                <option>제3자배정 유상증자</option>
+                <option>자사주취득</option>
+              </select>
+              <input class="search-input" id="disclosureSearchInput" type="search" placeholder="종목명, 코드, 공시명" autocomplete="off" />
+            </div>
+
+            <div class="action-row">
+              <button class="primary-button" type="button">주요 신호</button>
+              <button class="secondary-button" type="button">NEW</button>
+              <button class="refresh-button" type="button">새로고침</button>
+            </div>
+          </section>
+
+          <section class="update-row">
+            <div></div>
+            <p>
+              디자인 시스템: <strong>Binance Yellow / Dark Trading UI</strong><br />
+              상태: <strong>무상증자 · 단일판매계약 · 제3자배정 유상증자 · 자기주식취득 원문 분석 연결</strong><br />
+              RSS: <strong id="rssCountdown">다음 업데이트 확인 중</strong>
+              <span id="rssSummary">수집 상태를 불러오는 중입니다.</span>
+            </p>
+          </section>
+
+          <section class="workspace is-active">
+            <div class="main-feed">
+              <div class="section-header">
+                <div>
+                  <div class="signal-title-row">
+                    <h2>오늘의 공시 분석 신호</h2>
+                    <button
+                      class="signal-help-button"
+                      id="signalHelpButton"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls="signalHelpPanel"
+                      aria-label="공시 분석 신호 설명 보기"
+                    >
+                      ?
+                    </button>
+                  </div>
+                </div>
+                <span class="count-label">4개 분석 모듈</span>
+              </div>
+
+              <div class="signal-help-panel" id="signalHelpPanel" hidden>
+                <div>
+                  <strong>실시간 호재 종목</strong>
+                  <p>현재 분석 모듈이 포착한 긍정 공시를 한 화면에 모아봅니다.</p>
+                </div>
+                <div>
+                  <strong>무상증자</strong>
+                  <p>신주를 무상 배정하는 공시로, 배정 비율과 기준일이 핵심입니다.</p>
+                </div>
+                <div>
+                  <strong>단일판매계약</strong>
+                  <p>계약금액이 최근 매출 대비 얼마나 큰지와 계약기간을 봅니다.</p>
+                </div>
+                <div>
+                  <strong>제3자배정 유상증자</strong>
+                  <p>자금 유입 가능성과 희석률, 할인율 부담을 함께 확인합니다.</p>
+                </div>
+                <div>
+                  <strong>자사주취득</strong>
+                  <p>취득비율과 기간, 목적을 통해 주주환원 강도를 봅니다.</p>
+                </div>
+              </div>
+
+              <div class="category-tabs" aria-label="공시 분석 모듈 필터">
+                <button class="tab-button is-active" type="button" data-module-filter="ALL">실시간 호재 종목</button>
+                <button class="tab-button" type="button" data-module-filter="FREE_CAPITAL_INCREASE">무상증자</button>
+                <button class="tab-button" type="button" data-module-filter="SINGLE_SALES_CONTRACT">단일판매계약</button>
+                <button class="tab-button" type="button" data-module-filter="PAID_CAPITAL_INCREASE">제3자배정 유상증자</button>
+                <button class="tab-button" type="button" data-module-filter="BUYBACK">자사주취득</button>
+              </div>
+
+              <div class="signal-list" id="signalList" aria-label="공시 신호 카드">
+                <article class="signal-card signal-free-capital-increase">
+                  <div class="signal-topline">
+                    <div class="badge-row">
+                      <span class="badge info signal-type-badge">무상증자</span>
+                      <h3 class="company-title">공시 분석 대기 <span>(DART)</span></h3>
+                    </div>
+                    <span class="change-chip up">LOADING</span>
+                  </div>
+                  <p class="disclosure-time">공시 시간: RSS 데이터 확인 중</p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="discovered-section" aria-labelledby="discoveredTitle">
+            <div class="section-header compact">
               <div>
-                  <label for="login-id" class="block text-sm font-medium text-gray-300 mb-1">아이디</label>
-                  <input type="text" id="login-id" name="login-id" required autocomplete="username"
-                         class="modal-input w-full sm:text-sm" placeholder="아이디를 입력하세요">
+                <h2 id="discoveredTitle">도출된 공시 신호 기록</h2>
               </div>
-              <div class="mb-2">
-                  <label for="login-password" class="block text-sm font-medium text-gray-300 mb-1">비밀번호</label>
-                  <input type="password" id="login-password" name="login-password" required autocomplete="current-password"
-                         class="modal-input w-full sm:text-sm" placeholder="비밀번호를 입력하세요">
-              </div>
-              <p id="login-feedback" class="text-xs text-center h-4 mb-2"></p>
-              <div class="pt-2">
-                  <button type="submit"
-                          class="w-full bg-accent-blue hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-deep-navy focus:ring-accent-blue transition duration-150 ease-in-out">
-                      로그인
-                  </button>
-              </div>
-          </form>
-      </div>
-  </div>
-
-
-  <script>
-    const AppConfig = { /* 이전과 동일 */ };
-    const MockData = { /* 이전과 동일, sampleStocks에 disclosureTime 추가됨 */ };
-    // AppConfig 내용은 이전 답변의 것을 그대로 사용합니다.
-          AppConfig.tickerUpdateIntervalSeconds = 60;
-      AppConfig.conditionColorMap = { "무상증자": "condition-a", "단일판매계약": "condition-b", "제3자유상증자": "condition-c", "자사주취득": "condition-d", "외국증권사매수": "condition-e" };
-      AppConfig.conditionTabIdMap = { "무상증자": "tab-condition-a", "단일판매계약": "tab-condition-b", "제3자유상증자": "tab-condition-c", "자사주취득": "tab-condition-d", "외국증권사매수": "tab-condition-e" };
-      AppConfig.elements = {
-        tickerWrapper1: document.getElementById('ticker-wrapper-1'),
-        tickerWrapper2: document.getElementById('ticker-wrapper-2'),
-        lastUpdateTime: document.getElementById('last-update-time'),
-        updateCountdown: document.getElementById('update-countdown'),
-        stockCardsContainer: document.getElementById('stock-cards-container'),
-        conditionFilterSelect: document.getElementById('condition-filter-select'),
-        filterButtonsGroup: document.getElementById('filter-buttons-group'),
-        refreshDataBtn: document.getElementById('refresh-data-btn'),
-        conditionTabsNav: document.getElementById('condition-tabs-nav'),
-        forumPostsContainer: document.getElementById('forum-posts-container'),
-        newPostTitleInput: document.getElementById('new-post-title-input'),
-        newPostBodyInput: document.getElementById('new-post-body-input'),
-        newPostSubmitBtn: document.getElementById('new-post-submit-btn'),
-        notificationToggle: document.getElementById('notification-toggle'),
-        toastNotification: document.getElementById('toast-notification'),
-        toastMessageContent: document.getElementById('toast-message-content'),
-        statusUpdateBannerContainer: document.getElementById('status-update-banner-container'),
-        statusUpdateBannerMessage: document.getElementById('status-update-banner-message'),
-        stockCategoryTabs: document.getElementById('stock-category-tabs'),
-        mainNavigation: document.getElementById('main-navigation'),
-        navStocksLink: document.getElementById('nav-stocks'),
-        navCoinsLink: document.getElementById('nav-coins'),
-        stockServiceContent: document.getElementById('stock-service-content'),
-        coinServiceContent: document.getElementById('coin-service-content'),
-        authContainer: document.getElementById('auth-container'),
-        signupBtnHeader: document.getElementById('signup-btn-header'),
-        loginBtnHeader: document.getElementById('login-btn-header'),
-        welcomeMessage: document.getElementById('welcome-message'),
-        logoutBtnHeader: document.getElementById('logout-btn-header'),
-        signupModal: document.getElementById('signup-modal'),
-        signupForm: document.getElementById('signup-form'),
-        signupIdInput: document.getElementById('signup-id'),
-        checkIdDuplicateBtn: document.getElementById('check-id-duplicate-btn'),
-        signupIdFeedback: document.getElementById('signup-id-feedback'),
-        signupPasswordInput: document.getElementById('signup-password'),
-        signupPasswordConfirmInput: document.getElementById('signup-password-confirm'),
-        signupPasswordFeedback: document.getElementById('signup-password-feedback'),
-        closeSignupModalBtn: document.getElementById('close-signup-modal-btn'),
-        loginModal: document.getElementById('login-modal'),
-        loginForm: document.getElementById('login-form'),
-        loginIdInput: document.getElementById('login-id'),
-        loginPasswordInput: document.getElementById('login-password'),
-        loginFeedback: document.getElementById('login-feedback'),
-        closeLoginModalBtn: document.getElementById('close-login-modal-btn'),
-      };
-    MockData.marketTickerItems = [
-        {label:"KOSPI", value:"2,785.38", change:"+0.42%", dir:"positive"}, {label:"KOSDAQ", value:"892.37", change:"-0.18%", dir:"negative"},
-        {label:"USD/KRW", value:"1,328.50", change:"+0.05%", dir:"neutral"}, {label:"WTI", value:"78.24", change:"+1.32%", dir:"positive"},
-        {label:"Gold", value:"2,342.10", change:"+0.75%", dir:"positive"}, {label:"Bitcoin", value:"67,890.45", change:"+2.14%", dir:"positive"},
-        {label:"NASDAQ", value:"16,742.39", change:"+0.83%", dir:"positive"}, {label:"S&P500", value:"5,234.18", change:"+0.51%", dir:"positive"}
-      ];
-    MockData.sampleStocks = [
-        { code:"005930", name:"삼성전자", industry:"electronics", price:"78,500원", changeDir:"positive", change:"+2.34%", today:true, isNew:false, initiallyNew: false, condition:"무상증자", type:"강력매수", confidence:92, disclosureTime: new Date(Date.now() - 10 * 60 * 1000).toISOString(), metrics:[ {label:"증자비율", value:"10:5"}, {label:"기준일",  value:"2025-03-15"}, {label:"권리락일",value:"2025-03-16"} ], reason:["메모리 반도체 가격 상승세 지속","AI 서버용 HBM 수요 급증","2분기 실적 전망치 상향 조정"] },
-        { code:"035720", name:"카카오", industry:"it", price:"52,300원", changeDir:"negative", change:"-1.05%", today:true, isNew:true, initiallyNew: true, condition:"단일판매계약", type:"매수", confidence:72, disclosureTime: new Date(Date.now() - 30 * 60 * 1000).toISOString(), metrics:[ {label:"매출 대비", value:"12%"}, {label:"계약금액", value:"120억"}, {label:"상대방", value:"(주)넥슨"} ], reason:["AI 기반 서비스 확장 전략 발표","핀테크 부문 거래액 증가세","단기 조정 후 기술적 반등 신호"] },
-        { code:"051910", name:"LG화학", industry:"chemical", price:"625,000원", changeDir:"positive", change:"+3.78%", today:true, isNew:false, initiallyNew: false, condition:"제3자유상증자", type:"강력매수", confidence:95, disclosureTime: new Date(Date.now() - (2 * 60 + 15) * 60 * 1000).toISOString(), metrics:[ {label:"발행가액", value:"58만"}, {label:"증자 규모", value:"1.2조원"}, {label:"납입일", value:"2025-06-30"} ], reason:["배터리 소재 신규 계약 체결","북미 시장 점유율 확대","친환경 소재 부문 성장성 주목"] },
-        { code:"035420", name:"NAVER", industry:"it", price:"214,500원", changeDir:"positive", change:"+1.25%", today:true, isNew:false, initiallyNew: false, condition:"외국증권사매수", type:"매수", confidence:83, disclosureTime: new Date(Date.now() - (5 * 60 + 30) * 60 * 1000).toISOString(), metrics:[ {label:"매수주체", value:"모건스탠리"},{label:"순매수량", value:"10만주"} ], reason:["생성형 AI 서비스 출시 임박","웹툰/웹소설 글로벌 매출 증가","클라우드 사업 성장세 가속화"] },
-        { code:"005380", name:"현대차", industry:"auto", price:"243,000원", changeDir:"negative", change:"-0.45%", today:false, isNew:false, initiallyNew: false, condition:"자사주취득", type:"관망", confidence:65, disclosureTime: new Date(Date.now() - 23 * 60 * 1000).toISOString(), metrics:[ {label:"시총 대비", value:"2.1%"}, {label:"취득기간", value:"~25/12/31"} ], reason:["전기차 판매 호조세 지속","원자재 가격 상승 부담","기술적 지지선 근접, 반등 가능성"] },
-        { code:"068270", name:"셀트리온", industry:"pharma", price:"187,500원", changeDir:"positive", change:"+4.12%", today:true, isNew:true, initiallyNew: true, condition:"무상증자", type:"강력매수", confidence:89, disclosureTime: new Date(Date.now() - (1 * 60 + 5) * 60 * 1000).toISOString(), metrics:[ {label:"증자비율", value:"2:1"}, {label:"기준일",  value:"2025-04-10"} ], reason:["신약 FDA 승인 임박","유럽 시장 바이오시밀러 점유율 확대","기관 매수세 유입 증가"] }
-      ];
-    MockData.forumPosts = [
-        { id: "post1", user:"김투자", ago:"2시간 전", title:"오늘 시장 분석", body:"반도체 업종이 강세를 보이고 있네요. 특히 삼성전자와 SK하이닉스의 상승세가 두드러집니다. AI 관련 수혜주로 계속 주목해야 할 것 같습니다.", likes:23, replies: [ { id: "reply1-1", user: "박매수", text: "동의합니다. HBM 관련주 눈여겨보고 있습니다.", ago: "1시간 전" }, { id: "reply1-2", user: "최고점", text: "삼전 가즈아!", ago: "30분 전" } ] },
-        { id: "post2", user:"이코노", ago:"3시간 전", title:"다음주 전망은?", body:"미국 금리 인하 가능성이 솔솔 나오고 있는데, 국내 증시에도 훈풍이 불까요? 다들 어떻게 생각하시는지 궁금합니다.", likes:15, replies: [] }
-      ];
-
-
-    const UIRenderer = {
-      buildTickerHTML: function() { return MockData.marketTickerItems.map(item => `<div class="ticker-item"><span class="font-medium">${item.label}</span><span class="ml-1 text-${item.dir}">${item.value} ${item.change}</span></div>`).join(""); },
-      renderTickers: function() { const html = this.buildTickerHTML(); AppConfig.elements.tickerWrapper1.innerHTML = html; AppConfig.elements.tickerWrapper2.innerHTML = html; },
-      populateConditionFilterOptions: function() {
-        if (!AppConfig.elements.conditionFilterSelect) return;
-        const conditions = Object.keys(AppConfig.conditionColorMap);
-        let optionsHTML = '<option value="all">모든 공시 조건</option>';
-        conditions.forEach(condition => { optionsHTML += `<option value="${condition}">${condition}</option>`; });
-        AppConfig.elements.conditionFilterSelect.innerHTML = optionsHTML;
-      },
-      renderStockCards: function(stocksToRender = MockData.sampleStocks) {
-        const container = AppConfig.elements.stockCardsContainer;
-        if (!container) { console.error("Stock cards container not found"); return; }
-
-        if (!stocksToRender || stocksToRender.length === 0) {
-            container.innerHTML = `
-                <div class="col-span-full text-center text-gray-500 py-10">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                    </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-300">데이터 없음</h3>
-                    <p class="mt-1 text-sm text-gray-500">선택하신 카테고리에 해당하는 종목이 없습니다.</p>
-                </div>
-            `;
-            return;
-        }
-        
-        container.innerHTML = stocksToRender.map(stock => {
-          const badgeColorClass = AppConfig.conditionColorMap[stock.condition] || 'accent-blue';
-          const isFavorite = AppLogic.favoritedStockCodes.has(stock.code);
-          const highConfidenceClass = stock.confidence >= 90 ? 'text-bright-yellow font-bold' : 'text-gray-300';
-          const highConfidenceBorderClass = stock.confidence >= 90 ? 'high-confidence-card-border' : '';
-          const disclosureTimeAgo = AppLogic.formatTimeAgo(stock.disclosureTime);
-          const disclosureTimeFormatted = stock.disclosureTime ? 
-            new Date(stock.disclosureTime).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true }) : '-';
-
-          return `
-            <div class="stock-card relative rounded-lg bg-card-bg p-5 shadow-soft ${highConfidenceBorderClass}" 
-                 data-industry="${stock.industry}" data-condition="${stock.condition}" 
-                 data-new="${stock.isNew}" data-today="${stock.today}" data-code="${stock.code}">
-              <div class="mb-3 flex items-start justify-between">
-                <div class="flex items-center">
-                  <span class="condition-badge bg-${badgeColorClass} bg-opacity-20 text-${badgeColorClass}">${stock.condition}</span>
-                  <h3 class="text-lg font-bold">${stock.name} <span class="text-sm text-gray-400 font-normal">(${stock.code})</span></h3>
-                </div>
-                <div class="flex items-center">
-                  <button class="favorite-star ${isFavorite ? 'text-yellow-500 active' : 'text-gray-400'} hover:text-yellow-500 mr-2" aria-label="Toggle Favorite">
-                    <svg class="h-6 w-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                  </button>
-                  <div class="rounded-md bg-${stock.changeDir} bg-opacity-20 px-2 py-1 text-sm font-medium text-${stock.changeDir}">${stock.change}</div>
-                </div>
-              </div>
-              <div class="mb-3 text-xs"> 
-                <span class="text-gray-100">공시 시간:</span>
-                <span class="text-gray-100 font-medium ml-1">${disclosureTimeFormatted}</span>
-                <span class="text-gray-100 ml-1.5">(${disclosureTimeAgo})</span>
-              </div>
-              <div class="mb-5"><div class="mb-1 text-sm font-medium">주요지표</div><div class="space-y-1">${stock.metrics.slice(0, 3).map(m => `<div class="metric-box"><span class="metric-label">${m.label}</span><span class="metric-value">${m.value}</span></div>`).join("")}</div></div>
-              <div class="mb-4 flex justify-between text-sm"><span class="text-gray-400">추천 타임</span><span class="font-medium ${stock.type.startsWith('강') ? 'text-positive' : 'text-gray-300'}">${stock.type}</span></div>
-              <div class="mb-1">
-                  <div class="mb-1 flex justify-between text-sm"><span class="text-gray-400">신뢰도</span><span class="font-medium ${highConfidenceClass}">${stock.confidence}%</span></div>
-                  <div class="confidence-bar-bg"><div class="confidence-bar-fill" style="width:${stock.confidence}%"></div></div>
-              </div>
-              <div class="mt-4"><div class="mb-2 text-sm font-medium">추천 이유</div><ul class="list-disc pl-5 text-sm text-gray-300">${stock.reason.map(r=>`<li>${r}</li>`).join("")}</ul></div>
-              <div class="mt-4 flex justify-end text-xs text-gray-400">추천 시각: 09:15</div>
-              <div class="stock-update absolute top-2 right-2 text-xs font-bold ${stock.isNew ? 'text-bright-green' : 'text-transparent'}">NEW</div>
+              <span class="count-label" id="discoveredSignalCount">기록 대기</span>
             </div>
-          `;
-        }).join("");
-      },
-      renderConditionTabs: function() {
-        Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
-          const tabElement = document.getElementById(tabId);
-          if (tabElement) tabElement.innerHTML = "";
-        });
 
-        MockData.sampleStocks.forEach(stock => {
-          const tabId = AppConfig.conditionTabIdMap[stock.condition];
-          const tabElement = document.getElementById(tabId);
-          if (tabElement) {
-            const metricsHTML = stock.metrics && stock.metrics.length > 0 ?
-                stock.metrics.map(metric => `
-                    <span class="inline-block bg-gray-700/60 px-2 py-0.5 rounded-full text-xs whitespace-nowrap">
-                        <span class="text-gray-400">${metric.label}:</span>
-                        <span class="text-white ml-1">${metric.value}</span>
-                    </span>
-                `).join('')
-                : '';
-            
-            const confidenceBarHTML = stock.confidence !== undefined ? `
-                <div class="inline-flex items-center whitespace-nowrap">
-                    <span class="text-xs text-gray-400 mr-1.5">신뢰도:</span>
-                    <div class="confidence-bar-bg rounded" style="width: 100px; height: 6px;">
-                        <div class="confidence-bar-fill h-full rounded" style="width:${stock.confidence}%"></div>
-                    </div>
-                    <span class="text-xs ml-1.5 ${stock.confidence >= 90 ? 'text-bright-yellow font-semibold' : 'text-gray-300'}">${stock.confidence}%</span>
-                </div>
-            ` : '';
-            
-            const disclosureTimeForTab = stock.disclosureTime ? 
-                `공시: ${new Date(stock.disclosureTime).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true })}` 
-                : '공시: -';
-
-            tabElement.insertAdjacentHTML('beforeend', `
-              <div class="flex items-start justify-between py-3 border-b border-gray-700 last:border-none">
-                <div class="flex-grow flex items-start min-w-0">
-                    <div class="flex-shrink-0 mr-4">
-                        <span class="block text-sm font-medium text-gray-100">${stock.name}</span>
-                        <span class="block text-xs text-gray-400">${stock.code}</span>
-                    </div>
-                    <div class="flex-grow min-w-0"> 
-                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-                            ${metricsHTML ? `<div class="flex flex-wrap gap-x-1.5 gap-y-1">${metricsHTML}</div>` : ''}
-                            ${confidenceBarHTML ? `<div class="inline-flex items-center mt-1 sm:mt-0">${confidenceBarHTML}</div>` : ''}
-                        </div>
-                    </div>
-                </div>
-                <div class="text-sm font-semibold text-gray-100 flex-shrink-0 ml-4 whitespace-nowrap">${disclosureTimeForTab}</div>
+            <div class="condition-board">
+              <div class="condition-board-tabs" aria-label="조건별 종목 필터">
+                <button class="condition-tab is-active" type="button" data-discovery-filter="ALL">전체</button>
+                <button class="condition-tab" type="button" data-discovery-filter="FREE_CAPITAL_INCREASE">무상증자</button>
+                <button class="condition-tab" type="button" data-discovery-filter="SINGLE_SALES_CONTRACT">단일판매계약</button>
+                <button class="condition-tab" type="button" data-discovery-filter="PAID_CAPITAL_INCREASE">제3자유상증자</button>
+                <button class="condition-tab" type="button" data-discovery-filter="BUYBACK">자사주취득</button>
               </div>
-            `);
-          }
-        });
 
-        Object.values(AppConfig.conditionTabIdMap).forEach(tabId => {
-          const tabElement = document.getElementById(tabId);
-          if (tabElement && !tabElement.children.length) {
-            tabElement.innerHTML = '<p class="text-sm text-gray-400">해당 조건의 종목이 없습니다.</p>';
-          }
-        });
-      },
-      renderForumPosts: function() { /* ... 이전과 동일 ... */ },
-      updateTimersUI: function(val) { const mm=String(Math.floor(val/60)).padStart(2,'0'); const ss=String(val%60).padStart(2,'0'); AppConfig.elements.updateCountdown.textContent=`${mm}:${ss}`;},
-      setLastUpdateTime: function() { AppConfig.elements.lastUpdateTime.textContent = new Date().toTimeString().slice(0,8); }
-    };
-    UIRenderer.renderForumPosts = function() {
-        AppConfig.elements.forumPostsContainer.innerHTML = MockData.forumPosts.map(p => `
-          <div class="post-card" data-post-id="${p.id}">
-            <div class="post-header mb-2">
-              <div class="flex items-center gap-3">
-                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-accent-blue/20 text-sm font-bold text-accent-blue">${p.user[0]}</div>
-                <div><div class="font-medium">${p.user}</div><div class="text-xs text-gray-400">${p.ago}</div></div>
-              </div>
-              <div class="flex gap-3 text-xs text-gray-400">
-                <button class="like-btn forum-badge ${AppLogic.likedPostIds.has(p.id) ? 'liked text-accent-blue' : 'text-gray-400'}" data-post-id="${p.id}" aria-label="Like this post">
-                  <svg class="inline w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
-                  <span>${p.likes}</span>
-                </button>
-                <span class="forum-badge">
-                  <svg class="inline w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2H7l-4 4V10a2 2 0 012-2h2"></path></svg>
-                  <span>${p.replies ? p.replies.length : 0}</span>
-                </span>
+              <div class="condition-stock-list" id="discoveredList" aria-live="polite">
+                <div class="condition-empty">분석 결과를 불러오는 중입니다.</div>
               </div>
             </div>
-            <div class="mb-1 text-sm font-semibold">${p.title}</div>
-            <p class="text-sm text-gray-300 mb-3">${p.body}</p>
-            <div class="replies-container mt-4 pl-5 border-l-2 border-gray-700/50 space-y-3">
-              ${p.replies && p.replies.length > 0 ? p.replies.map(reply => `
-                <div class="reply-card">
-                  <div class="flex items-center gap-2 mb-1">
-                    <div class="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-bold text-gray-200">${reply.user[0]}</div>
+
+            <div class="side-ad feature-ad">사이드 광고 영역 (300×600)</div>
+          </section>
+
+          <section class="discussion-section" aria-labelledby="discussionTitle">
+            <div class="section-header compact">
+              <div>
+                <h2 id="discussionTitle">종합 토론방</h2>
+              </div>
+            </div>
+
+            <div class="discussion-card" id="communityBoard">
+              <div class="community-dashboard">
+                <aside class="community-profile-card" aria-label="내 커뮤니티 프로필">
+                  <div class="post-head">
+                    <span class="avatar">나</span>
                     <div>
-                      <span class="font-medium text-sm text-gray-200">${reply.user}</span>
-                      <span class="text-xs text-gray-500 ml-2">${reply.ago}</span>
+                      <strong id="communityProfileName">SnapPicker</strong>
+                      <span id="communityProfileLevel">L1 Observer</span>
                     </div>
                   </div>
-                  <p class="text-sm text-gray-400 ml-8">${reply.text}</p>
+                  <div class="community-profile-metrics" id="communityProfileMetrics"></div>
+                  <div class="community-badge-row" id="communityBadgeList"></div>
+                </aside>
+
+                <aside class="community-activity-panel" aria-label="최근 커뮤니티 활동">
+                  <strong>활동내역</strong>
+                  <div id="communityActivityList"></div>
+                </aside>
+              </div>
+
+              <div class="community-toolbar">
+                <div class="community-tabs" id="communityBoardTabs" aria-label="게시판 필터">
+                  <button class="is-active" type="button" data-community-board="ALL">전체</button>
+                  <button type="button" data-community-board="FREE">자유</button>
+                  <button type="button" data-community-board="QUESTION">질문</button>
+                  <button type="button" data-community-board="REVIEW">후기</button>
                 </div>
-              `).join('') : '<p class="text-xs text-gray-500 italic">아직 댓글이 없습니다.</p>'}
-            </div>
-            <div class="reply-form mt-3 md:pl-5">
-              <div class="flex items-center gap-1 sm:gap-2">
-                <input type="text" class="reply-input-field flex-1 min-w-0 rounded-l-lg border border-gray-600 bg-gray-700/80 px-3 py-1.5 text-sm text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue" placeholder="댓글 남기기...">
-                <button class="reply-submit-btn rounded-r-lg bg-accent-blue px-2 sm:px-3 py-1.5 text-xs font-medium text-white transition hover:bg-blue-600 flex-shrink-0" data-post-id="${p.id}">등록</button>
+                <span id="communityPostCount">게시글 대기</span>
+              </div>
+
+              <div class="discussion-post-list" id="discussionPostList" aria-live="polite"></div>
+
+              <div class="new-post-form">
+                <div class="post-head">
+                  <span class="avatar">나</span>
+                  <strong>새 게시글 작성하기</strong>
+                </div>
+                <select class="forum-input" id="newPostBoard" aria-label="게시판 선택">
+                  <option value="FREE">자유게시판</option>
+                  <option value="QUESTION">질문게시판</option>
+                  <option value="REVIEW">후기게시판</option>
+                </select>
+                <input class="forum-input" id="newPostTitle" type="text" placeholder="제목을 입력하세요" />
+                <div class="new-post-body-row">
+                  <textarea class="forum-input" id="newPostBody" placeholder="토론방에 새 글을 남겨보세요"></textarea>
+                  <button class="submit-button" id="newPostButton" type="button">등록</button>
+                </div>
               </div>
             </div>
+          </section>
+          </section>
+
+          <section class="view-section personal-view" data-view="personal" aria-labelledby="personalBoardTitle">
+            <section class="personal-hero">
+              <div>
+                <span class="badge info">주인장 전용</span>
+                <h1 id="personalBoardTitle">주인장기록</h1>
+                <p>CREON 잔고 스냅샷을 일별로 보존하고, 전일 대비 손익과 월별 수익률을 누적합니다.</p>
+              </div>
+              <button class="refresh-button" id="portfolioReloadButton" type="button">불러오기</button>
+            </section>
+
+            <nav class="personal-tabs" aria-label="주인장기록 탭">
+              <button class="personal-tab is-active" type="button" data-personal-tab-target="returns">수익률</button>
+              <button class="personal-tab" type="button" data-personal-tab-target="holdings">보유현황</button>
+              <button class="personal-tab" type="button" data-personal-tab-target="flows">입출금</button>
+              <button class="personal-tab" type="button" data-personal-tab-target="notes">매매기록</button>
+            </nav>
+
+            <section class="personal-tab-panel is-active" data-personal-tab="returns">
+              <section class="personal-kpi-grid" aria-label="자산 요약">
+                <article class="personal-kpi">
+                  <span>최근 순자산</span>
+                  <strong id="portfolioLatestAsset">-</strong>
+                  <small id="portfolioLatestDate">기록 대기</small>
+                </article>
+                <article class="personal-kpi">
+                  <span>일별 투자손익</span>
+                  <strong id="portfolioDailyProfit">-</strong>
+                  <small id="portfolioDailyProfitHint">전일 기록 대기</small>
+                </article>
+                <article class="personal-kpi">
+                  <span>일별 수익률</span>
+                  <strong id="portfolioDailyReturn">-</strong>
+                  <small id="portfolioReturnHint">최근 기록 기준</small>
+                </article>
+                <article class="personal-kpi">
+                  <span>이번 달 손익</span>
+                  <strong id="portfolioMonthlyProfit">-</strong>
+                  <small id="portfolioMonthlyDays">월별 기록 대기</small>
+                </article>
+                <article class="personal-kpi">
+                  <span>이번 달 수익률</span>
+                  <strong id="portfolioMonthlyReturn">-</strong>
+                  <small id="portfolioMonthlyBase">기준금액 대기</small>
+                </article>
+                <article class="personal-kpi">
+                  <span>예수금 / 대주</span>
+                  <strong id="portfolioExposure">-</strong>
+                  <small id="portfolioUpdatedAt">API 연결 대기</small>
+                </article>
+              </section>
+
+              <section class="personal-dashboard-grid">
+                <form class="personal-panel personal-record-form" id="portfolioForm">
+                  <div class="section-header compact">
+                    <div>
+                      <h2>일별 기록 보정</h2>
+                    </div>
+                  </div>
+
+                  <label>
+                    기록일
+                    <input id="portfolioDate" name="record_date" type="date" required />
+                  </label>
+                  <label>
+                    기말 순자산
+                    <input id="portfolioAsset" name="ending_net_asset" type="number" inputmode="decimal" min="0" step="1000" placeholder="예: 34867104" required />
+                  </label>
+                  <div class="record-field-grid" aria-label="입출금 및 입출고 보정">
+                    <label>
+                      입금액
+                      <input name="cash_in" type="number" inputmode="decimal" min="0" step="1000" value="0" />
+                    </label>
+                    <label>
+                      출금액
+                      <input name="cash_out" type="number" inputmode="decimal" min="0" step="1000" value="0" />
+                    </label>
+                    <label>
+                      입고평가액
+                      <input name="stock_in_value" type="number" inputmode="decimal" min="0" step="1000" value="0" />
+                    </label>
+                    <label>
+                      출고평가액
+                      <input name="stock_out_value" type="number" inputmode="decimal" min="0" step="1000" value="0" />
+                    </label>
+                  </div>
+                  <label>
+                    메모
+                    <textarea id="portfolioMemo" name="memo" placeholder="매매 이유나 시장 상황을 짧게 남겨두세요"></textarea>
+                  </label>
+
+                  <div class="personal-form-actions">
+                    <button class="primary-button" type="submit">기록 저장</button>
+                    <p id="portfolioFeedback" role="status"></p>
+                  </div>
+                </form>
+
+                <section class="personal-panel portfolio-chart-panel" aria-labelledby="portfolioChartTitle">
+                  <div class="section-header compact">
+                    <div>
+                      <h2 id="portfolioChartTitle">자산 흐름</h2>
+                    </div>
+                    <span class="count-label">최근 14개 기록</span>
+                  </div>
+
+                  <div class="asset-chart" id="portfolioChart" aria-label="최근 자산 차트">
+                    <div class="portfolio-empty">아직 기록된 자산 데이터가 없습니다.</div>
+                  </div>
+                </section>
+              </section>
+
+              <section class="portfolio-history-section" aria-labelledby="portfolioMonthlyTitle">
+                <div class="section-header compact">
+                  <div>
+                    <h2 id="portfolioMonthlyTitle">월별 기록</h2>
+                  </div>
+                  <span class="count-label">Modified Dietz</span>
+                </div>
+
+                <div class="portfolio-table monthly-table" id="portfolioMonthlyTable" aria-live="polite">
+                  <div class="portfolio-empty">일별 기록이 쌓이면 월별 수익률이 표시됩니다.</div>
+                </div>
+              </section>
+
+              <section class="portfolio-history-section" aria-labelledby="portfolioHistoryTitle">
+                <div class="section-header compact">
+                  <div>
+                    <h2 id="portfolioHistoryTitle">일별 기록</h2>
+                  </div>
+                </div>
+
+                <div class="portfolio-table" id="portfolioTable" aria-live="polite">
+                  <div class="portfolio-empty">기록을 저장하면 여기에 날짜별 자산과 수익률이 표시됩니다.</div>
+                </div>
+              </section>
+            </section>
+
+            <section class="personal-tab-panel" data-personal-tab="holdings">
+              <div class="personal-panel personal-placeholder-panel">보유현황</div>
+            </section>
+
+            <section class="personal-tab-panel" data-personal-tab="flows">
+              <div class="personal-panel personal-placeholder-panel">입출금</div>
+            </section>
+
+            <section class="personal-tab-panel" data-personal-tab="notes">
+              <div class="personal-panel personal-placeholder-panel">매매기록</div>
+            </section>
+          </section>
+
+          <section class="view-section breaking-view" data-view="breaking" aria-labelledby="breakingNewsTitle">
+            <section class="breaking-hero">
+              <div>
+                <span class="badge hot">LIVE</span>
+                <h1 id="breakingNewsTitle">속보뉴스</h1>
+                <p id="breakingNewsStatus">네이버 최신순 속보를 확인하는 중입니다.</p>
+              </div>
+              <span class="count-label" id="breakingNewsCount">수집 대기</span>
+            </section>
+
+            <section class="breaking-news-board" aria-label="속보뉴스 목록" aria-live="polite">
+              <section class="breaking-news-grid" id="breakingNewsList">
+                <article class="breaking-news-card is-empty">
+                  <div class="breaking-news-meta">
+                    <span class="badge neutral">대기</span>
+                  </div>
+                  <h2>속보뉴스 수집 대기</h2>
+                  <p>백엔드 연결 후 최신 뉴스가 표시됩니다.</p>
+                </article>
+              </section>
+              <section class="breaking-news-list" id="breakingNewsArchiveList" aria-label="추가 속보뉴스 목록"></section>
+            </section>
+
+            <section class="breaking-learning-panel" aria-labelledby="breakingLearningTitle">
+              <div class="breaking-learning-header">
+                <div>
+                  <span class="badge info">LEARNING</span>
+                  <h2 id="breakingLearningTitle">필터 학습 후보</h2>
+                </div>
+                <span id="breakingLearningSummary">샘플 대기</span>
+              </div>
+              <form class="breaking-learning-form" id="breakingLearningForm">
+                <input
+                  class="breaking-learning-input"
+                  id="breakingLearningInput"
+                  type="text"
+                  placeholder="통과시킬 뉴스 URL 또는 제목"
+                  autocomplete="off"
+                />
+                <button class="breaking-learning-button" type="submit">통과 학습</button>
+              </form>
+              <p class="breaking-learning-feedback" id="breakingLearningFeedback"></p>
+              <div class="breaking-manual-approvals" id="breakingManualApprovals"></div>
+              <div class="breaking-learning-grid" id="breakingLearningList"></div>
+            </section>
+          </section>
+
+          <section class="view-section snappiko-view" data-view="snappiko" aria-labelledby="snappikoIndexTitle">
+            <section class="snappiko-hero">
+              <div>
+                <span class="badge info">INDEX</span>
+                <h1 id="snappikoIndexTitle">스냅픽코 지수</h1>
+                <p id="snappikoIndexStatus">실제 수집 데이터 상태를 불러오는 중입니다.</p>
+              </div>
+              <span class="count-label" id="snappikoIndexCount">데이터 대기</span>
+            </section>
+
+            <section class="snappiko-cycle-layout" aria-label="스냅픽코 입력 데이터 매트릭스">
+              <aside class="snappiko-cycle-board">
+                <div class="snappiko-panel-head">
+                  <h2>입력 데이터 매트릭스</h2>
+                  <span>지표군별 점수/출처</span>
+                </div>
+                <div class="snappiko-cycle-list" id="snappikoCycleBoard"></div>
+              </aside>
+
+              <article class="snappiko-main-board">
+                <div class="snappiko-main-copy">
+                  <span class="badge warning" id="snappikoPhaseLabel">점수대 대기</span>
+                  <h2><strong id="snappikoGaugeScore">--</strong><span>/ 1000</span></h2>
+                  <p id="snappikoGaugeMeta">백분위와 전주 변화값을 계산하는 중입니다.</p>
+                </div>
+                <div class="snappiko-gauge" aria-hidden="true">
+                  <div class="snappiko-gauge-arc">
+                    <span>0</span>
+                    <span>1000</span>
+                    <i class="snappiko-gauge-needle" id="snappikoGaugeNeedle"></i>
+                  </div>
+                </div>
+                <div class="snappiko-main-stats">
+                  <div>
+                    <span>PanicScore</span>
+                    <strong id="snappikoPanicScore">--</strong>
+                  </div>
+                  <div>
+                    <span>BoomScore</span>
+                    <strong id="snappikoBoomScore">--</strong>
+                  </div>
+                  <div>
+                    <span>Fragility</span>
+                    <strong id="snappikoFragilityScore">--</strong>
+                  </div>
+                  <div>
+                    <span>전주 변화</span>
+                    <strong id="snappikoWeeklyChange">--</strong>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section class="snappiko-intel-grid" aria-label="스냅픽코 히스토리와 관련 속보">
+              <article class="snappiko-panel">
+                <div class="snappiko-panel-head">
+                  <h2>점수 히스토리</h2>
+                  <span id="snappikoHistorySummary">히스토리 대기</span>
+                </div>
+                <div class="snappiko-history-bars" id="snappikoHistoryBars" role="img" aria-label="최근 점수 히스토리"></div>
+              </article>
+              <article class="snappiko-panel">
+                <div class="snappiko-panel-head">
+                  <h2>관련 속보</h2>
+                  <span>금융 필터 통과 뉴스</span>
+                </div>
+                <div class="snappiko-related-news" id="snappikoRelatedNews"></div>
+              </article>
+            </section>
+
+            <section class="snappiko-grid" aria-label="스냅픽코 지수 현황">
+              <article class="snappiko-card is-primary">
+                <span>종합 점수</span>
+                <strong id="snappikoOverallScore">--</strong>
+                <small id="snappikoOverallLabel">시스템 점수 대기</small>
+              </article>
+              <article class="snappiko-card">
+                <span>Nasdaq Heat</span>
+                <strong id="snappikoHeatScore">--</strong>
+                <small id="snappikoHeatLabel">Nasdaq Heat 대기</small>
+              </article>
+              <article class="snappiko-card">
+                <span>금리 스트레스</span>
+                <strong id="snappikoBondScore">--</strong>
+                <small id="snappikoBondLabel">Bond Stress 대기</small>
+              </article>
+              <article class="snappiko-card">
+                <span>데이터 커버리지</span>
+                <strong id="snappikoConfidence">--</strong>
+                <small id="snappikoDataNote">출처 확인 대기</small>
+              </article>
+            </section>
+
+            <section class="snappiko-explain" aria-label="스냅픽코 데이터 상태">
+              <div>
+                <span class="badge warning">실제 데이터</span>
+                <h2>실제 수집 데이터만 표시합니다.</h2>
+                <p id="snappikoSummary">FRED/MOF/내부 API 수집값과 코드 산식만 표시하고, 값이 없으면 대기 상태로 표시합니다.</p>
+              </div>
+              <button class="snappiko-refresh-button" type="button" id="snappikoRefreshButton">새로고침</button>
+            </section>
+
+            <section class="snappiko-detail-grid" aria-label="스냅픽코 세부 지표">
+              <article class="snappiko-panel">
+                <div class="snappiko-panel-head">
+                  <h2>계산 입력</h2>
+                  <span>값/산식/결측 상태</span>
+                </div>
+                <div class="snappiko-contributors" id="snappikoContributors"></div>
+              </article>
+
+              <article class="snappiko-panel">
+                <div class="snappiko-panel-head">
+                  <h2>Nasdaq Heat 구성</h2>
+                  <span id="snappikoHeatAsOf">확정 봉 대기</span>
+                </div>
+                <div class="snappiko-heat-grid" id="snappikoHeatDetails"></div>
+              </article>
+
+              <article class="snappiko-panel snappiko-bond-panel is-wide">
+                <div class="snappiko-panel-head">
+                  <h2>미국/일본 채권 · 달러지수</h2>
+                  <span id="snappikoBondAsOf">채권 데이터 대기</span>
+                </div>
+                <div class="snappiko-bond-macro-layout">
+                  <div class="snappiko-bond-chart-card">
+                    <div class="snappiko-bond-chart-head">
+                      <div>
+                        <strong>채권 4종 통합 차트</strong>
+                        <span id="snappikoBondChartMeta">미국 10Y·30Y / 일본 10Y·30Y</span>
+                      </div>
+                      <span id="snappikoDollarIndexBadge">달러지수 대기</span>
+                    </div>
+                    <div class="snappiko-bond-controls" aria-label="채권 차트 봉 선택">
+                      <button class="is-active" type="button" data-bond-period="daily">일봉 6개월</button>
+                      <button type="button" data-bond-period="weekly">주봉 2년</button>
+                      <button type="button" data-bond-period="monthly">월봉 5년</button>
+                    </div>
+                    <div class="snappiko-bond-chart" id="snappikoBondChart"></div>
+                    <div class="snappiko-bond-legend" id="snappikoBondLegend"></div>
+                  </div>
+                  <div class="snappiko-bond-side">
+                    <div class="snappiko-dollar-card" id="snappikoDollarIndexCard"></div>
+                    <div class="snappiko-heat-grid snappiko-bond-list" id="snappikoBondDetails"></div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="snappiko-panel snappiko-liquidity-panel is-wide">
+                <div class="snappiko-panel-head">
+                  <h2>달러 유동성</h2>
+                  <span id="snappikoLiquidityAsOf">유동성 데이터 대기</span>
+                </div>
+                <div class="snappiko-liquidity-layout">
+                  <div class="snappiko-liquidity-score-card">
+                    <span>유동성 점수</span>
+                    <strong id="snappikoLiquidityScore">--</strong>
+                    <small id="snappikoLiquidityLabel">달러 자금환경 대기</small>
+                    <p id="snappikoLiquiditySummary">Fed 총자산, TGA, 역레포, 지급준비금을 연결하는 중입니다.</p>
+                  </div>
+                  <div class="snappiko-liquidity-chart-card">
+                    <div class="snappiko-bond-chart-head">
+                      <div>
+                        <strong>순 Fed 유동성</strong>
+                        <span>Fed 총자산 - TGA - ON RRP</span>
+                      </div>
+                    </div>
+                    <div class="snappiko-bond-chart snappiko-liquidity-chart" id="snappikoLiquidityChart"></div>
+                  </div>
+                  <div class="snappiko-liquidity-components" id="snappikoLiquidityComponents"></div>
+                </div>
+              </article>
+            </section>
+
+            <p class="snappiko-source-note" id="snappikoSourceNote">출처와 지연 정보를 확인하는 중입니다.</p>
+          </section>
+        </section>
+      </main>
+
+      <nav class="mobile-nav" aria-label="모바일 메뉴">
+        <button class="mobile-nav-button is-active" type="button" data-view-target="market" data-nav-key="stock">홈</button>
+        <button class="mobile-nav-button" type="button" data-view-target="market" data-nav-key="disclosure">공시</button>
+        <button class="mobile-nav-button" type="button" data-view-target="personal" data-nav-key="personal">주인장기록</button>
+        <button class="mobile-nav-button" type="button" data-view-target="breaking" data-nav-key="breaking">속보뉴스</button>
+        <button class="mobile-nav-button" type="button" data-view-target="snappiko" data-nav-key="snappiko">스냅픽코</button>
+      </nav>
+
+      <div class="auth-modal" id="signupModal" role="dialog" aria-modal="true" aria-labelledby="signupModalTitle" hidden>
+        <div class="auth-card">
+          <div class="modal-header">
+            <div>
+              <span class="badge warning">START</span>
+              <h2 id="signupModalTitle">관심 신호를 저장하고 알림을 시작합니다</h2>
+            </div>
+            <button class="icon-close" type="button" data-close-modal aria-label="닫기">×</button>
           </div>
-        `).join("");
-    };
+          <p class="modal-copy">실제 계정 서버가 붙기 전까지는 이 기기에 리드 정보와 관심 설정만 저장합니다.</p>
+          <label>
+            이메일
+            <input id="signupEmail" type="email" autocomplete="email" placeholder="you@example.com" />
+          </label>
+          <label>
+            주 관심 영역
+            <select id="signupInterest">
+              <option value="disclosure">DART 공시</option>
+              <option value="breaking">금융 속보</option>
+              <option value="snappiko">스냅픽코 지수</option>
+              <option value="portfolio">주인장기록</option>
+            </select>
+          </label>
+          <label class="check-row">
+            <input id="signupDigest" type="checkbox" checked />
+            <span>장 마감 후 관심 신호 요약을 받겠습니다</span>
+          </label>
+          <button class="primary-button" type="button" id="signupSubmitButton">관심 계정 만들기</button>
+          <p class="form-feedback" id="signupFeedback" aria-live="polite"></p>
+        </div>
+      </div>
 
-    const AppLogic = { /* 모든 AppLogic 함수 */ };
-    // AppLogic 전체 내용은 이전 답변의 것을 그대로 사용합니다.
-    AppLogic.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
-    AppLogic.countdownIntervalId = null;
-    AppLogic.notificationsEnabled = true;
-    AppLogic.newStockNotificationShownFor = new Set();
-    AppLogic.toastTimeoutId = null;
-    AppLogic.statusUpdateBannerTimeoutId = null;
-    AppLogic.favoritedStockCodes = new Set();
-    AppLogic.currentStockCategory = 'realtime_news_stocks'; 
-    AppLogic.currentUser = null; 
-    AppLogic.USERS_STORAGE_KEY = 'snappiko_users'; 
-    AppLogic.CURRENT_USER_STORAGE_KEY = 'snappiko_currentUser';
-    AppLogic.likedPostIds = new Set();
+      <div class="auth-modal" id="alertModal" role="dialog" aria-modal="true" aria-labelledby="alertModalTitle" hidden>
+        <div class="auth-card">
+          <div class="modal-header">
+            <div>
+              <span class="badge info">ALERT</span>
+              <h2 id="alertModalTitle">재방문 알림 설정</h2>
+            </div>
+            <button class="icon-close" type="button" data-close-modal aria-label="닫기">×</button>
+          </div>
+          <p class="modal-copy">브라우저 푸시 서버가 붙기 전까지는 알림 조건을 로컬에 저장합니다.</p>
+          <label>
+            알림 이메일
+            <input id="alertEmail" type="email" autocomplete="email" placeholder="you@example.com" />
+          </label>
+          <div class="modal-option-grid" aria-label="알림 조건">
+            <label class="check-row"><input type="checkbox" value="breaking" checked /> <span>금융 속보 신규 등록</span></label>
+            <label class="check-row"><input type="checkbox" value="disclosure" checked /> <span>관심 공시 조건 감지</span></label>
+            <label class="check-row"><input type="checkbox" value="snappiko" /> <span>스냅픽코 점수 급변</span></label>
+            <label class="check-row"><input type="checkbox" value="community" /> <span>커뮤니티 댓글/답변</span></label>
+          </div>
+          <button class="primary-button" type="button" id="alertSubmitButton">알림 조건 저장</button>
+          <p class="form-feedback" id="alertFeedback" aria-live="polite"></p>
+        </div>
+      </div>
 
-    AppLogic.getUsers = function() { return JSON.parse(localStorage.getItem(this.USERS_STORAGE_KEY)) || {}; };
-    AppLogic.saveUsers = function(users) { localStorage.setItem(this.USERS_STORAGE_KEY, JSON.stringify(users)); };
+      <div class="auth-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle" hidden>
+        <div class="auth-card">
+          <div class="modal-header">
+            <div>
+              <span class="badge positive">GROWTH</span>
+              <h2 id="shareModalTitle">공유 링크</h2>
+            </div>
+            <button class="icon-close" type="button" data-close-modal aria-label="닫기">×</button>
+          </div>
+          <p class="modal-copy">추천인 시스템 생산화 전까지 공유 유입 파라미터를 붙인 링크를 생성합니다.</p>
+          <label>
+            추천 공유 링크
+            <input id="shareLinkInput" type="text" readonly />
+          </label>
+          <button class="primary-button" type="button" id="copyShareLinkButton">링크 복사</button>
+          <p class="form-feedback" id="shareFeedback" aria-live="polite"></p>
+        </div>
+      </div>
 
-    AppLogic.updateAuthUI = function() {
-      const { signupBtnHeader, loginBtnHeader, welcomeMessage, logoutBtnHeader } = AppConfig.elements;
-      if (!signupBtnHeader || !loginBtnHeader || !welcomeMessage || !logoutBtnHeader) { return; }
-      
-      if (this.currentUser) {
-          welcomeMessage.textContent = `${this.currentUser}님, 환영합니다!`;
-          welcomeMessage.classList.remove('hidden');
-          logoutBtnHeader.classList.remove('hidden');
-          signupBtnHeader.classList.add('hidden');
-          loginBtnHeader.classList.add('hidden');
-      } else {
-          welcomeMessage.classList.add('hidden');
-          logoutBtnHeader.classList.add('hidden');
-          signupBtnHeader.classList.remove('hidden');
-          loginBtnHeader.classList.remove('hidden');
-      }
-    };
-    AppLogic.toggleModal = function(modalElement, show) {
-        if (modalElement) {
-            modalElement.classList.toggle('hidden', !show);
-            modalElement.classList.toggle('flex', show); 
-        }
-    };
-    AppLogic.handleCheckIdDuplicate = function() {
-      const id = AppConfig.elements.signupIdInput.value.trim();
-      const feedbackEl = AppConfig.elements.signupIdFeedback;
-      if (!id) {
-          feedbackEl.textContent = "아이디를 입력해주세요.";
-          feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-          return false;
-      }
-      if (!/^[a-z0-9]{6,12}$/.test(id)) {
-          feedbackEl.textContent = "아이디는 영문 소문자, 숫자 조합 6~12자여야 합니다.";
-          feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-          return false;
-      }
-      const users = this.getUsers();
-      if (users[id]) {
-          feedbackEl.textContent = "이미 사용 중인 아이디입니다.";
-          feedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-          return false;
-      } else {
-          feedbackEl.textContent = "사용 가능한 아이디입니다.";
-          feedbackEl.className = 'text-xs mt-1 h-4 feedback-success';
-          return true;
-      }
-    };
-    AppLogic.handleSignup = function(event) {
-      event.preventDefault();
-      const id = AppConfig.elements.signupIdInput.value.trim();
-      const password = AppConfig.elements.signupPasswordInput.value;
-      const passwordConfirm = AppConfig.elements.signupPasswordConfirmInput.value;
-      const idFeedbackEl = AppConfig.elements.signupIdFeedback;
-      const passwordFeedbackEl = AppConfig.elements.signupPasswordFeedback;
+      <div class="auth-modal" id="planModal" role="dialog" aria-modal="true" aria-labelledby="planModalTitle" hidden>
+        <div class="auth-card">
+          <div class="modal-header">
+            <div>
+              <span class="badge positive">PRO</span>
+              <h2 id="planModalTitle">프로 기능 관심 등록</h2>
+            </div>
+            <button class="icon-close" type="button" data-close-modal aria-label="닫기">×</button>
+          </div>
+          <p class="modal-copy">지금은 결제 전 수요 확인 단계입니다. 등록된 항목은 다음 유료 기능 우선순위 판단에 사용합니다.</p>
+          <label>
+            이메일
+            <input id="planEmail" type="email" autocomplete="email" placeholder="you@example.com" />
+          </label>
+          <label>
+            관심 플랜
+            <select id="planType">
+              <option value="pro">Pro - 알림/필터/리포트</option>
+              <option value="watch">Watch - 개인 알림 중심</option>
+              <option value="team">Team - 여러 계정/운영 기능</option>
+            </select>
+          </label>
+          <label>
+            가장 필요한 기능
+            <textarea id="planUseCase" rows="4" maxlength="500" placeholder="예: 관심 공시가 뜨면 바로 알림을 받고 싶습니다."></textarea>
+          </label>
+          <label>
+            예상 지불 의사
+            <select id="planBudget">
+              <option value="undecided">아직 미정</option>
+              <option value="under-10000">월 1만원 이하</option>
+              <option value="10000-30000">월 1만-3만원</option>
+              <option value="30000-plus">월 3만원 이상</option>
+            </select>
+          </label>
+          <button class="primary-button" type="button" id="planSubmitButton">프로 관심 저장</button>
+          <p class="form-feedback" id="planFeedback" aria-live="polite"></p>
+        </div>
+      </div>
 
-      passwordFeedbackEl.textContent = ''; 
-
-      if (idFeedbackEl.textContent !== "사용 가능한 아이디입니다.") {
-          AppConfig.elements.signupIdInput.focus();
-          idFeedbackEl.textContent = "아이디 중복확인을 먼저 해주세요.";
-          idFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-          return;
-      }
-      if (password.length < 8) { 
-          passwordFeedbackEl.textContent = "비밀번호는 8자 이상이어야 합니다.";
-          passwordFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-          return;
-      }
-      if (password !== passwordConfirm) {
-          passwordFeedbackEl.textContent = "비밀번호가 일치하지 않습니다.";
-          passwordFeedbackEl.className = 'text-xs mt-1 h-4 feedback-error';
-          return;
-      }
-
-      const users = this.getUsers();
-      users[id] = password; 
-      this.saveUsers(users);
-      
-      alert("회원가입이 완료되었습니다! 로그인해주세요.");
-      this.toggleModal(AppConfig.elements.signupModal, false);
-      if (AppConfig.elements.signupForm) AppConfig.elements.signupForm.reset();
-      if (idFeedbackEl) idFeedbackEl.textContent = ''; 
-      if (passwordFeedbackEl) passwordFeedbackEl.textContent = '';
-    };
-    AppLogic.handleLogin = function(event) {
-      event.preventDefault();
-      const id = AppConfig.elements.loginIdInput.value.trim();
-      const password = AppConfig.elements.loginPasswordInput.value;
-      const feedbackEl = AppConfig.elements.loginFeedback;
-      const users = this.getUsers();
-
-      if (users[id] && users[id] === password) { 
-          this.currentUser = id;
-          localStorage.setItem(this.CURRENT_USER_STORAGE_KEY, id);
-          this.updateAuthUI();
-          this.toggleModal(AppConfig.elements.loginModal, false);
-          if(AppConfig.elements.loginForm) AppConfig.elements.loginForm.reset();
-          if(feedbackEl) feedbackEl.textContent = '';
-      } else {
-          if(feedbackEl) {
-              feedbackEl.textContent = "아이디 또는 비밀번호가 올바르지 않습니다.";
-              feedbackEl.className = 'text-xs text-center h-4 mb-2 feedback-error';
-          }
-      }
-    };
-    AppLogic.handleLogout = function() {
-      this.currentUser = null;
-      localStorage.removeItem(this.CURRENT_USER_STORAGE_KEY);
-      this.updateAuthUI();
-    };
-    AppLogic.checkLoggedInStatus = function() {
-      const loggedInUser = localStorage.getItem(this.CURRENT_USER_STORAGE_KEY);
-      if (loggedInUser) {
-          this.currentUser = loggedInUser;
-      }
-      this.updateAuthUI();
-    };
-    AppLogic.formatTimeAgo = function(dateString) {
-        if (!dateString) return '';
-        const now = new Date();
-        const past = new Date(dateString);
-        const diffInSeconds = Math.floor((now - past) / 1000);
-
-        const minutes = Math.floor(diffInSeconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-
-        if (days > 0) return `${days}일 전`;
-        if (hours > 0) return `${hours}시간 전`;
-        if (minutes > 0) return `${minutes}분 전`;
-        if (diffInSeconds < 5) return `방금 전`;
-        return `${diffInSeconds}초 전`;
-    };
-    AppLogic.applyStockFilters = function() {
-      const selectedCondDropdownValue = AppConfig.elements.conditionFilterSelect.value;
-      const activeTopFilterButton = AppConfig.elements.filterButtonsGroup.querySelector('.filter-btn.active');
-      const currentTopFilterType = activeTopFilterButton ? activeTopFilterButton.dataset.filter : 'all';
-
-      let baseStocksForCategory = [];
-      switch (this.currentStockCategory) {
-          case 'realtime_news_stocks':
-              baseStocksForCategory = [...MockData.sampleStocks];
-              break;
-          case 'low_pbr_stocks':
-          case 'treasury_accumulating':
-          case 'treasury_over_50': 
-              baseStocksForCategory = []; 
-              break;
-          default: 
-              baseStocksForCategory = [...MockData.sampleStocks];
-      }
-
-      let 최종필터된종목들 = baseStocksForCategory;
-
-      if (currentTopFilterType === 'favorites') {
-          최종필터된종목들 = 최종필터된종목들.filter(stock => AppLogic.favoritedStockCodes.has(stock.code));
-      } else if (currentTopFilterType === 'today' && AppConfig.elements.filterButtonsGroup.querySelector('[data-filter="today"]') && !AppConfig.elements.filterButtonsGroup.querySelector('[data-filter="today"]').classList.contains('hidden') ) {
-          최종필터된종목들 = 최종필터된종목들.filter(stock => stock.today === true);
-      } else if (currentTopFilterType === 'new' && AppConfig.elements.filterButtonsGroup.querySelector('[data-filter="new"]') && !AppConfig.elements.filterButtonsGroup.querySelector('[data-filter="new"]').classList.contains('hidden') ) {
-          최종필터된종목들 = 최종필터된종목들.filter(stock => stock.isNew === true);
-      }
-      
-      if (selectedCondDropdownValue !== 'all') {
-          최종필터된종목들 = 최종필터된종목들.filter(stock => stock.condition === selectedCondDropdownValue);
-      }
-
-      UIRenderer.renderStockCards(최종필터된종목들);
-    };
-    AppLogic.handleFilterButtonClick = function(e) { 
-      const btn = e.target.closest('.filter-btn'); 
-      if(!btn || btn.classList.contains('active')) return;
-      AppConfig.elements.filterButtonsGroup.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); 
-      btn.classList.add('active'); 
-      AppLogic.applyStockFilters(); 
-    };
-    AppLogic.handleConditionFilterChange = function() { AppLogic.applyStockFilters(); };
-    AppLogic.handleFavoriteToggle = function(e) {
-      const starButton = e.target.closest('.favorite-star');
-      if (!starButton) return;
-
-      const stockCard = starButton.closest('.stock-card');
-      const stockCode = stockCard ? stockCard.dataset.code : null;
-      if (!stockCode) return;
-
-      const isCurrentlyFavorite = AppLogic.favoritedStockCodes.has(stockCode);
-
-      if (isCurrentlyFavorite) {
-          AppLogic.favoritedStockCodes.delete(stockCode);
-          starButton.classList.remove('active', 'text-yellow-500');
-          starButton.classList.add('text-gray-400');
-      } else {
-          AppLogic.favoritedStockCodes.add(stockCode);
-          starButton.classList.add('active', 'text-yellow-500');
-          starButton.classList.remove('text-gray-400');
-      }
-      
-      const activeFilterButton = AppConfig.elements.filterButtonsGroup.querySelector('.filter-btn.active');
-      if (activeFilterButton && activeFilterButton.dataset.filter === 'favorites') {
-          AppLogic.applyStockFilters();
-      }
-    };
-    AppLogic.handleTabNavigation = function(e) {
-      const btn = e.target.closest('.tab-btn'); if(!btn) return;
-      AppConfig.elements.conditionTabsNav.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('tab-active','text-white');b.classList.add('text-gray-400');});
-      btn.classList.add('tab-active','text-white'); btn.classList.remove('text-gray-400');
-      document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden'));
-      const targetId=btn.dataset.tabId; if(targetId){const targetEl=document.getElementById(targetId); if(targetEl)targetEl.classList.remove('hidden');}
-    };
-    AppLogic.handleAddNewPost = function() {
-      const titleInput = AppConfig.elements.newPostTitleInput;
-      const bodyInput = AppConfig.elements.newPostBodyInput;
-      const titleText = titleInput.value.trim();
-      const bodyText = bodyInput.value.trim();
-      if (titleText && bodyText) { MockData.forumPosts.unshift({id: `post${Date.now()}`,user: "나",ago: "방금 전",title: titleText,body: bodyText,likes: 0,replies: []}); UIRenderer.renderForumPosts(); titleInput.value = ''; bodyInput.value = ''; } else { alert("제목과 내용을 모두 입력해주세요."); }
-    };
-    AppLogic.handleLikePost = function(event) {
-      const likeButton = event.target.closest('.like-btn');
-      if (!likeButton) return;
-      const postId = likeButton.dataset.postId;
-      const post = MockData.forumPosts.find(p => p.id === postId);
-
-      if (post) {
-          if (AppLogic.likedPostIds.has(postId)) {
-              AppLogic.likedPostIds.delete(postId);
-              post.likes--; 
-          } else {
-              AppLogic.likedPostIds.add(postId);
-              post.likes++; 
-          }
-          UIRenderer.renderForumPosts(); 
-      }
-    };
-    AppLogic.handleAddReply = function(event) {
-      const replyButton = event.target.closest('.reply-submit-btn');
-      if (!replyButton) return;
-      const postId = replyButton.dataset.postId;
-      const post = MockData.forumPosts.find(p => p.id === postId);
-      const postCardElement = replyButton.closest('.post-card');
-      const replyInputField = postCardElement ? postCardElement.querySelector('.reply-input-field') : null;
-      if (post && replyInputField) { const replyText = replyInputField.value.trim(); if (replyText) { if (!post.replies) { post.replies = []; } post.replies.push({id: `reply${postId}-${Date.now()}`,user: "나",text: replyText,ago: "방금 전"}); UIRenderer.renderForumPosts();}}
-    };
-    AppLogic.showToastNotification = function(stockName) {
-      if (!this.notificationsEnabled || !AppConfig.elements.toastNotification || !AppConfig.elements.toastMessageContent) return;
-      if (this.toastTimeoutId) clearTimeout(this.toastTimeoutId);
-      AppConfig.elements.toastMessageContent.innerHTML = `<strong class="font-semibold">${stockName}</strong> - 새로운 추천 종목!`;
-      AppConfig.elements.toastNotification.classList.remove('hidden', 'opacity-0', 'translate-y-10');
-      AppConfig.elements.toastNotification.classList.add('opacity-100', 'translate-y-0');
-      this.toastTimeoutId = setTimeout(() => {
-          AppConfig.elements.toastNotification.classList.remove('opacity-100', 'translate-y-0');
-          AppConfig.elements.toastNotification.classList.add('opacity-0', 'translate-y-10');
-          setTimeout(() => { AppConfig.elements.toastNotification.classList.add('hidden'); }, 300);
-      }, 4000);
-    };
-    AppLogic.processNewStockNotifications = function(stocks) {
-      if (!this.notificationsEnabled) return;
-      stocks.forEach(stock => {
-          if (stock.isNew && !this.newStockNotificationShownFor.has(stock.code)) {
-              this.showToastNotification(stock.name);
-              this.newStockNotificationShownFor.add(stock.code);
-          }
-      });
-    };
-    AppLogic.showStatusUpdateBanner = function() {
-      const bannerContainer = AppConfig.elements.statusUpdateBannerContainer;
-      const bannerMessage = AppConfig.elements.statusUpdateBannerMessage;
-      if (!bannerContainer || !bannerMessage) return;
-      if (this.statusUpdateBannerTimeoutId) clearTimeout(this.statusUpdateBannerTimeoutId);
-
-      const now = new Date();
-      const timeString = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-      bannerMessage.textContent = ` ${timeString} 추천 정보가 업데이트 되었습니다!`;
-
-      bannerContainer.classList.remove('hidden', 'opacity-0');
-      void bannerContainer.offsetWidth;
-      bannerContainer.classList.add('opacity-100');
-
-      this.statusUpdateBannerTimeoutId = setTimeout(() => {
-          bannerContainer.classList.remove('opacity-100');
-          bannerContainer.classList.add('opacity-0');
-          setTimeout(() => {
-              bannerContainer.classList.add('hidden');
-          }, 500);
-      }, 3000);
-    };
-    AppLogic.startUpdateTimer = function() {
-      if (this.countdownIntervalId) clearInterval(this.countdownIntervalId);
-      this.countdownIntervalId = setInterval(() => {
-          UIRenderer.updateTimersUI(this.nextUpdateSeconds);
-          if (this.nextUpdateSeconds === 0) {
-              this.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
-              UIRenderer.setLastUpdateTime();
-              console.log("Automatic data refresh cycle triggered...");
-              AppLogic.applyStockFilters(); 
-              UIRenderer.renderConditionTabs(); 
-              const newStocksForToast = MockData.sampleStocks.filter(stock => stock.isNew && !this.newStockNotificationShownFor.has(stock.code));
-              this.processNewStockNotifications(newStocksForToast);
-              this.showStatusUpdateBanner();
-          }
-          this.nextUpdateSeconds--;
-      }, 1000);
-    };
-    AppLogic.handleRefreshData = function() {
-      console.log("Manual refresh: Processing notifications and showing status banner.");
-      this.newStockNotificationShownFor.clear();
-      AppLogic.applyStockFilters();
-      UIRenderer.renderConditionTabs();
-      UIRenderer.renderForumPosts();
-      UIRenderer.setLastUpdateTime();
-      this.nextUpdateSeconds = AppConfig.tickerUpdateIntervalSeconds;
-      UIRenderer.updateTimersUI(this.nextUpdateSeconds);
-      this.showStatusUpdateBanner();
-      const currentNewStocks = MockData.sampleStocks.filter(stock => stock.isNew);
-      this.processNewStockNotifications(currentNewStocks);
-    };
-    AppLogic.handlePageNavigation = function(targetService) {
-      const { stockServiceContent, coinServiceContent, navStocksLink, navCoinsLink } = AppConfig.elements;
-      if (!stockServiceContent || !coinServiceContent || !navStocksLink || !navCoinsLink) return;
-
-      if (targetService === 'stocks') {
-          stockServiceContent.classList.remove('hidden');
-          coinServiceContent.classList.add('hidden');
-          navStocksLink.classList.add('active'); 
-          navCoinsLink.classList.remove('active');
-          window.location.hash = 'stocks';
-          if (AppConfig.elements.stockCategoryTabs) { 
-            const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
-            this.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
-            this.applyStockFilters();
-          }
-
-      } else if (targetService === 'coins') {
-          stockServiceContent.classList.add('hidden');
-          coinServiceContent.classList.remove('hidden');
-          navCoinsLink.classList.add('active');
-          navStocksLink.classList.remove('active');
-          window.location.hash = 'coins';
-      }
-    };
-    AppLogic.initEventListeners = function() {
-      if(AppConfig.elements.filterButtonsGroup) AppConfig.elements.filterButtonsGroup.addEventListener('click', this.handleFilterButtonClick.bind(this));
-      if(AppConfig.elements.conditionFilterSelect) AppConfig.elements.conditionFilterSelect.addEventListener('change', this.handleConditionFilterChange.bind(this));
-      if(AppConfig.elements.stockCardsContainer) AppConfig.elements.stockCardsContainer.addEventListener('click', this.handleFavoriteToggle.bind(this));
-      if(AppConfig.elements.conditionTabsNav) AppConfig.elements.conditionTabsNav.addEventListener('click', this.handleTabNavigation.bind(this));
-      if(AppConfig.elements.newPostSubmitBtn) AppConfig.elements.newPostSubmitBtn.addEventListener('click', this.handleAddNewPost.bind(this));
-      if(AppConfig.elements.refreshDataBtn) AppConfig.elements.refreshDataBtn.addEventListener('click', () => this.handleRefreshData());
-      if(AppConfig.elements.notificationToggle) {
-          this.notificationsEnabled = AppConfig.elements.notificationToggle.checked;
-          AppConfig.elements.notificationToggle.addEventListener('change', (event) => {
-              this.notificationsEnabled = event.target.checked;
-              if (!this.notificationsEnabled && AppConfig.elements.toastNotification && !AppConfig.elements.toastNotification.classList.contains('hidden')) {
-                  AppConfig.elements.toastNotification.classList.remove('opacity-100', 'translate-y-0');
-                  AppConfig.elements.toastNotification.classList.add('opacity-0', 'translate-y-10', 'hidden');
-                  if(this.toastTimeoutId) clearTimeout(this.toastTimeoutId);
-              }
-          });
-      }
-      if(AppConfig.elements.forumPostsContainer) AppConfig.elements.forumPostsContainer.addEventListener('click', (event) => {
-          if (event.target.closest('.like-btn')) { AppLogic.handleLikePost(event); }
-          else if (event.target.closest('.reply-submit-btn')) { AppLogic.handleAddReply(event); }
-      });
-      if (AppConfig.elements.stockCategoryTabs) {
-          AppConfig.elements.stockCategoryTabs.addEventListener('click', (event) => {
-              const tabButton = event.target.closest('.category-tab-btn');
-              if (!tabButton || tabButton.classList.contains('tab-active')) return;
-              AppConfig.elements.stockCategoryTabs.querySelectorAll('.category-tab-btn').forEach(btn => {
-                  btn.classList.remove('tab-active', 'text-white'); btn.classList.add('text-gray-400', 'hover:text-gray-200');
-              });
-              tabButton.classList.add('tab-active', 'text-white'); tabButton.classList.remove('text-gray-400', 'hover:text-gray-200');
-              this.currentStockCategory = tabButton.dataset.category;
-              this.applyStockFilters();
-          });
-      }
-      if (AppConfig.elements.navStocksLink) AppConfig.elements.navStocksLink.addEventListener('click', (e) => { e.preventDefault(); AppLogic.handlePageNavigation('stocks'); });
-      if (AppConfig.elements.navCoinsLink) AppConfig.elements.navCoinsLink.addEventListener('click', (e) => { e.preventDefault(); AppLogic.handlePageNavigation('coins'); });
-
-      if(AppConfig.elements.loginBtnHeader) AppConfig.elements.loginBtnHeader.addEventListener('click', () => this.toggleModal(AppConfig.elements.loginModal, true));
-      if(AppConfig.elements.closeLoginModalBtn) AppConfig.elements.closeLoginModalBtn.addEventListener('click', () => { this.toggleModal(AppConfig.elements.loginModal, false); if(AppConfig.elements.loginFeedback) AppConfig.elements.loginFeedback.textContent = ''; });
-      if(AppConfig.elements.loginForm) AppConfig.elements.loginForm.addEventListener('submit', this.handleLogin.bind(this));
-      if(AppConfig.elements.signupBtnHeader) AppConfig.elements.signupBtnHeader.addEventListener('click', () => this.toggleModal(AppConfig.elements.signupModal, true));
-      if(AppConfig.elements.closeSignupModalBtn) AppConfig.elements.closeSignupModalBtn.addEventListener('click', () => { this.toggleModal(AppConfig.elements.signupModal, false); if(AppConfig.elements.signupIdFeedback) AppConfig.elements.signupIdFeedback.textContent = ''; if(AppConfig.elements.signupPasswordFeedback) AppConfig.elements.signupPasswordFeedback.textContent = ''; });
-      if(AppConfig.elements.signupForm) AppConfig.elements.signupForm.addEventListener('submit', this.handleSignup.bind(this));
-      if(AppConfig.elements.checkIdDuplicateBtn) AppConfig.elements.checkIdDuplicateBtn.addEventListener('click', this.handleCheckIdDuplicate.bind(this));
-      if(AppConfig.elements.logoutBtnHeader) AppConfig.elements.logoutBtnHeader.addEventListener('click', this.handleLogout.bind(this));
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      UIRenderer.renderTickers();
-      AppLogic.checkLoggedInStatus(); 
-      AppLogic.initEventListeners();
-
-      const initialPage = window.location.hash.substring(1) || 'stocks';
-      AppLogic.handlePageNavigation(initialPage); 
-      
-      if (initialPage === 'stocks') {
-        UIRenderer.populateConditionFilterOptions();
-        if (AppConfig.elements.stockCategoryTabs) { 
-            const activeCategoryTab = AppConfig.elements.stockCategoryTabs.querySelector('.category-tab-btn.tab-active');
-            AppLogic.currentStockCategory = activeCategoryTab ? activeCategoryTab.dataset.category : 'realtime_news_stocks';
-        } else {
-            AppLogic.currentStockCategory = 'realtime_news_stocks';
-        }
-        AppLogic.applyStockFilters();
-        UIRenderer.renderConditionTabs();
-        UIRenderer.renderForumPosts();
-        UIRenderer.setLastUpdateTime();
-        const initialNewStocks = MockData.sampleStocks.filter(stock => stock.isNew && stock.initiallyNew);
-        AppLogic.processNewStockNotifications(initialNewStocks);
-      }
-      AppLogic.startUpdateTimer();
-    });
-  </script>
-</body>
+      <div class="auth-modal" id="trustModal" role="dialog" aria-modal="true" aria-labelledby="trustModalTitle" hidden>
+        <div class="auth-card trust-card">
+          <div class="modal-header">
+            <div>
+              <span class="badge neutral">TRUST</span>
+              <h2 id="trustModalTitle">데이터 출처와 운영 정책</h2>
+            </div>
+            <button class="icon-close" type="button" data-close-modal aria-label="닫기">×</button>
+          </div>
+          <div class="trust-policy-list">
+            <section>
+              <strong>데이터 출처</strong>
+              <p>DART RSS, Naver Search API, FRED, 일본 MOF CSV, 내부 로컬 기록을 사용합니다.</p>
+            </section>
+            <section>
+              <strong>자동화 사용 범위</strong>
+              <p>속보 필터는 Gemini/키워드 상태를 구분하고, 스냅픽코 지수는 수집값과 코드 산식만 사용합니다.</p>
+            </section>
+            <section>
+              <strong>투자 판단</strong>
+              <p>서비스는 정보 정리 도구이며 매수/매도 추천이나 수익 보장을 제공하지 않습니다.</p>
+            </section>
+            <section>
+              <strong>커뮤니티 운영</strong>
+              <p>리딩방 홍보, 허위정보, 출처 없는 가격 조작성 글은 제한 대상입니다.</p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./app.js?v=final-mvp"></script>
+  </body>
 </html>
