@@ -4053,6 +4053,7 @@ renderSnapPickHome();
 loadSignalCards();
 refreshRssStatus();
 loadBreakingNews();
+loadSnappikoIndex();
 setInterval(updateRssStatusText, 1000);
 setInterval(updateBreakingStatusText, 1000);
 setInterval(refreshRssStatus, 10000);
