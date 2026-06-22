@@ -5,14 +5,14 @@
     <meta name="naver-site-verification" content="588df416ff6a2827e7c04dda62d18946a4b475f6" />
     <meta name="google-site-verification" content="mweApcvfL2CGBz8TYevVi3dOeasKN1nlfSkn5YNDgnU" />
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="dartscope-api-base" content="" />
     <meta
       name="description"
       content="SnapPick은 DART 공시, 금융 속보, 스냅픽코 위험지수를 한 화면에서 추적하는 실시간 투자 레이더입니다."
     />
     <title>SnapPick - 실시간 공시·속보 투자 레이더</title>
-    <link rel="stylesheet" href="./styles.css?v=final-mvp" />
+    <link rel="stylesheet" href="./styles.css?v=mobile-visibility" />
   </head>
   <body>
     <div class="app-shell">
@@ -49,6 +49,23 @@
               <p>
                 DART 공시, 금융 속보, 스냅픽코 지수를 연결해 시장 변화를 빠르게 확인하고 관심 신호를 저장합니다.
               </p>
+              <div class="mobile-hero-visual" aria-label="모바일 핵심 신호 요약">
+                <div class="mobile-signal-tile is-primary">
+                  <span>공시 감시</span>
+                  <strong>60초</strong>
+                  <i></i>
+                </div>
+                <div class="mobile-signal-tile">
+                  <span>속보 필터</span>
+                  <strong>10초</strong>
+                  <i></i>
+                </div>
+                <div class="mobile-signal-tile">
+                  <span>위험지수</span>
+                  <strong>DATA</strong>
+                  <i></i>
+                </div>
+              </div>
               <div class="home-hero-actions">
                 <button class="primary-button" type="button" id="saveInterestButton">관심 신호 설정</button>
                 <button class="secondary-button" type="button" data-modal-target="alert">알림 설정</button>
@@ -879,6 +896,6 @@
         </div>
       </div>
     </div>
-    <script src="./app.js?v=final-mvp"></script>
+    <script src="./app.js?v=mobile-visibility"></script>
   </body>
 </html>
